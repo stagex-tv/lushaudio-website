@@ -52,19 +52,22 @@ body {
   text-shadow: 0 0 20px rgba(121, 0, 255, 0.6), 0 0 40px rgba(121, 0, 255, 0.25);
 }
 
-/* Wave lines through white text */
+/* Wave lines through white text — animated sweep with fade in/out */
 .text-wave {
-  background-image: repeating-linear-gradient(
-    -28deg,
-    #ffffff      0px,
-    #ffffff      14px,
-    rgba(121, 0, 255, 0.55)  14px,
-    rgba(5,  49, 250, 0.55)  16px,
-    rgba(0, 188, 255, 0.55)  18px,
-    #ffffff      18px,
-    #ffffff      32px
-  );
+  background-image:
+    url('/wave-lines.svg'),
+    linear-gradient(#ffffff, #ffffff);
+  background-size: 600px 100%, 100% 100%;
+  background-repeat: repeat-x, no-repeat;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: wave-sweep 4s ease-in-out infinite;
+}
+
+@keyframes wave-sweep {
+  0%   { background-position: -600px center, 0 0; opacity: 0.75; }
+  40%  { opacity: 1; }
+  60%  { opacity: 1; }
+  100% { background-position: 600px center, 0 0; opacity: 0.75; }
 }
