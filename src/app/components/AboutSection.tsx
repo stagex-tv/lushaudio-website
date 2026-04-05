@@ -14,9 +14,9 @@ export default function AboutSection() {
           <p className="text-accent text-sm tracking-[0.3em] uppercase mb-4">
             About
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-8">
+          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gradient">
             Built by producers,{" "}
-            <span className="text-primary">for producers.</span>
+            for producers.
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed">
             Lush Plugins is a small team building the audio tools we always wanted.
