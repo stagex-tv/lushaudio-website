@@ -12,7 +12,7 @@ const words = [
   "DELAY",
   "GATE",
   "LIMITER",
-  "CLIPPER",
+  "SOFTCLIP",
   "DE-ESSER",
   "HARMONIX",
   "AUTO-TUNE",

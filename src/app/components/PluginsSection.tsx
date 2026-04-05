@@ -82,7 +82,7 @@ const plugins = [
     originalPrice: 129,
   },
   {
-    name: "Lush Clipper",
+    name: "Lush SoftClip",
     tagline: "Soft Clipper",
     description:
       "Add warmth, grit, and loudness with musical soft clipping. Variable saturation curves, oversampling, and a Lush knob for blending reverb into the clipped signal.",
