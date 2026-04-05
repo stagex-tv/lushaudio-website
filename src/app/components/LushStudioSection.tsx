@@ -125,7 +125,7 @@ export default function LushStudioSection() {
   }, []);
 
   return (
-    <section id="lush-studio" className="py-24 px-6">
+    <section id="lush-studio" className="pt-6 pb-24 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
