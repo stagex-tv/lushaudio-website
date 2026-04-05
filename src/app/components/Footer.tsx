@@ -7,7 +7,7 @@ export default function Footer() {
       className="py-12 px-6 border-t border-white/5 text-center"
     >
       <p className="text-xl font-bold tracking-widest mb-4">
-        STAGE <span className="text-accent-green">X</span>
+        LUSH <span className="text-accent-green">AUDIO</span>
       </p>
       <p className="text-zinc-500 text-sm mb-6">
         Premium audio tools for music production.
@@ -24,7 +24,7 @@ export default function Footer() {
         </a>
       </div>
       <p className="text-zinc-700 text-xs mt-8">
-        &copy; {new Date().getFullYear()} Stage X. All rights reserved.
+        &copy; {new Date().getFullYear()} Lush Audio. All rights reserved.
       </p>
     </footer>
   );

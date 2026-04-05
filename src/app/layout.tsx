@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "STAGE X — Audio Tools",
+  title: "Lush Audio — Audio Tools",
   description: "Premium audio plugins for music production",
 };
 

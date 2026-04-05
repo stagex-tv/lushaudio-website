@@ -19,7 +19,7 @@ export default function AboutSection() {
             <span className="text-accent-green">for producers.</span>
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed">
-            Stage X is a small team building the audio tools we always wanted.
+            Lush Audio is a small team building the audio tools we always wanted.
             Every plugin is designed with a focus on sound quality, creative
             control, and a workflow that stays out of your way.
           </p>
