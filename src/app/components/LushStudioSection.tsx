@@ -53,7 +53,7 @@ interface ModuleProps {
 
 function RackModule({ name, color, active = true, children }: ModuleProps) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col flex-1 min-w-0">
       {/* Module header */}
       <div
         className="flex items-center justify-between px-2 py-1 rounded-t-md border-b"
