@@ -14,7 +14,7 @@ export default function AboutSection() {
           <p className="text-accent text-sm tracking-[0.3em] uppercase mb-4">
             About
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gradient">
+          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-wave">
             Built by producers,{" "}
             for producers.
           </h2>

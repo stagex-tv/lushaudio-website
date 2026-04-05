@@ -52,9 +52,18 @@ body {
   text-shadow: 0 0 20px rgba(121, 0, 255, 0.6), 0 0 40px rgba(121, 0, 255, 0.25);
 }
 
-/* Gradient text — purple → blue → teal */
-.text-gradient {
-  background: linear-gradient(135deg, #7900ff 0%, #0531fa 50%, #00bcff 100%);
+/* Wave lines through white text */
+.text-wave {
+  background-image: repeating-linear-gradient(
+    -28deg,
+    #ffffff      0px,
+    #ffffff      14px,
+    rgba(121, 0, 255, 0.55)  14px,
+    rgba(5,  49, 250, 0.55)  16px,
+    rgba(0, 188, 255, 0.55)  18px,
+    #ffffff      18px,
+    #ffffff      32px
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

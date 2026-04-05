@@ -100,7 +100,7 @@ export default function PluginsSection() {
           <p className="text-tertiary text-sm tracking-[0.3em] uppercase mb-4">
             Our Tools
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">Plugins</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-wave">Plugins</h2>
           <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
             Every Lush plugin features a built-in{" "}
             <span className="text-primary font-medium">Lush Knob</span> — one
