@@ -103,6 +103,15 @@ const plugins = [
     mockType: "saturation",
     comingSoon: true,
   },
+  {
+    name: "Lush Multi-Band",
+    tagline: "Multi-Band",
+    description:
+      "Split your signal into four frequency bands and process each independently. Per-band compression, stereo width, and gain — plus a Lush knob for multi-band reverb blending.",
+    accentColor: "#7900ff",
+    mockType: "multiband",
+    comingSoon: true,
+  },
 ];
 
 export default function PluginsSection() {

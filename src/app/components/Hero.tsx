@@ -17,6 +17,7 @@ const words = [
   "HARMONIX",
   "AUTO-TUNE",
   "SATURATION",
+  "MULTI-BAND",
 ];
 
 const DISPLAY_TIME = 2500; // total time per word (visible + transition)

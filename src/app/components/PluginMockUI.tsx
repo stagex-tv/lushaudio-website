@@ -375,6 +375,54 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             </div>
           </div>
         );
+      case "multiband":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* 4-band spectrum with crossover points */}
+            <div className="w-full h-14 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
+              <svg viewBox="0 0 200 56" className="w-full h-full">
+                {/* Crossover lines */}
+                <line x1="50" y1="0" x2="50" y2="56" stroke="#333" strokeWidth="0.5" strokeDasharray="3,3" />
+                <line x1="100" y1="0" x2="100" y2="56" stroke="#333" strokeWidth="0.5" strokeDasharray="3,3" />
+                <line x1="150" y1="0" x2="150" y2="56" stroke="#333" strokeWidth="0.5" strokeDasharray="3,3" />
+                {/* Band labels */}
+                <text x="22" y="8" fill="#555" fontSize="6" textAnchor="middle" fontFamily="monospace">LOW</text>
+                <text x="75" y="8" fill="#555" fontSize="6" textAnchor="middle" fontFamily="monospace">MID</text>
+                <text x="125" y="8" fill="#555" fontSize="6" textAnchor="middle" fontFamily="monospace">HI-M</text>
+                <text x="175" y="8" fill="#555" fontSize="6" textAnchor="middle" fontFamily="monospace">HIGH</text>
+                {/* Band fill regions */}
+                <rect x="0" y="18" width="50" height="38" fill={`${color}08`} />
+                <rect x="50" y="22" width="50" height="34" fill="#0531fa08" />
+                <rect x="100" y="20" width="50" height="36" fill="#00bcff08" />
+                <rect x="150" y="24" width="50" height="32" fill="#f2a80d08" />
+                {/* Gain reduction bars per band */}
+                <rect x="10" y="20" width="8" height="28" rx="2" fill={`${color}20`} />
+                <rect x="10" y={20 + 28 * 0.35} width="8" height={28 * 0.65} rx="2" fill={`${color}80`} />
+                <rect x="22" y="20" width="8" height="28" rx="2" fill={`${color}20`} />
+                <rect x="22" y={20 + 28 * 0.25} width="8" height={28 * 0.75} rx="2" fill={`${color}80`} />
+                <rect x="60" y="22" width="8" height="26" rx="2" fill="#0531fa20" />
+                <rect x="60" y={22 + 26 * 0.4} width="8" height={26 * 0.6} rx="2" fill="#0531fa80" />
+                <rect x="72" y="22" width="8" height="26" rx="2" fill="#0531fa20" />
+                <rect x="72" y={22 + 26 * 0.5} width="8" height={26 * 0.5} rx="2" fill="#0531fa80" />
+                <rect x="110" y="20" width="8" height="28" rx="2" fill="#00bcff20" />
+                <rect x="110" y={20 + 28 * 0.3} width="8" height={28 * 0.7} rx="2" fill="#00bcff80" />
+                <rect x="122" y="20" width="8" height="28" rx="2" fill="#00bcff20" />
+                <rect x="122" y={20 + 28 * 0.55} width="8" height={28 * 0.45} rx="2" fill="#00bcff80" />
+                <rect x="160" y="24" width="8" height="24" rx="2" fill="#f2a80d20" />
+                <rect x="160" y={24 + 24 * 0.45} width="8" height={24 * 0.55} rx="2" fill="#f2a80d80" />
+                <rect x="172" y="24" width="8" height="24" rx="2" fill="#f2a80d20" />
+                <rect x="172" y={24 + 24 * 0.6} width="8" height={24 * 0.4} rx="2" fill="#f2a80d80" />
+              </svg>
+            </div>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Low" color={color} value={0.55} />
+              <MockKnob label="Mid" color="#0531fa" value={0.4} />
+              <MockKnob label="Hi-M" color="#00bcff" value={0.6} />
+              <MockKnob label="High" color="#f2a80d" value={0.35} />
+              <LushKnob color={color} />
+            </div>
+          </div>
+        );
       default:
         return null;
     }
