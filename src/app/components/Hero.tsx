@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useState, useEffect, useCallback } from "react";
 
 const words = [
   "PLUGINS",
@@ -16,15 +16,27 @@ const words = [
   "GATE",
 ];
 
+const DISPLAY_TIME = 2200; // how long each word is fully visible
+const FADE_TIME = 250; // fade out/in duration
+
 export default function Hero() {
-  const [index, setIndex] = useState(0);
+  const [wordIndex, setWordIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  const cycleWord = useCallback(() => {
+    setVisible(false); // fade out
+    setTimeout(() => {
+      setWordIndex((prev) => (prev + 1) % words.length);
+      setVisible(true); // fade in new word
+    }, FADE_TIME);
+  }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % words.length);
-    }, 2200);
+    const interval = setInterval(cycleWord, DISPLAY_TIME);
     return () => clearInterval(interval);
-  }, []);
+  }, [cycleWord]);
+
+  const currentWord = words[wordIndex];
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
@@ -52,24 +64,24 @@ export default function Hero() {
 
         <motion.h1
           layout
-          transition={{ layout: { duration: 0.4, ease: "easeInOut" } }}
+          transition={{ layout: { duration: 1.8, ease: "easeInOut" } }}
           className="text-6xl md:text-8xl font-bold tracking-tight mb-6 whitespace-nowrap"
         >
           <span>LUSH </span>
-          <AnimatePresence mode="wait">
-            <motion.span
-              key={words[index]}
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className={`inline-block text-primary text-glow-primary ${
-                words[index] === "DE-ESSER" ? "text-[2.8rem] md:text-[5.5rem] align-baseline" : ""
-              }`}
-            >
-              {words[index]}
-            </motion.span>
-          </AnimatePresence>
+          <span
+            className={`inline-block text-primary text-glow-primary transition-opacity ${
+              currentWord === "DE-ESSER"
+                ? "text-[2.8rem] md:text-[5.5rem] align-baseline"
+                : ""
+            }`}
+            style={{
+              opacity: visible ? 1 : 0,
+              transitionDuration: `${FADE_TIME}ms`,
+              transitionTimingFunction: "ease-in-out",
+            }}
+          >
+            {currentWord}
+          </span>
         </motion.h1>
 
         <motion.p
