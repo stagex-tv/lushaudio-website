@@ -22,7 +22,7 @@ const STAGGER = 0.04;
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
-  const [phase, setPhase] = useState<"show" | "out" | "in">("show");
+  const [phase, setPhase] = useState<"in" | "out">("in");
   const indexRef = useRef(0);
 
   useEffect(() => {
@@ -30,17 +30,12 @@ export default function Hero() {
       setPhase("out");
 
       const currentLen = words[indexRef.current].length;
-      const rollOutTime = (currentLen * STAGGER + 0.25) * 1000;
+      const rollOutTime = (currentLen * STAGGER + 0.2) * 1000;
 
       setTimeout(() => {
         indexRef.current = (indexRef.current + 1) % words.length;
         setIndex(indexRef.current);
         setPhase("in");
-
-        // After roll-in completes, set to "show" (static)
-        const nextLen = words[indexRef.current].length;
-        const rollInTime = (nextLen * STAGGER + 0.5) * 1000;
-        setTimeout(() => setPhase("show"), rollInTime);
       }, rollOutTime);
     }, DISPLAY_TIME);
 
@@ -52,127 +47,58 @@ export default function Hero() {
 
   const renderLetters = (prefix: string) => (
     <span key={`${prefix}-${index}-${phase}`} className="inline-block text-primary text-glow-primary">
-      {chars.map((char, i) => {
-        const isFirst = i === 0;
-
-        // First letter: normal appearance, gooey on exit, gooey morph on enter
-        let animClass = "";
-        if (phase === "show") {
-          animClass = "letter-visible";
-        } else if (phase === "out") {
-          animClass = isFirst ? "first-letter-out" : "letter-out";
-        } else {
-          animClass = isFirst ? "first-letter-in" : "letter-in";
-        }
-
-        const delay =
-          phase === "out"
-            ? (chars.length - 1 - i) * STAGGER
-            : i * STAGGER;
-
-        return (
-          <span
-            key={i}
-            className={`inline-block ${animClass}`}
-            style={{ animationDelay: isFirst && phase !== "show" ? "0s" : `${delay}s` }}
-          >
-            {char === " " ? "\u00A0" : char}
-          </span>
-        );
-      })}
+      {chars.map((char, i) => (
+        <span
+          key={i}
+          className={`letter ${phase === "in" ? "letter-in" : "letter-out"}`}
+          style={{
+            animationDelay: `${
+              phase === "in"
+                ? i * STAGGER
+                : (chars.length - 1 - i) * STAGGER
+            }s`,
+          }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </span>
+      ))}
     </span>
   );
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
       <style jsx>{`
-        /* --- Normal letters --- */
-        .letter-visible {
-          opacity: 1;
-          transform: translateY(0);
+        .letter {
+          display: inline-block;
+          will-change: transform, opacity;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
         }
         @keyframes letterIn {
-          from { opacity: 0; transform: translateY(0.4em); }
-          to   { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translate3d(0, 0.4em, 0);
+          }
+          to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+          }
         }
         @keyframes letterOut {
-          from { opacity: 1; transform: translateY(0); }
-          to   { opacity: 0; transform: translateY(-0.4em); }
+          from {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+          }
+          to {
+            opacity: 0;
+            transform: translate3d(0, -0.4em, 0);
+          }
         }
         .letter-in {
-          animation: letterIn 0.25s ease-out forwards;
+          animation: letterIn 0.22s ease-out forwards;
         }
         .letter-out {
-          animation: letterOut 0.25s ease-in forwards;
-        }
-
-        /* --- First letter: gooey exit --- */
-        @keyframes firstOut {
-          0% {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0px);
-            text-shadow: 0 0 0px rgba(121, 0, 255, 0);
-          }
-          40% {
-            opacity: 1;
-            transform: scale(1.3);
-            filter: blur(4px);
-            text-shadow: 0 0 20px rgba(121, 0, 255, 0.8);
-          }
-          70% {
-            opacity: 0.7;
-            transform: scale(1.5);
-            filter: blur(8px);
-            text-shadow: 0 0 30px rgba(121, 0, 255, 0.6);
-          }
-          100% {
-            opacity: 0;
-            transform: scale(0.5);
-            filter: blur(12px);
-            text-shadow: 0 0 0px rgba(121, 0, 255, 0);
-          }
-        }
-        .first-letter-out {
-          animation: firstOut 0.45s ease-in forwards;
-          display: inline-block;
-        }
-
-        /* --- First letter: gooey enter --- */
-        @keyframes firstIn {
-          0% {
-            opacity: 0;
-            transform: scale(0.3);
-            filter: blur(12px);
-            text-shadow: 0 0 0px rgba(121, 0, 255, 0);
-          }
-          25% {
-            opacity: 0.8;
-            transform: scale(1.4);
-            filter: blur(6px);
-            text-shadow: 0 0 30px rgba(121, 0, 255, 0.9);
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1.15);
-            filter: blur(3px);
-            text-shadow: 0 0 25px rgba(121, 0, 255, 0.7);
-          }
-          75% {
-            transform: scale(0.95);
-            filter: blur(1px);
-            text-shadow: 0 0 15px rgba(121, 0, 255, 0.4);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0px);
-            text-shadow: 0 0 8px rgba(121, 0, 255, 0.2);
-          }
-        }
-        .first-letter-in {
-          animation: firstIn 0.55s cubic-bezier(0.34, 1.3, 0.64, 1) forwards;
-          display: inline-block;
+          animation: letterOut 0.22s ease-in forwards;
         }
       `}</style>
 
