@@ -1,12 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import PluginMockUI from "./PluginMockUI";
 
 interface PluginCardProps {
   name: string;
   tagline: string;
   description: string;
   accentColor: string;
+  mockType: string;
   comingSoon?: boolean;
 }
 
@@ -15,6 +17,7 @@ export default function PluginCard({
   tagline,
   description,
   accentColor,
+  mockType,
   comingSoon,
 }: PluginCardProps) {
   return (
@@ -34,18 +37,7 @@ export default function PluginCard({
         }}
       />
 
-      {/* Plugin "screen" placeholder — this is where a 3D render or screenshot will go */}
-      <div className="relative w-full h-48 mb-6 rounded-lg bg-[#0a0a0a] border border-white/5 flex items-center justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            background: `radial-gradient(circle at 50% 80%, ${accentColor}, transparent 70%)`,
-          }}
-        />
-        <span className="text-zinc-600 text-sm tracking-wider font-mono">
-          {comingSoon ? "COMING SOON" : "SCREENSHOT"}
-        </span>
-      </div>
+      <PluginMockUI type={mockType} color={accentColor} />
 
       <div className="relative">
         <p
@@ -57,6 +49,11 @@ export default function PluginCard({
         <h3 className="text-2xl font-bold mb-3">{name}</h3>
         <p className="text-zinc-400 text-sm leading-relaxed">{description}</p>
 
+        {comingSoon && (
+          <span className="inline-block mt-4 px-4 py-1.5 rounded-full text-xs font-medium border border-white/10 text-zinc-500">
+            Coming Soon
+          </span>
+        )}
         {!comingSoon && (
           <motion.button
             whileHover={{ scale: 1.02 }}
