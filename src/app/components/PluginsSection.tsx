@@ -21,7 +21,7 @@ export default function PluginsSection() {
 
         <div className="grid md:grid-cols-2 gap-8">
           <PluginCard
-            name="Audio Plugin 1"
+            name="Lush Harmonix"
             tagline="Harmonic Shaper"
             description="Shape your sound with precision harmonic control, advanced cut filters with up to 96dB/oct slopes, and a brick wall mode. Full colour theming included."
             accentColor="#7900ff"

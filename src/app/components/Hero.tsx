@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 
 const words = [
   "PLUGINS",
+  "HARMONIX",
   "AUDIO",
   "VERB",
   "COMP",
