@@ -484,16 +484,26 @@ export default function LushStudioSection() {
           </motion.div>
         </div>
 
-        {/* Coming soon */}
+        {/* Pricing + Coming soon */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mt-10"
+          className="text-center mt-12"
         >
-          <span className="inline-block px-6 py-2 rounded-full text-sm font-medium border border-primary/30 text-primary bg-primary/5">
-            Coming Soon
-          </span>
+          <div className="inline-block rounded-2xl border border-primary/20 bg-primary/[0.03] px-10 py-8">
+            <p className="text-sm text-zinc-400 mb-2">All plugins included</p>
+            <div className="flex items-baseline justify-center gap-1">
+              <span className="text-4xl font-bold text-white">$9.99</span>
+              <span className="text-zinc-400 text-lg">/mo</span>
+            </div>
+            <p className="text-sm text-zinc-500 mt-2 mb-5">
+              Access every Lush plugin, preset chain, and marketplace.
+            </p>
+            <span className="inline-block px-6 py-2 rounded-full text-sm font-medium border border-primary/30 text-primary bg-primary/5">
+              Coming Soon
+            </span>
+          </div>
         </motion.div>
       </div>
     </section>

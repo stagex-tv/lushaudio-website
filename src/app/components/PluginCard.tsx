@@ -11,6 +11,8 @@ interface PluginCardProps {
   accentColor: string;
   mockType: string;
   comingSoon?: boolean;
+  price?: number;
+  originalPrice?: number;
 }
 
 export default function PluginCard({
@@ -20,6 +22,8 @@ export default function PluginCard({
   accentColor,
   mockType,
   comingSoon,
+  price,
+  originalPrice,
 }: PluginCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
@@ -100,8 +104,22 @@ export default function PluginCard({
           <h3 className="text-2xl font-bold mb-3">{name}</h3>
           <p className="text-zinc-400 text-sm leading-relaxed">{description}</p>
 
+          {price && (
+            <div className="flex items-center gap-2 mt-4">
+              <span className="text-xl font-bold text-white">${price}</span>
+              {originalPrice && originalPrice > price && (
+                <span className="text-sm text-zinc-500 line-through">${originalPrice}</span>
+              )}
+              {originalPrice && originalPrice > price && (
+                <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase" style={{ backgroundColor: `${accentColor}20`, color: accentColor }}>
+                  Sale
+                </span>
+              )}
+            </div>
+          )}
+
           {comingSoon && (
-            <span className="inline-block mt-4 px-4 py-1.5 rounded-full text-xs font-medium border border-white/10 text-zinc-500">
+            <span className="inline-block mt-3 px-4 py-1.5 rounded-full text-xs font-medium border border-white/10 text-zinc-500">
               Coming Soon
             </span>
           )}
@@ -109,7 +127,7 @@ export default function PluginCard({
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="mt-6 px-6 py-2.5 rounded-full text-sm font-medium transition-all"
+              className="mt-4 px-6 py-2.5 rounded-full text-sm font-medium transition-all"
               style={{
                 backgroundColor: accentColor,
                 color: "#000",

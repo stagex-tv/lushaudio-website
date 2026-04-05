@@ -12,6 +12,8 @@ const plugins = [
     accentColor: "#7900ff",
     mockType: "harmonix",
     comingSoon: false,
+    price: 99,
+    originalPrice: 129,
   },
   {
     name: "Lush Verb",
@@ -21,6 +23,8 @@ const plugins = [
     accentColor: "#0531fa",
     mockType: "verb",
     comingSoon: true,
+    price: 99,
+    originalPrice: 129,
   },
   {
     name: "Lush Comp",
@@ -30,6 +34,8 @@ const plugins = [
     accentColor: "#00bcff",
     mockType: "comp",
     comingSoon: true,
+    price: 99,
+    originalPrice: 129,
   },
   {
     name: "Lush Pro Q",
@@ -39,6 +45,8 @@ const plugins = [
     accentColor: "#f2a80d",
     mockType: "proq",
     comingSoon: true,
+    price: 99,
+    originalPrice: 129,
   },
   {
     name: "Lush Delay",
@@ -48,6 +56,8 @@ const plugins = [
     accentColor: "#00bcff",
     mockType: "delay",
     comingSoon: true,
+    price: 99,
+    originalPrice: 129,
   },
   {
     name: "Lush Gate",
@@ -57,6 +67,8 @@ const plugins = [
     accentColor: "#0531fa",
     mockType: "gate",
     comingSoon: true,
+    price: 99,
+    originalPrice: 129,
   },
   {
     name: "Lush Limiter",
@@ -66,6 +78,8 @@ const plugins = [
     accentColor: "#7900ff",
     mockType: "limiter",
     comingSoon: true,
+    price: 99,
+    originalPrice: 129,
   },
   {
     name: "Lush Clipper",
@@ -75,6 +89,8 @@ const plugins = [
     accentColor: "#f2a80d",
     mockType: "clipper",
     comingSoon: true,
+    price: 99,
+    originalPrice: 129,
   },
   {
     name: "Lush De-Esser",
@@ -84,6 +100,8 @@ const plugins = [
     accentColor: "#00bcff",
     mockType: "deesser",
     comingSoon: true,
+    price: 99,
+    originalPrice: 129,
   },
   {
     name: "Lush Auto-Tune",
@@ -93,6 +111,8 @@ const plugins = [
     accentColor: "#00bcff",
     mockType: "autotune",
     comingSoon: true,
+    price: 99,
+    originalPrice: 129,
   },
   {
     name: "Lush Saturation",
@@ -102,6 +122,8 @@ const plugins = [
     accentColor: "#f2a80d",
     mockType: "saturation",
     comingSoon: true,
+    price: 99,
+    originalPrice: 129,
   },
   {
     name: "Lush Multi-Band",
@@ -111,6 +133,8 @@ const plugins = [
     accentColor: "#7900ff",
     mockType: "multiband",
     comingSoon: true,
+    price: 99,
+    originalPrice: 129,
   },
 ];
 
