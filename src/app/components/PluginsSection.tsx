@@ -85,6 +85,15 @@ const plugins = [
     mockType: "deesser",
     comingSoon: true,
   },
+  {
+    name: "Lush Auto-Tune",
+    tagline: "Pitch Correction",
+    description:
+      "Real-time pitch correction from subtle to hard-tune. Key and scale detection, formant preservation, pitch display, and the signature Lush knob for instant reverbed vocals.",
+    accentColor: "#00bcff",
+    mockType: "autotune",
+    comingSoon: true,
+  },
 ];
 
 export default function PluginsSection() {

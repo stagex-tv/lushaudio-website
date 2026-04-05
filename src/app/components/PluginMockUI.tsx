@@ -262,6 +262,63 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             </div>
           </div>
         );
+      case "autotune":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* Pitch correction visualization */}
+            <div className="w-full h-12 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
+              <svg viewBox="0 0 200 48" className="w-full h-full">
+                {/* Grid lines for notes */}
+                {[8, 16, 24, 32, 40].map((y) => (
+                  <line key={y} x1="0" y1={y} x2="200" y2={y} stroke="#222" strokeWidth="0.5" />
+                ))}
+                {/* Input pitch (wobbly) */}
+                <path
+                  d="M0,24 C10,22 15,20 25,18 C35,16 40,19 50,22 C60,25 65,28 75,26 C85,23 90,18 100,16 C110,14 120,17 130,20 C140,23 150,27 160,24 C170,21 180,17 190,19 L200,20"
+                  fill="none"
+                  stroke="#555"
+                  strokeWidth="1"
+                  strokeDasharray="3,3"
+                />
+                {/* Corrected pitch (snapped to grid) */}
+                <path
+                  d="M0,24 L25,24 L25,16 L50,16 L50,24 L75,24 L75,16 L100,16 L100,24 L130,24 L130,16 L160,16 L160,24 L200,24"
+                  fill="none"
+                  stroke={color}
+                  strokeWidth="1.5"
+                />
+                {/* Note labels */}
+                <text x="3" y="7" fill={`${color}80`} fontSize="5" fontFamily="monospace">C4</text>
+                <text x="3" y="19" fill="#444" fontSize="5" fontFamily="monospace">B3</text>
+                <text x="3" y="27" fill="#444" fontSize="5" fontFamily="monospace">A3</text>
+                <text x="3" y="43" fill="#444" fontSize="5" fontFamily="monospace">G3</text>
+              </svg>
+            </div>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Speed" color={color} value={0.3} size={28} />
+              <MockKnob label="Note" color={color} value={0.5} size={28} />
+              <MockKnob label="Pitch" color={color} value={0.65} size={28} />
+              <MockKnob label="Form" color={color} value={0.45} size={28} />
+              <LushKnob color={color} />
+            </div>
+            {/* Key selector */}
+            <div className="flex gap-1">
+              {["C", "D", "E", "F", "G", "A", "B"].map((note, i) => (
+                <span
+                  key={note}
+                  className="text-[7px] px-1.5 py-0.5 rounded"
+                  style={{
+                    backgroundColor: i === 0 ? `${color}30` : "transparent",
+                    color: i === 0 ? color : "#555",
+                    border: `1px solid ${i === 0 ? `${color}50` : "#333"}`,
+                  }}
+                >
+                  {note}
+                </span>
+              ))}
+            </div>
+          </div>
+        );
       case "deesser":
         return (
           <div className="flex flex-col items-center gap-3 w-full">
