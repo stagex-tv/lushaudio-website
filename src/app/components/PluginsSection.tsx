@@ -146,7 +146,7 @@ export default function PluginsSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-6"
+          className="text-center mb-6 mt-10"
         >
           <p className="text-tertiary text-sm tracking-[0.3em] uppercase mb-4">
             Our Tools
