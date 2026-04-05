@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const words = [
   "PLUGINS",
@@ -17,115 +17,67 @@ const words = [
   "GATE",
 ];
 
-const DISPLAY_TIME = 2200;
-const LETTER_STAGGER = 35;
-
-function RollingWord({
-  word,
-  cycle,
-  className,
-}: {
-  word: string;
-  cycle: number;
-  className?: string;
-}) {
-  const [charStates, setCharStates] = useState<boolean[]>(() =>
-    word.split("").map(() => true)
-  );
-  const [displayWord, setDisplayWord] = useState(word);
-  const prevCycleRef = useRef(cycle);
-  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
-
-  useEffect(() => {
-    if (cycle === prevCycleRef.current) return;
-    prevCycleRef.current = cycle;
-
-    // Clear pending timeouts
-    timeoutsRef.current.forEach(clearTimeout);
-    timeoutsRef.current = [];
-
-    const oldWord = displayWord;
-    const oldLen = oldWord.length;
-
-    // Phase 1: Roll out old word right-to-left
-    for (let i = 0; i < oldLen; i++) {
-      const idx = oldLen - 1 - i;
-      const t = setTimeout(() => {
-        setCharStates((prev) => {
-          const next = [...prev];
-          next[idx] = false;
-          return next;
-        });
-      }, i * LETTER_STAGGER);
-      timeoutsRef.current.push(t);
-    }
-
-    // Phase 2: Switch word and roll in left-to-right
-    const switchDelay = oldLen * LETTER_STAGGER + 60;
-    const t2 = setTimeout(() => {
-      setDisplayWord(word);
-      const newLen = word.length;
-      setCharStates(new Array(newLen).fill(false));
-
-      for (let i = 0; i < newLen; i++) {
-        const t = setTimeout(() => {
-          setCharStates((prev) => {
-            const next = [...prev];
-            next[i] = true;
-            return next;
-          });
-        }, i * LETTER_STAGGER);
-        timeoutsRef.current.push(t);
-      }
-    }, switchDelay);
-    timeoutsRef.current.push(t2);
-
-    return () => {
-      timeoutsRef.current.forEach(clearTimeout);
-      timeoutsRef.current = [];
-    };
-  }, [cycle, word]);
-
-  const chars = displayWord.split("");
-
-  return (
-    <span className={className}>
-      {chars.map((char, i) => (
-        <span
-          key={`${cycle}-${i}`}
-          className="inline-block"
-          style={{
-            opacity: charStates[i] ? 1 : 0,
-            transform: charStates[i] ? "translateY(0)" : "translateY(0.3em)",
-            transition: "opacity 180ms ease-out, transform 180ms ease-out",
-          }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
-    </span>
-  );
-}
+const DISPLAY_TIME = 2500;
+const STAGGER = 0.04; // seconds between each letter
 
 export default function Hero() {
-  const [wordIndex, setWordIndex] = useState(0);
-  const [cycle, setCycle] = useState(0);
-  const wordIndexRef = useRef(0);
+  const [index, setIndex] = useState(0);
+  const [phase, setPhase] = useState<"in" | "out">("in");
+  const indexRef = useRef(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const nextIndex = (wordIndexRef.current + 1) % words.length;
-      wordIndexRef.current = nextIndex;
-      setWordIndex(nextIndex);
-      setCycle((c) => c + 1);
+      // Start rolling out
+      setPhase("out");
+
+      // After roll-out completes, switch word and roll in
+      const currentLen = words[indexRef.current].length;
+      const rollOutTime = (currentLen * STAGGER + 0.2) * 1000;
+
+      setTimeout(() => {
+        indexRef.current = (indexRef.current + 1) % words.length;
+        setIndex(indexRef.current);
+        setPhase("in");
+      }, rollOutTime);
     }, DISPLAY_TIME);
+
     return () => clearInterval(interval);
   }, []);
 
-  const currentWord = words[wordIndex];
+  const currentWord = words[index];
+  const chars = currentWord.split("");
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      <style jsx>{`
+        @keyframes letterIn {
+          from {
+            opacity: 0;
+            transform: translateY(0.4em);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes letterOut {
+          from {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          to {
+            opacity: 0;
+            transform: translateY(-0.4em);
+          }
+        }
+        .letter-in {
+          animation: letterIn 0.25s ease-out forwards;
+        }
+        .letter-out {
+          animation: letterOut 0.25s ease-in forwards;
+        }
+      `}</style>
+
       {/* Animated background grid */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(121,0,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(121,0,255,0.04)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
@@ -148,29 +100,53 @@ export default function Hero() {
           Audio Tools for Creators
         </motion.p>
 
-        {/* Desktop: inline on one line */}
+        {/* Desktop: inline */}
         <motion.h1
           layout
           transition={{ layout: { duration: 2.0, ease: [0.25, 0.1, 0.25, 1.0] } }}
           className="hidden md:block font-bold tracking-tight mb-6 whitespace-nowrap text-8xl"
         >
           <span>LUSH </span>
-          <RollingWord
-            word={currentWord}
-            cycle={cycle}
-            className="text-primary text-glow-primary"
-          />
+          <span key={`d-${index}-${phase}`} className="inline-block text-primary text-glow-primary">
+            {chars.map((char, i) => (
+              <span
+                key={i}
+                className={`inline-block ${phase === "in" ? "letter-in" : "letter-out"}`}
+                style={{
+                  animationDelay: `${
+                    phase === "in"
+                      ? i * STAGGER
+                      : (chars.length - 1 - i) * STAGGER
+                  }s`,
+                }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </span>
         </motion.h1>
 
         {/* Mobile: stacked */}
         <div className="md:hidden font-bold tracking-tight mb-6 text-center">
           <div className="text-6xl mb-2">LUSH</div>
           <div className="text-5xl whitespace-nowrap">
-            <RollingWord
-              word={currentWord}
-              cycle={cycle}
-              className="text-primary text-glow-primary"
-            />
+            <span key={`m-${index}-${phase}`} className="inline-block text-primary text-glow-primary">
+              {chars.map((char, i) => (
+                <span
+                  key={i}
+                  className={`inline-block ${phase === "in" ? "letter-in" : "letter-out"}`}
+                  style={{
+                    animationDelay: `${
+                      phase === "in"
+                        ? i * STAGGER
+                        : (chars.length - 1 - i) * STAGGER
+                    }s`,
+                  }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              ))}
+            </span>
           </div>
         </div>
 
