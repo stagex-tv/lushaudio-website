@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LUSH AUDIO — Premium Plugins",
+  title: "LUSH PLUGINS — Premium Audio",
   description: "Premium audio plugins for music production",
 };
 
