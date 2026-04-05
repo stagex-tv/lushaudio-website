@@ -104,14 +104,11 @@ export default function Hero() {
           Audio Tools for Creators
         </motion.p>
 
+        {/* Desktop: inline on one line with smooth drift */}
         <motion.h1
           layout
           transition={{ layout: { duration: 2.0, ease: [0.25, 0.1, 0.25, 1.0] } }}
-          className={`font-bold tracking-tight mb-6 whitespace-nowrap ${
-            currentWord === "DE-ESSER"
-              ? "text-6xl md:text-8xl"
-              : "text-6xl md:text-8xl"
-          }`}
+          className="hidden md:block font-bold tracking-tight mb-6 whitespace-nowrap text-8xl"
         >
           <span>LUSH </span>
           <span className="inline-block text-primary text-glow-primary">
@@ -132,6 +129,27 @@ export default function Hero() {
             ))}
           </span>
         </motion.h1>
+
+        {/* Mobile: stacked — LUSH on top, purple word below */}
+        <div className="md:hidden font-bold tracking-tight mb-6 text-center">
+          <div className="text-6xl mb-2">LUSH</div>
+          <div className="text-5xl text-primary text-glow-primary whitespace-nowrap">
+            {letters.map((letter, i) => (
+              <span
+                key={`${wordIndex}-${i}`}
+                className="inline-block transition-all"
+                style={{
+                  opacity: letter.visible ? 1 : 0,
+                  transform: letter.visible ? "translateY(0)" : "translateY(0.3em)",
+                  transitionDuration: "200ms",
+                  transitionTimingFunction: "ease-out",
+                }}
+              >
+                {letter.char === " " ? "\u00A0" : letter.char}
+              </span>
+            ))}
+          </div>
+        </div>
 
         <motion.p
           initial={{ opacity: 0 }}
