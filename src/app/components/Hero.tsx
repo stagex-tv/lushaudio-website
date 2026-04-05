@@ -6,15 +6,15 @@ import { useState, useEffect, useRef } from "react";
 const words = [
   "PLUGINS",
   "AUDIO",
-  "HARMONIX",
   "VERB",
   "COMP",
+  "GATE",
   "PRO Q",
   "DELAY",
-  "CLIPPER",
   "LIMITER",
+  "CLIPPER",
   "DE-ESSER",
-  "GATE",
+  "HARMONIX",
 ];
 
 const DISPLAY_TIME = 2500;
