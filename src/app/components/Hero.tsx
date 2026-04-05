@@ -1,8 +1,31 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+
+const words = [
+  "PLUGINS",
+  "AUDIO",
+  "VERB",
+  "COMP",
+  "PRO Q",
+  "DELAY",
+  "CLIPPER",
+  "LIMITER",
+  "DE-ESSER",
+  "GATE",
+];
 
 export default function Hero() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % words.length);
+    }, 2200);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
       {/* Animated background grid */}
@@ -27,9 +50,22 @@ export default function Hero() {
           Audio Tools for Creators
         </motion.p>
 
-        <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-6">
-          LUSH{" "}
-          <span className="text-primary text-glow-primary">AUDIO</span>
+        <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-6 flex items-center justify-center gap-4 md:gap-6">
+          <span>LUSH</span>
+          <span className="relative inline-block w-[280px] md:w-[420px] h-[1.15em] overflow-hidden text-left">
+            <AnimatePresence mode="popLayout">
+              <motion.span
+                key={words[index]}
+                initial={{ y: "100%", opacity: 0 }}
+                animate={{ y: "0%", opacity: 1 }}
+                exit={{ y: "-100%", opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="absolute inset-0 text-primary text-glow-primary"
+              >
+                {words[index]}
+              </motion.span>
+            </AnimatePresence>
+          </span>
         </h1>
 
         <motion.p
