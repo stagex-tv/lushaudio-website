@@ -8,17 +8,17 @@ const words = [
   "AUDIO",
   "VERB",
   "COMP",
-  "GATE",
   "PRO Q",
   "DELAY",
+  "GATE",
   "LIMITER",
   "CLIPPER",
   "DE-ESSER",
   "HARMONIX",
 ];
 
-const DISPLAY_TIME = 2500;
-const STAGGER = 0.04;
+const DISPLAY_TIME = 2500; // total time per word (visible + transition)
+const TRANSITION_TIME = 400; // fixed transition time for all words
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
@@ -29,14 +29,11 @@ export default function Hero() {
     const interval = setInterval(() => {
       setPhase("out");
 
-      const currentLen = words[indexRef.current].length;
-      const rollOutTime = (currentLen * STAGGER + 0.2) * 1000;
-
       setTimeout(() => {
         indexRef.current = (indexRef.current + 1) % words.length;
         setIndex(indexRef.current);
         setPhase("in");
-      }, rollOutTime);
+      }, TRANSITION_TIME);
     }, DISPLAY_TIME);
 
     return () => clearInterval(interval);
@@ -45,25 +42,28 @@ export default function Hero() {
   const currentWord = words[index];
   const chars = currentWord.split("");
 
-  const renderLetters = (prefix: string) => (
-    <span key={`${prefix}-${index}-${phase}`} className="inline-block text-primary text-glow-primary">
-      {chars.map((char, i) => (
-        <span
-          key={i}
-          className={`letter ${phase === "in" ? "letter-in" : "letter-out"}`}
-          style={{
-            animationDelay: `${
-              phase === "in"
-                ? i * STAGGER
-                : (chars.length - 1 - i) * STAGGER
-            }s`,
-          }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
-    </span>
-  );
+  const renderLetters = (prefix: string) => {
+    const stagger = chars.length > 1 ? (TRANSITION_TIME / 1000 - 0.22) / (chars.length - 1) : 0;
+    return (
+      <span key={`${prefix}-${index}-${phase}`} className="inline-block text-primary text-glow-primary">
+        {chars.map((char, i) => (
+          <span
+            key={i}
+            className={`letter ${phase === "in" ? "letter-in" : "letter-out"}`}
+            style={{
+              animationDelay: `${
+                phase === "in"
+                  ? i * stagger
+                  : (chars.length - 1 - i) * stagger
+              }s`,
+            }}
+          >
+            {char === " " ? "\u00A0" : char}
+          </span>
+        ))}
+      </span>
+    );
+  };
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
