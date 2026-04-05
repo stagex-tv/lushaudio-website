@@ -108,7 +108,7 @@ export default function PluginCard({
             <div className="flex items-center gap-2 mt-4">
               <span className="text-xl font-bold text-white">${price}</span>
               {originalPrice && originalPrice > price && (
-                <span className="text-sm text-zinc-500 line-through">${originalPrice}</span>
+                <span className="text-lg text-zinc-500 line-through">${originalPrice}</span>
               )}
               {originalPrice && originalPrice > price && (
                 <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase" style={{ backgroundColor: `${accentColor}20`, color: accentColor }}>

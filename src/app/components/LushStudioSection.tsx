@@ -171,6 +171,19 @@ export default function LushStudioSection() {
           ))}
         </motion.div>
 
+        {/* Pricing line */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="text-center mb-10"
+        >
+          <p className="text-2xl md:text-3xl font-bold text-white">
+            Only <span className="text-primary">$12.99</span>/month for the entire suite
+          </p>
+        </motion.div>
+
         {/* Giant rack mock-up */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -494,7 +507,7 @@ export default function LushStudioSection() {
           <div className="inline-block rounded-2xl border border-primary/20 bg-primary/[0.03] px-10 py-8">
             <p className="text-sm text-zinc-400 mb-2">All plugins included</p>
             <div className="flex items-baseline justify-center gap-1">
-              <span className="text-4xl font-bold text-white">$9.99</span>
+              <span className="text-4xl font-bold text-white">$12.99</span>
               <span className="text-zinc-400 text-lg">/mo</span>
             </div>
             <p className="text-sm text-zinc-500 mt-2 mb-5">
