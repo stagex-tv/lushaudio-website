@@ -5,8 +5,8 @@ import { useState, useEffect, useRef } from "react";
 
 const words = [
   "PLUGINS",
-  "HARMONIX",
   "AUDIO",
+  "HARMONIX",
   "VERB",
   "COMP",
   "PRO Q",
