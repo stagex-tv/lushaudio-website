@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
 const words = [
-  "PLUGINS",
   "AUDIO",
+  "PLUGINS",
   "VERB",
   "COMP",
   "PRO Q",
@@ -22,18 +22,12 @@ const TRANSITION_TIME = 400; // fixed transition time for all words
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
-  const [phase, setPhase] = useState<"in" | "out">("in");
   const indexRef = useRef(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setPhase("out");
-
-      setTimeout(() => {
-        indexRef.current = (indexRef.current + 1) % words.length;
-        setIndex(indexRef.current);
-        setPhase("in");
-      }, TRANSITION_TIME);
+      indexRef.current = (indexRef.current + 1) % words.length;
+      setIndex(indexRef.current);
     }, DISPLAY_TIME);
 
     return () => clearInterval(interval);
@@ -45,18 +39,12 @@ export default function Hero() {
   const renderLetters = (prefix: string) => {
     const stagger = chars.length > 1 ? (TRANSITION_TIME / 1000 - 0.22) / (chars.length - 1) : 0;
     return (
-      <span key={`${prefix}-${index}-${phase}`} className="inline-block text-primary text-glow-primary">
+      <span key={`${prefix}-${index}`} className="inline-block text-primary text-glow-primary">
         {chars.map((char, i) => (
           <span
             key={i}
-            className={`letter ${phase === "in" ? "letter-in" : "letter-out"}`}
-            style={{
-              animationDelay: `${
-                phase === "in"
-                  ? i * stagger
-                  : (chars.length - 1 - i) * stagger
-              }s`,
-            }}
+            className="letter letter-in"
+            style={{ animationDelay: `${i * stagger}s` }}
           >
             {char === " " ? "\u00A0" : char}
           </span>
@@ -84,21 +72,8 @@ export default function Hero() {
             transform: translate3d(0, 0, 0);
           }
         }
-        @keyframes letterOut {
-          from {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-          }
-          to {
-            opacity: 0;
-            transform: translate3d(0, -0.4em, 0);
-          }
-        }
         .letter-in {
           animation: letterIn 0.22s ease-out forwards;
-        }
-        .letter-out {
-          animation: letterOut 0.22s ease-in forwards;
         }
       `}</style>
 
