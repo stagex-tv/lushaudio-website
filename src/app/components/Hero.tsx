@@ -168,7 +168,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-zinc-400 text-lg md:text-xl max-w-md mx-auto mb-10"
+          className="text-zinc-400 text-lg md:text-xl mx-auto mb-10 whitespace-nowrap"
         >
           Premium audio plugins crafted for modern music production.
         </motion.p>
