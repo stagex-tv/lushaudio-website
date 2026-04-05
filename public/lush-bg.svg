@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900">
+  <defs>
+    <!-- Blur filters for depth -->
+    <filter id="blur-heavy" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="blur-mid" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="35"/>
+    </filter>
+    <filter id="blur-soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <filter id="blur-light" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+
+    <!-- Gradients -->
+    <radialGradient id="glow-purple" cx="30%" cy="70%" r="55%">
+      <stop offset="0%" stop-color="#7900ff" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#7900ff" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="glow-blue" cx="75%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#0531fa" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#0531fa" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="glow-teal" cx="60%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#00bcff" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#00bcff" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="glow-teal-top" cx="85%" cy="10%" r="40%">
+      <stop offset="0%" stop-color="#00bcff" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#00bcff" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="wave-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7900ff" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#0531fa" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#00bcff" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <linearGradient id="wave-grad-2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00bcff" stop-opacity="0.4"/>
+      <stop offset="60%" stop-color="#0531fa" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#7900ff" stop-opacity="0.45"/>
+    </linearGradient>
+
+    <linearGradient id="wave-grad-3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7900ff" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#00bcff" stop-opacity="0.3"/>
+    </linearGradient>
+
+    <clipPath id="bounds">
+      <rect width="1440" height="900"/>
+    </clipPath>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="1440" height="900" fill="#0a0a0a"/>
+
+  <g clip-path="url(#bounds)">
+
+    <!-- ── Layer 1: Deep ambient glows (heaviest blur) ── -->
+    <rect width="1440" height="900" fill="url(#glow-purple)" filter="url(#blur-heavy)"/>
+    <rect width="1440" height="900" fill="url(#glow-blue)"   filter="url(#blur-heavy)"/>
+    <rect width="1440" height="900" fill="url(#glow-teal)"   filter="url(#blur-heavy)"/>
+    <rect width="1440" height="900" fill="url(#glow-teal-top)" filter="url(#blur-heavy)"/>
+
+    <!-- ── Layer 2: Large organic blobs ── -->
+    <!-- Purple blob bottom-left -->
+    <ellipse cx="200" cy="720" rx="380" ry="260" fill="#7900ff" opacity="0.28" filter="url(#blur-heavy)"/>
+    <!-- Blue blob centre -->
+    <ellipse cx="780" cy="480" rx="420" ry="300" fill="#0531fa" opacity="0.2" filter="url(#blur-heavy)"/>
+    <!-- Teal blob right -->
+    <ellipse cx="1280" cy="300" rx="350" ry="250" fill="#00bcff" opacity="0.22" filter="url(#blur-heavy)"/>
+    <!-- Teal blob bottom-right -->
+    <ellipse cx="1350" cy="780" rx="300" ry="200" fill="#00bcff" opacity="0.18" filter="url(#blur-heavy)"/>
+    <!-- Purple blob top-centre -->
+    <ellipse cx="650" cy="120" rx="300" ry="180" fill="#7900ff" opacity="0.2" filter="url(#blur-heavy)"/>
+
+    <!-- ── Layer 3: Wave shapes — back ── -->
+    <path d="M-100 750
+             C 150 680, 350 820, 600 720
+             C 850 620, 1000 780, 1250 700
+             C 1400 650, 1500 720, 1600 700
+             L1600 900 L-100 900 Z"
+          fill="url(#wave-grad-1)" opacity="0.18" filter="url(#blur-mid)"/>
+
+    <path d="M-100 600
+             C 200 530, 400 680, 700 580
+             C 950 490, 1100 640, 1350 560
+             C 1450 520, 1550 580, 1600 560
+             L1600 900 L-100 900 Z"
+          fill="url(#wave-grad-2)" opacity="0.13" filter="url(#blur-mid)"/>
+
+    <path d="M-100 820
+             C 250 760, 500 870, 750 800
+             C 1000 730, 1150 840, 1440 780
+             L1440 900 L-100 900 Z"
+          fill="#7900ff" opacity="0.22" filter="url(#blur-mid)"/>
+
+    <!-- ── Layer 4: Wave shapes — mid ── -->
+    <path d="M-100 680
+             C 180 610, 380 740, 620 650
+             C 860 560, 1020 700, 1260 620
+             C 1380 580, 1500 640, 1600 620
+             L1600 900 L-100 900 Z"
+          fill="url(#wave-grad-3)" opacity="0.2" filter="url(#blur-soft)"/>
+
+    <path d="M-100 850
+             C 200 800, 450 880, 720 830
+             C 990 780, 1150 860, 1440 820
+             L1440 900 L-100 900 Z"
+          fill="#00bcff" opacity="0.15" filter="url(#blur-soft)"/>
+
+    <!-- ── Layer 5: Flowing ribbon shapes for texture ── -->
+    <path d="M-100 400
+             C 150 320, 300 480, 550 380
+             C 800 280, 950 440, 1200 340
+             C 1350 290, 1480 360, 1600 320
+             L1600 460 C1480 500, 1350 430, 1200 480
+             C950 540, 800 380, 550 480
+             C300 580, 150 420, -100 500 Z"
+          fill="url(#wave-grad-1)" opacity="0.1" filter="url(#blur-soft)"/>
+
+    <path d="M-100 200
+             C 200 130, 420 280, 700 180
+             C 960 80, 1100 240, 1380 160
+             C 1460 130, 1540 180, 1600 160
+             L1600 300 C1540 320, 1460 270, 1380 300
+             C1100 380, 960 220, 700 320
+             C420 420, 200 270, -100 340 Z"
+          fill="#0531fa" opacity="0.12" filter="url(#blur-soft)"/>
+
+    <!-- ── Layer 6: Fine detail ripples (lightest blur) ── -->
+    <path d="M-100 870 C360 840, 720 875, 1080 850 C1260 838, 1380 858, 1600 848 L1600 900 L-100 900 Z"
+          fill="#00bcff" opacity="0.2" filter="url(#blur-light)"/>
+    <path d="M-100 888 C360 868, 720 892, 1080 872 C1260 862, 1380 878, 1600 870 L1600 900 L-100 900 Z"
+          fill="#7900ff" opacity="0.18" filter="url(#blur-light)"/>
+
+    <!-- ── Layer 7: Specular highlights / shimmer dots ── -->
+    <circle cx="320"  cy="680" r="180" fill="#00bcff" opacity="0.07" filter="url(#blur-mid)"/>
+    <circle cx="1100" cy="200" r="140" fill="#7900ff" opacity="0.1"  filter="url(#blur-mid)"/>
+    <circle cx="900"  cy="750" r="160" fill="#0531fa" opacity="0.08" filter="url(#blur-mid)"/>
+    <circle cx="180"  cy="250" r="120" fill="#00bcff" opacity="0.08" filter="url(#blur-soft)"/>
+    <circle cx="1350" cy="600" r="130" fill="#7900ff" opacity="0.09" filter="url(#blur-soft)"/>
+
+    <!-- ── Layer 8: Very subtle vignette ── -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%"   stop-color="#0a0a0a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0.55"/>
+    </radialGradient>
+    <rect width="1440" height="900" fill="url(#vignette)"/>
+
+  </g>
+</svg>
