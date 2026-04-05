@@ -16,6 +16,7 @@ const words = [
   "DE-ESSER",
   "HARMONIX",
   "AUTO-TUNE",
+  "SATURATION",
 ];
 
 const DISPLAY_TIME = 2500; // total time per word (visible + transition)

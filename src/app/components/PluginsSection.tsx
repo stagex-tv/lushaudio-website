@@ -94,6 +94,15 @@ const plugins = [
     mockType: "autotune",
     comingSoon: true,
   },
+  {
+    name: "Lush Saturation",
+    tagline: "Saturation",
+    description:
+      "Tube, tape, and transistor warmth in one plugin. Shape your harmonic content with a musical transfer curve, harmonic spectrum view, and a Lush knob for saturated reverb tails.",
+    accentColor: "#f2a80d",
+    mockType: "saturation",
+    comingSoon: true,
+  },
 ];
 
 export default function PluginsSection() {

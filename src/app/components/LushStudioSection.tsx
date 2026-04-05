@@ -231,22 +231,57 @@ export default function LushStudioSection() {
 
                 <FlowArrow color="#00bcff" />
 
-                {/* Gate module */}
-                <RackModule name="Gate" color="#0531fa">
-                  <div className="flex gap-1.5 items-center">
-                    <MiniKnob color="#0531fa" value={0.35} />
-                    <MiniKnob color="#0531fa" value={0.5} />
-                    <div className="flex gap-px items-end h-5">
-                      {[0.1, 0.9, 0.9, 0.1, 0.1, 0.9, 0.9, 0.1].map((v, i) => (
-                        <div key={i} className="w-0.5 rounded-t" style={{ height: `${v * 100}%`, backgroundColor: v > 0.5 ? "#0531fa" : "#0531fa30" }} />
-                      ))}
+                {/* 1. De-Esser */}
+                <RackModule name="De-Ess" color="#00bcff">
+                  <div className="flex flex-col items-center gap-1">
+                    <svg viewBox="0 0 60 16" className="w-12 h-3">
+                      <path d="M0,8 L20,8 C30,8 35,12 42,14 C48,12 52,8 60,8" fill="none" stroke="#00bcff" strokeWidth="1" />
+                    </svg>
+                    <div className="flex gap-1">
+                      <MiniKnob color="#00bcff" value={0.7} size={14} />
+                      <MiniKnob color="#00bcff" value={0.4} size={14} />
                     </div>
                   </div>
                 </RackModule>
 
-                <FlowArrow color="#0531fa" />
+                <FlowArrow color="#00bcff" />
 
-                {/* EQ module */}
+                {/* 2. Auto-Tune */}
+                <RackModule name="Auto-Tune" color="#00bcff">
+                  <div className="flex flex-col items-center gap-1">
+                    <svg viewBox="0 0 60 20" className="w-12 h-3.5">
+                      <line x1="0" y1="10" x2="60" y2="10" stroke="#222" strokeWidth="0.5" />
+                      <path d="M0,10 C5,8 10,6 15,6 L25,6 L25,14 L35,14 L35,6 L50,6 L50,14 L60,14" fill="none" stroke="#00bcff" strokeWidth="1" />
+                      <path d="M0,10 C5,9 10,7 15,5 C20,8 25,15 30,13 C35,11 40,5 45,7 C50,9 55,13 60,14" fill="none" stroke="#555" strokeWidth="0.6" strokeDasharray="2,2" />
+                    </svg>
+                    <div className="flex gap-1">
+                      <MiniKnob color="#00bcff" value={0.3} size={14} />
+                      <MiniKnob color="#00bcff" value={0.5} size={14} />
+                    </div>
+                  </div>
+                </RackModule>
+
+                <FlowArrow color="#00bcff" />
+
+                {/* 3. Comp */}
+                <RackModule name="Comp" color="#00bcff">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="flex gap-px items-end h-4">
+                      {[0.3, 0.5, 0.8, 1, 0.9, 0.6, 0.7, 0.85, 0.7, 0.4].map((v, i) => (
+                        <div key={i} className="w-0.5 rounded-t" style={{ height: `${v * 100}%`, backgroundColor: v > 0.8 ? "#00bcff" : "#00bcff60" }} />
+                      ))}
+                    </div>
+                    <div className="flex gap-1">
+                      <MiniKnob color="#00bcff" value={0.4} size={14} />
+                      <MiniKnob color="#00bcff" value={0.6} size={14} />
+                      <MiniKnob color="#00bcff" value={0.5} size={14} />
+                    </div>
+                  </div>
+                </RackModule>
+
+                <FlowArrow color="#f2a80d" />
+
+                {/* 4. Pro Q */}
                 <RackModule name="Pro Q" color="#f2a80d">
                   <div className="flex flex-col items-center gap-1">
                     <svg viewBox="0 0 80 24" className="w-16 h-5">
@@ -263,54 +298,38 @@ export default function LushStudioSection() {
 
                 <FlowArrow color="#f2a80d" />
 
-                {/* Comp module */}
-                <RackModule name="Comp" color="#00bcff">
+                {/* 5. Saturation */}
+                <RackModule name="Saturate" color="#f2a80d">
                   <div className="flex flex-col items-center gap-1">
-                    <div className="flex gap-px items-end h-4">
-                      {[0.3, 0.5, 0.8, 1, 0.9, 0.6, 0.7, 0.85, 0.7, 0.4].map((v, i) => (
-                        <div key={i} className="w-0.5 rounded-t" style={{ height: `${v * 100}%`, backgroundColor: v > 0.8 ? "#00bcff" : "#00bcff60" }} />
-                      ))}
-                    </div>
-                    <div className="flex gap-1">
-                      <MiniKnob color="#00bcff" value={0.4} size={14} />
-                      <MiniKnob color="#00bcff" value={0.6} size={14} />
-                      <MiniKnob color="#00bcff" value={0.5} size={14} />
-                    </div>
-                  </div>
-                </RackModule>
-
-                <FlowArrow color="#00bcff" />
-
-                {/* Harmonix module */}
-                <RackModule name="Harmonix" color="#7900ff">
-                  <div className="flex gap-1 items-end">
-                    <MiniFader color="#7900ff" value={0.7} />
-                    <MiniFader color="#7900ff" value={0.4} />
-                    <MiniFader color="#7900ff" value={0.55} />
-                    <div className="ml-1">
-                      <MiniKnob color="#7900ff" value={0.6} size={16} />
-                    </div>
-                  </div>
-                </RackModule>
-
-                <FlowArrow color="#7900ff" />
-
-                {/* De-Esser module */}
-                <RackModule name="De-Ess" color="#00bcff">
-                  <div className="flex flex-col items-center gap-1">
-                    <svg viewBox="0 0 60 16" className="w-12 h-3">
-                      <path d="M0,8 L20,8 C30,8 35,12 42,14 C48,12 52,8 60,8" fill="none" stroke="#00bcff" strokeWidth="1" />
+                    <svg viewBox="0 0 40 40" className="w-8 h-8">
+                      <line x1="0" y1="40" x2="40" y2="0" stroke="#222" strokeWidth="0.4" strokeDasharray="2,2" />
+                      <path d="M0,40 C4,36 8,28 12,22 C16,16 20,10 24,7 C28,5 32,3.5 36,3 L40,2.5" fill="none" stroke="#f2a80d" strokeWidth="1" />
                     </svg>
                     <div className="flex gap-1">
-                      <MiniKnob color="#00bcff" value={0.7} size={14} />
-                      <MiniKnob color="#00bcff" value={0.4} size={14} />
+                      <MiniKnob color="#f2a80d" value={0.6} size={14} />
+                      <MiniKnob color="#f2a80d" value={0.5} size={14} />
                     </div>
                   </div>
                 </RackModule>
 
-                <FlowArrow color="#00bcff" />
+                <FlowArrow color="#0531fa" />
 
-                {/* Verb module */}
+                {/* 6. Gate */}
+                <RackModule name="Gate" color="#0531fa">
+                  <div className="flex gap-1.5 items-center">
+                    <MiniKnob color="#0531fa" value={0.35} />
+                    <MiniKnob color="#0531fa" value={0.5} />
+                    <div className="flex gap-px items-end h-5">
+                      {[0.1, 0.9, 0.9, 0.1, 0.1, 0.9, 0.9, 0.1].map((v, i) => (
+                        <div key={i} className="w-0.5 rounded-t" style={{ height: `${v * 100}%`, backgroundColor: v > 0.5 ? "#0531fa" : "#0531fa30" }} />
+                      ))}
+                    </div>
+                  </div>
+                </RackModule>
+
+                <FlowArrow color="#0531fa" />
+
+                {/* 7. Verb */}
                 <RackModule name="Verb" color="#0531fa">
                   <div className="flex flex-col items-center gap-1">
                     <svg viewBox="0 0 60 16" className="w-12 h-3">
@@ -320,21 +339,6 @@ export default function LushStudioSection() {
                       <MiniKnob color="#0531fa" value={0.7} size={14} />
                       <MiniKnob color="#0531fa" value={0.55} size={14} />
                       <MiniKnob color="#0531fa" value={0.4} size={14} />
-                    </div>
-                  </div>
-                </RackModule>
-
-                <FlowArrow color="#0531fa" />
-
-                {/* Limiter module */}
-                <RackModule name="Limiter" color="#7900ff">
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="w-14 h-2 rounded-full bg-zinc-800 overflow-hidden">
-                      <div className="h-full rounded-full" style={{ width: "72%", background: "linear-gradient(90deg, #7900ff40, #7900ff)" }} />
-                    </div>
-                    <div className="flex gap-1">
-                      <MiniKnob color="#7900ff" value={0.7} size={14} />
-                      <MiniKnob color="#7900ff" value={0.85} size={14} />
                     </div>
                   </div>
                 </RackModule>
@@ -354,16 +358,16 @@ export default function LushStudioSection() {
             {/* ── Signal chain (mobile — 2-col grid) ── */}
             <div className="md:hidden p-4">
               <div className="grid grid-cols-2 gap-2">
-                <RackModule name="Gate" color="#0531fa">
+                <RackModule name="De-Ess" color="#00bcff">
                   <div className="flex gap-1.5 items-center">
-                    <MiniKnob color="#0531fa" value={0.35} />
-                    <MiniKnob color="#0531fa" value={0.5} />
+                    <MiniKnob color="#00bcff" value={0.7} />
+                    <MiniKnob color="#00bcff" value={0.4} />
                   </div>
                 </RackModule>
-                <RackModule name="Pro Q" color="#f2a80d">
+                <RackModule name="Auto-Tune" color="#00bcff">
                   <div className="flex gap-1.5 items-center">
-                    <MiniKnob color="#f2a80d" value={0.5} />
-                    <MiniKnob color="#f2a80d" value={0.65} />
+                    <MiniKnob color="#00bcff" value={0.3} />
+                    <MiniKnob color="#00bcff" value={0.5} />
                   </div>
                 </RackModule>
                 <RackModule name="Comp" color="#00bcff">
@@ -372,33 +376,33 @@ export default function LushStudioSection() {
                     <MiniKnob color="#00bcff" value={0.6} />
                   </div>
                 </RackModule>
-                <RackModule name="Harmonix" color="#7900ff">
-                  <div className="flex gap-1 items-end">
-                    <MiniFader color="#7900ff" value={0.7} />
-                    <MiniFader color="#7900ff" value={0.4} />
-                    <MiniFader color="#7900ff" value={0.55} />
+                <RackModule name="Pro Q" color="#f2a80d">
+                  <div className="flex gap-1.5 items-center">
+                    <MiniKnob color="#f2a80d" value={0.5} />
+                    <MiniKnob color="#f2a80d" value={0.65} />
                   </div>
                 </RackModule>
-                <RackModule name="De-Ess" color="#00bcff">
+                <RackModule name="Saturate" color="#f2a80d">
                   <div className="flex gap-1.5 items-center">
-                    <MiniKnob color="#00bcff" value={0.7} />
-                    <MiniKnob color="#00bcff" value={0.4} />
+                    <MiniKnob color="#f2a80d" value={0.6} />
+                    <MiniKnob color="#f2a80d" value={0.5} />
                   </div>
                 </RackModule>
-                <RackModule name="Verb" color="#0531fa">
+                <RackModule name="Gate" color="#0531fa">
                   <div className="flex gap-1.5 items-center">
-                    <MiniKnob color="#0531fa" value={0.7} />
-                    <MiniKnob color="#0531fa" value={0.55} />
+                    <MiniKnob color="#0531fa" value={0.35} />
+                    <MiniKnob color="#0531fa" value={0.5} />
                   </div>
                 </RackModule>
                 <div className="col-span-2">
-                  <RackModule name="Limiter" color="#7900ff">
-                    <div className="flex items-center gap-2 w-full">
-                      <div className="flex-1 h-2 rounded-full bg-zinc-800 overflow-hidden">
-                        <div className="h-full rounded-full" style={{ width: "72%", background: "linear-gradient(90deg, #7900ff40, #7900ff)" }} />
-                      </div>
-                      <MiniKnob color="#7900ff" value={0.7} size={16} />
-                      <MiniKnob color="#7900ff" value={0.85} size={16} />
+                  <RackModule name="Verb" color="#0531fa">
+                    <div className="flex items-center gap-2 w-full justify-center">
+                      <MiniKnob color="#0531fa" value={0.7} size={16} />
+                      <MiniKnob color="#0531fa" value={0.55} size={16} />
+                      <MiniKnob color="#0531fa" value={0.4} size={16} />
+                      <svg viewBox="0 0 60 16" className="w-12 h-3 ml-1">
+                        <path d="M0,14 L5,2 C15,4 30,8 50,12 L60,14" fill="#0531fa10" stroke="#0531fa" strokeWidth="0.8" />
+                      </svg>
                     </div>
                   </RackModule>
                 </div>

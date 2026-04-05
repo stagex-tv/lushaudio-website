@@ -319,6 +319,44 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             </div>
           </div>
         );
+      case "saturation":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* Transfer curve + harmonic bars */}
+            <div className="w-full flex gap-3 items-end justify-center">
+              {/* Saturation transfer curve */}
+              <svg viewBox="0 0 60 60" className="w-14 h-14">
+                <line x1="0" y1="60" x2="60" y2="0" stroke="#222" strokeWidth="0.5" strokeDasharray="2,2" />
+                <path
+                  d="M0,60 C5,55 10,45 15,35 C20,25 25,16 30,12 C35,8 40,5 45,4 C50,3 55,2.5 60,2"
+                  fill="none"
+                  stroke={color}
+                  strokeWidth="1.5"
+                />
+                <rect x="0" y="0" width="60" height="60" fill="none" stroke="#333" strokeWidth="0.5" />
+              </svg>
+              {/* Harmonic bars */}
+              <div className="flex gap-0.5 items-end h-12">
+                {[0.9, 0.55, 0.35, 0.2, 0.12, 0.06].map((v, i) => (
+                  <div
+                    key={i}
+                    className="w-1.5 rounded-t"
+                    style={{
+                      height: `${v * 100}%`,
+                      backgroundColor: i < 2 ? color : `${color}60`,
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Drive" color={color} value={0.6} />
+              <MockKnob label="Tone" color={color} value={0.5} />
+              <MockKnob label="Mix" color={color} value={0.7} />
+              <LushKnob color={color} />
+            </div>
+          </div>
+        );
       case "deesser":
         return (
           <div className="flex flex-col items-center gap-3 w-full">
