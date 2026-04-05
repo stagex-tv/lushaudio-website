@@ -127,7 +127,7 @@ export default function PluginCard({
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="mt-4 px-6 py-2.5 rounded-full text-sm font-medium transition-all"
+              className="mt-3 px-4 py-1.5 rounded-full text-xs font-medium transition-all"
               style={{
                 backgroundColor: accentColor,
                 color: "#000",
