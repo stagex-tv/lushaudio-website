@@ -153,7 +153,7 @@ export default function LushStudioSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-12 mt-8"
+          className="flex flex-wrap justify-center gap-3 mb-6 mt-8"
         >
           {[
             { label: "Preset Chains", icon: "⛓" },
@@ -173,14 +173,17 @@ export default function LushStudioSection() {
 
         {/* Pricing line */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="text-center mb-10"
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="text-center mb-6"
         >
-          <p className="text-2xl md:text-3xl font-bold text-white">
-            Only <span className="text-primary">$12.99</span>/month for the entire suite
+          <p className="text-3xl md:text-5xl font-bold tracking-tight">
+            <span className="text-zinc-400">Only </span>
+            <span className="text-primary text-glow-primary">$12.99</span>
+            <span className="text-white">/month</span>
+            <span className="text-zinc-500 font-normal text-xl md:text-2xl ml-3">for the entire suite</span>
           </p>
         </motion.div>
 
