@@ -18,7 +18,7 @@ const words = [
 ];
 
 const DISPLAY_TIME = 2500;
-const STAGGER = 0.04; // seconds between each letter
+const STAGGER = 0.04;
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
@@ -27,10 +27,8 @@ export default function Hero() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Start rolling out
       setPhase("out");
 
-      // After roll-out completes, switch word and roll in
       const currentLen = words[indexRef.current].length;
       const rollOutTime = (currentLen * STAGGER + 0.2) * 1000;
 
@@ -47,8 +45,56 @@ export default function Hero() {
   const currentWord = words[index];
   const chars = currentWord.split("");
 
+  const renderLetters = (prefix: string) => (
+    <span key={`${prefix}-${index}-${phase}`} className="inline-block text-primary text-glow-primary">
+      {chars.map((char, i) => {
+        const isFirst = i === 0;
+        return (
+          <span
+            key={i}
+            className={`inline-block ${
+              isFirst
+                ? phase === "in"
+                  ? "gooey-in"
+                  : "gooey-out"
+                : phase === "in"
+                  ? "letter-in"
+                  : "letter-out"
+            }`}
+            style={{
+              animationDelay: `${
+                phase === "in"
+                  ? i * STAGGER
+                  : (chars.length - 1 - i) * STAGGER
+              }s`,
+              ...(isFirst ? { filter: "url(#goo)" } : {}),
+            }}
+          >
+            {char === " " ? "\u00A0" : char}
+          </span>
+        );
+      })}
+    </span>
+  );
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      {/* SVG gooey filter */}
+      <svg className="absolute w-0 h-0" aria-hidden="true">
+        <defs>
+          <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+            <feColorMatrix
+              in="blur"
+              mode="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"
+              result="goo"
+            />
+            <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+          </filter>
+        </defs>
+      </svg>
+
       <style jsx>{`
         @keyframes letterIn {
           from {
@@ -70,11 +116,72 @@ export default function Hero() {
             transform: translateY(-0.4em);
           }
         }
+        @keyframes gooeyIn {
+          0% {
+            opacity: 0;
+            transform: scale(0.3) translateY(0.2em);
+            border-radius: 50%;
+            filter: blur(8px);
+          }
+          30% {
+            opacity: 1;
+            transform: scale(1.4) translateY(-0.05em);
+            border-radius: 50%;
+            filter: blur(6px);
+          }
+          60% {
+            transform: scale(1.1) translateY(0);
+            border-radius: 30%;
+            filter: blur(3px);
+          }
+          80% {
+            transform: scale(0.95) translateY(0);
+            filter: blur(1px);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            border-radius: 0%;
+            filter: blur(0px);
+          }
+        }
+        @keyframes gooeyOut {
+          0% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            border-radius: 0%;
+            filter: blur(0px);
+          }
+          30% {
+            transform: scale(1.15) translateY(0);
+            filter: blur(2px);
+          }
+          60% {
+            opacity: 1;
+            transform: scale(1.3) translateY(-0.1em);
+            border-radius: 50%;
+            filter: blur(6px);
+          }
+          100% {
+            opacity: 0;
+            transform: scale(0.2) translateY(-0.3em);
+            border-radius: 50%;
+            filter: blur(10px);
+          }
+        }
         .letter-in {
           animation: letterIn 0.25s ease-out forwards;
         }
         .letter-out {
           animation: letterOut 0.25s ease-in forwards;
+        }
+        .gooey-in {
+          animation: gooeyIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+          display: inline-block;
+        }
+        .gooey-out {
+          animation: gooeyOut 0.4s ease-in forwards;
+          display: inline-block;
         }
       `}</style>
 
@@ -107,46 +214,14 @@ export default function Hero() {
           className="hidden md:block font-bold tracking-tight mb-6 whitespace-nowrap text-8xl"
         >
           <span>LUSH </span>
-          <span key={`d-${index}-${phase}`} className="inline-block text-primary text-glow-primary">
-            {chars.map((char, i) => (
-              <span
-                key={i}
-                className={`inline-block ${phase === "in" ? "letter-in" : "letter-out"}`}
-                style={{
-                  animationDelay: `${
-                    phase === "in"
-                      ? i * STAGGER
-                      : (chars.length - 1 - i) * STAGGER
-                  }s`,
-                }}
-              >
-                {char === " " ? "\u00A0" : char}
-              </span>
-            ))}
-          </span>
+          {renderLetters("d")}
         </motion.h1>
 
         {/* Mobile: stacked */}
         <div className="md:hidden font-bold tracking-tight mb-6 text-center">
           <div className="text-6xl mb-2">LUSH</div>
           <div className="text-5xl whitespace-nowrap">
-            <span key={`m-${index}-${phase}`} className="inline-block text-primary text-glow-primary">
-              {chars.map((char, i) => (
-                <span
-                  key={i}
-                  className={`inline-block ${phase === "in" ? "letter-in" : "letter-out"}`}
-                  style={{
-                    animationDelay: `${
-                      phase === "in"
-                        ? i * STAGGER
-                        : (chars.length - 1 - i) * STAGGER
-                    }s`,
-                  }}
-                >
-                  {char === " " ? "\u00A0" : char}
-                </span>
-              ))}
-            </span>
+            {renderLetters("m")}
           </div>
         </div>
 
