@@ -180,7 +180,7 @@ export default function LushStudioSection() {
           className="text-center mb-6"
         >
           <p className="text-3xl md:text-5xl font-bold tracking-tight">
-            <span className="text-zinc-400">Only </span>
+            <span className="text-white underline">Only</span>{" "}
             <span className="text-primary text-glow-primary">$12.99</span>
             <span className="text-white">/month</span>
             <span className="text-zinc-500 font-normal text-xl md:text-2xl ml-3">for the entire suite</span>
