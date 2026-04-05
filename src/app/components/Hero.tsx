@@ -146,7 +146,7 @@ export default function Hero() {
         <motion.h1
           layout
           transition={{ layout: { duration: 2.0, ease: [0.25, 0.1, 0.25, 1.0] } }}
-          className="hidden md:block font-bold tracking-tight mb-6 whitespace-nowrap text-8xl text-wave"
+          className="hidden md:block font-bold tracking-tight mb-6 whitespace-nowrap text-8xl"
         >
           <span>LUSH </span>
           {renderLetters("d")}
@@ -154,7 +154,7 @@ export default function Hero() {
 
         {/* Mobile: stacked with rolling word */}
         <div className="md:hidden font-bold tracking-tight mb-6 text-center">
-          <div className="text-6xl mb-2 text-wave">LUSH</div>
+          <div className="text-6xl mb-2">LUSH</div>
           <div className="text-5xl whitespace-nowrap mobile-word-container text-primary text-glow-primary">
             {prevIndex >= 0 && (
               <span key={`mo-${prevIndex}`} className="mobile-roll-out">

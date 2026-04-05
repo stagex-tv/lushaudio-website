@@ -137,7 +137,7 @@ export default function LushStudioSection() {
           <p className="text-tertiary text-sm tracking-[0.3em] uppercase mb-4">
             The Flagship
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-wave">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
             LUSH
           </h2>
           <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
