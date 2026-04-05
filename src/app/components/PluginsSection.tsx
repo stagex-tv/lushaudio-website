@@ -140,7 +140,7 @@ const plugins = [
 
 export default function PluginsSection() {
   return (
-    <section id="plugins" className="pt-4 pb-16 px-6 scroll-mt-20">
+    <section id="plugins" className="pt-4 pb-16 px-6 scroll-mt-12">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
