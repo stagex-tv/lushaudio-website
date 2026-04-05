@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const words = [
   "PLUGINS",
@@ -17,25 +17,66 @@ const words = [
   "GATE",
 ];
 
-const DISPLAY_TIME = 2200; // how long each word is fully visible
-const FADE_TIME = 250; // fade out/in duration
+const DISPLAY_TIME = 2200;
+const LETTER_STAGGER = 40; // ms between each letter rolling in
 
 export default function Hero() {
   const [wordIndex, setWordIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
-
-  const cycleWord = useCallback(() => {
-    setVisible(false); // fade out
-    setTimeout(() => {
-      setWordIndex((prev) => (prev + 1) % words.length);
-      setVisible(true); // fade in new word
-    }, FADE_TIME);
-  }, []);
+  const [letters, setLetters] = useState<{ char: string; visible: boolean }[]>(
+    () => words[0].split("").map((c) => ({ char: c, visible: true }))
+  );
+  const [isRolling, setIsRolling] = useState(false);
+  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
 
   useEffect(() => {
-    const interval = setInterval(cycleWord, DISPLAY_TIME);
-    return () => clearInterval(interval);
-  }, [cycleWord]);
+    const interval = setInterval(() => {
+      // Clear any pending timeouts
+      timeoutsRef.current.forEach(clearTimeout);
+      timeoutsRef.current = [];
+
+      const currentWord = words[wordIndex];
+      const nextIndex = (wordIndex + 1) % words.length;
+      const nextWord = words[nextIndex];
+
+      setIsRolling(true);
+
+      // Phase 1: Roll out current letters one by one (right to left)
+      const rollOutLetters = currentWord.split("").map((c) => ({ char: c, visible: true }));
+      currentWord.split("").forEach((_, i) => {
+        const reverseI = currentWord.length - 1 - i;
+        const t = setTimeout(() => {
+          rollOutLetters[reverseI] = { ...rollOutLetters[reverseI], visible: false };
+          setLetters([...rollOutLetters]);
+        }, i * LETTER_STAGGER);
+        timeoutsRef.current.push(t);
+      });
+
+      // Phase 2: After rollout, switch to new word and roll in (left to right)
+      const rollOutDuration = currentWord.length * LETTER_STAGGER + 80;
+      const switchTimeout = setTimeout(() => {
+        setWordIndex(nextIndex);
+        const newLetters = nextWord.split("").map((c) => ({ char: c, visible: false }));
+        setLetters(newLetters);
+
+        nextWord.split("").forEach((_, i) => {
+          const t = setTimeout(() => {
+            newLetters[i] = { ...newLetters[i], visible: true };
+            setLetters([...newLetters]);
+            if (i === nextWord.length - 1) {
+              setIsRolling(false);
+            }
+          }, i * LETTER_STAGGER);
+          timeoutsRef.current.push(t);
+        });
+      }, rollOutDuration);
+      timeoutsRef.current.push(switchTimeout);
+    }, DISPLAY_TIME);
+
+    return () => {
+      clearInterval(interval);
+      timeoutsRef.current.forEach(clearTimeout);
+    };
+  }, [wordIndex]);
 
   const currentWord = words[wordIndex];
 
@@ -65,23 +106,30 @@ export default function Hero() {
 
         <motion.h1
           layout
-          transition={{ layout: { duration: 1.8, ease: "easeInOut" } }}
-          className="text-6xl md:text-8xl font-bold tracking-tight mb-6 whitespace-nowrap"
+          transition={{ layout: { duration: 2.0, ease: [0.25, 0.1, 0.25, 1.0] } }}
+          className={`font-bold tracking-tight mb-6 whitespace-nowrap ${
+            currentWord === "DE-ESSER"
+              ? "text-6xl md:text-8xl"
+              : "text-6xl md:text-8xl"
+          }`}
         >
           <span>LUSH </span>
-          <span
-            className={`inline-block text-primary text-glow-primary transition-opacity ${
-              currentWord === "DE-ESSER"
-                ? "text-[2.8rem] md:text-[5.5rem] align-baseline"
-                : ""
-            }`}
-            style={{
-              opacity: visible ? 1 : 0,
-              transitionDuration: `${FADE_TIME}ms`,
-              transitionTimingFunction: "ease-in-out",
-            }}
-          >
-            {currentWord}
+          <span className="inline-block text-primary text-glow-primary">
+            {letters.map((letter, i) => (
+              <span
+                key={`${wordIndex}-${i}`}
+                className="inline-block transition-all"
+                style={{
+                  opacity: letter.visible ? 1 : 0,
+                  transform: letter.visible ? "translateY(0)" : "translateY(0.3em)",
+                  transitionDuration: "200ms",
+                  transitionTimingFunction: "ease-out",
+                  fontSize: currentWord === "DE-ESSER" ? "0.7em" : undefined,
+                }}
+              >
+                {letter.char === " " ? "\u00A0" : letter.char}
+              </span>
+            ))}
           </span>
         </motion.h1>
 
