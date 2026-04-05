@@ -3,15 +3,19 @@
 :root {
   --background: #0a0a0a;
   --foreground: #ededed;
-  --accent-green: #489F3D;
-  --accent-orange: #E69519;
+  --primary: #7900ff;
+  --secondary: #0531fa;
+  --tertiary: #00bcff;
+  --accent: #f2a80d;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-accent-green: var(--accent-green);
-  --color-accent-orange: var(--accent-orange);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-tertiary: var(--tertiary);
+  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -35,12 +39,15 @@ body {
 }
 
 /* Glow effects */
-.glow-green {
-  box-shadow: 0 0 40px rgba(72, 159, 61, 0.3), 0 0 80px rgba(72, 159, 61, 0.1);
+.glow-primary {
+  box-shadow: 0 0 40px rgba(121, 0, 255, 0.35), 0 0 80px rgba(121, 0, 255, 0.12);
 }
-.glow-orange {
-  box-shadow: 0 0 40px rgba(230, 149, 25, 0.3), 0 0 80px rgba(230, 149, 25, 0.1);
+.glow-secondary {
+  box-shadow: 0 0 40px rgba(5, 49, 250, 0.3), 0 0 80px rgba(5, 49, 250, 0.1);
 }
-.text-glow-green {
-  text-shadow: 0 0 20px rgba(72, 159, 61, 0.5), 0 0 40px rgba(72, 159, 61, 0.2);
+.glow-accent {
+  box-shadow: 0 0 40px rgba(242, 168, 13, 0.3), 0 0 80px rgba(242, 168, 13, 0.1);
+}
+.text-glow-primary {
+  text-shadow: 0 0 20px rgba(121, 0, 255, 0.6), 0 0 40px rgba(121, 0, 255, 0.25);
 }

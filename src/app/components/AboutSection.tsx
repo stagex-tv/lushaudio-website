@@ -11,12 +11,12 @@ export default function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <p className="text-accent-orange text-sm tracking-[0.3em] uppercase mb-4">
+          <p className="text-accent text-sm tracking-[0.3em] uppercase mb-4">
             About
           </p>
           <h2 className="text-4xl md:text-5xl font-bold mb-8">
             Built by producers,{" "}
-            <span className="text-accent-green">for producers.</span>
+            <span className="text-primary">for producers.</span>
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed">
             Lush Audio is a small team building the audio tools we always wanted.
