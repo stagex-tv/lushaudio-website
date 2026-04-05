@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
 const words = [
-  "AUDIO",
   "PLUGINS",
+  "AUDIO",
   "VERB",
   "COMP",
   "PRO Q",
