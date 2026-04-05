@@ -22,11 +22,14 @@ const TRANSITION_TIME = 400; // fixed transition time for all words
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState(-1);
   const indexRef = useRef(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
+      const prev = indexRef.current;
       indexRef.current = (indexRef.current + 1) % words.length;
+      setPrevIndex(prev);
       setIndex(indexRef.current);
     }, DISPLAY_TIME);
 
@@ -75,6 +78,43 @@ export default function Hero() {
         .letter-in {
           animation: letterIn 0.22s ease-out forwards;
         }
+        @keyframes mobileRollIn {
+          from {
+            opacity: 0;
+            transform: translate3d(0, 100%, 0);
+          }
+          to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+          }
+        }
+        @keyframes mobileRollOut {
+          from {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+          }
+          to {
+            opacity: 0;
+            transform: translate3d(0, -100%, 0);
+          }
+        }
+        .mobile-word-container {
+          position: relative;
+          height: 1.2em;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .mobile-roll-in {
+          animation: mobileRollIn 0.4s ease-out forwards;
+          will-change: transform, opacity;
+        }
+        .mobile-roll-out {
+          animation: mobileRollOut 0.4s ease-in forwards;
+          position: absolute;
+          will-change: transform, opacity;
+        }
       `}</style>
 
       {/* Animated background grid */}
@@ -109,11 +149,18 @@ export default function Hero() {
           {renderLetters("d")}
         </motion.h1>
 
-        {/* Mobile: stacked */}
+        {/* Mobile: stacked with rolling word */}
         <div className="md:hidden font-bold tracking-tight mb-6 text-center">
           <div className="text-6xl mb-2">LUSH</div>
-          <div className="text-5xl whitespace-nowrap">
-            {renderLetters("m")}
+          <div className="text-5xl whitespace-nowrap mobile-word-container text-primary text-glow-primary">
+            {prevIndex >= 0 && (
+              <span key={`mo-${prevIndex}`} className="mobile-roll-out">
+                {words[prevIndex]}
+              </span>
+            )}
+            <span key={`mi-${index}`} className={prevIndex >= 0 ? "mobile-roll-in" : ""}>
+              {currentWord}
+            </span>
           </div>
         </div>
 
