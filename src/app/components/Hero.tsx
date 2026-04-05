@@ -50,15 +50,19 @@ export default function Hero() {
           Audio Tools for Creators
         </motion.p>
 
-        <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-6 whitespace-nowrap">
+        <motion.h1
+          layout
+          transition={{ layout: { duration: 0.4, ease: "easeInOut" } }}
+          className="text-6xl md:text-8xl font-bold tracking-tight mb-6 whitespace-nowrap"
+        >
           <span>LUSH </span>
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode="wait">
             <motion.span
               key={words[index]}
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
               className={`inline-block text-primary text-glow-primary ${
                 words[index] === "DE-ESSER" ? "text-[2.8rem] md:text-[5.5rem] align-baseline" : ""
               }`}
@@ -66,7 +70,7 @@ export default function Hero() {
               {words[index]}
             </motion.span>
           </AnimatePresence>
-        </h1>
+        </motion.h1>
 
         <motion.p
           initial={{ opacity: 0 }}
