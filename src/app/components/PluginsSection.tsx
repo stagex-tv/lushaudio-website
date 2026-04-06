@@ -140,7 +140,7 @@ const plugins = [
     name: "Lush Loudness Meter",
     tagline: "Loudness Meter",
     description:
-      "Broadcast-ready metering with integrated LUFS, true peak, and dynamic range readouts. Real-time loudness visualization, target presets for every platform, and a Lush knob for referencing your mix in context.",
+      "Broadcast-ready metering with integrated LUFS, true peak, and dynamic range. Target presets for every platform, and a Lush knob for referencing your mix in context.",
     accentColor: "#00bcff",
     mockType: "loudness",
     comingSoon: true,
