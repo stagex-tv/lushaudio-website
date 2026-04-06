@@ -328,12 +328,12 @@ function DesktopModuleContent({ type, color }: { type: string; color: string }) 
 const chainVariants = {
   enter: {
     transition: {
-      staggerChildren: 0.04,
+      staggerChildren: 0.09,
     },
   },
   exit: {
     transition: {
-      staggerChildren: 0.03,
+      staggerChildren: 0.12,
       staggerDirection: -1,
     },
   },
@@ -350,16 +350,16 @@ const moduleVariants = {
     scale: 1,
     y: 0,
     transition: {
-      duration: 0.35,
+      duration: 0.4,
       ease: [0.22, 1, 0.36, 1] as const,
     },
   },
   exit: {
     opacity: 0,
-    scale: 0.8,
-    y: -10,
+    scale: 0.75,
+    y: -12,
     transition: {
-      duration: 0.25,
+      duration: 0.4,
       ease: [0.55, 0, 1, 0.45] as const,
     },
   },
@@ -373,12 +373,12 @@ const arrowVariants = {
   enter: {
     opacity: 1,
     scaleX: 1,
-    transition: { duration: 0.2, ease: "easeOut" as const },
+    transition: { duration: 0.25, ease: "easeOut" as const },
   },
   exit: {
     opacity: 0,
     scaleX: 0,
-    transition: { duration: 0.15, ease: "easeIn" as const },
+    transition: { duration: 0.25, ease: "easeIn" as const },
   },
 };
 
@@ -400,7 +400,7 @@ export default function LushStudioSection() {
     const interval = setInterval(() => {
       hasAnimated.current = true;
       setCurrentPreset((prev) => (prev + 1) % presets.length);
-    }, 6500);
+    }, 8000);
     return () => clearInterval(interval);
   }, []);
 

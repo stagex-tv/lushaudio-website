@@ -115,6 +115,17 @@ const plugins = [
     originalPrice: 129,
   },
   {
+    name: "Lush Key & BPM",
+    tagline: "Key & BPM Finder",
+    description:
+      "Instantly detect the key and tempo of any audio. Sends key data directly to every instance of Lush Auto-Tune in your session — no manual setup, just drop it on your master and go.",
+    accentColor: "#f2a80d",
+    mockType: "keybpm",
+    comingSoon: true,
+    price: 99,
+    originalPrice: 129,
+  },
+  {
     name: "Lush Saturation",
     tagline: "Saturation",
     description:

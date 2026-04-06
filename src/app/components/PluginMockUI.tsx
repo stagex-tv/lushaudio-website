@@ -506,6 +506,50 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             </div>
           </div>
         );
+      case "keybpm":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* Key & BPM display */}
+            <div className="w-full flex justify-center gap-4 items-center">
+              {/* Key display */}
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-[7px] text-zinc-600 tracking-wider">KEY</span>
+                <div
+                  className="px-4 py-2 rounded-lg border"
+                  style={{ borderColor: `${color}40`, backgroundColor: `${color}08` }}
+                >
+                  <span className="text-2xl font-bold font-mono" style={{ color }}>C#m</span>
+                </div>
+                <span className="text-[7px] text-zinc-500">Minor</span>
+              </div>
+              {/* BPM display */}
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-[7px] text-zinc-600 tracking-wider">BPM</span>
+                <div
+                  className="px-4 py-2 rounded-lg border"
+                  style={{ borderColor: `#00bcff40`, backgroundColor: `#00bcff08` }}
+                >
+                  <span className="text-2xl font-bold font-mono text-[#00bcff]">128</span>
+                </div>
+                <span className="text-[7px] text-zinc-500">Locked</span>
+              </div>
+            </div>
+            {/* Link indicator */}
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 px-2 py-0.5 rounded-full border" style={{ borderColor: `${color}30`, backgroundColor: `${color}08` }}>
+                <svg viewBox="0 0 12 12" className="w-2.5 h-2.5">
+                  <path d="M4,8 L8,4 M3,5 C1,5 1,8 3,8 L4,8 M8,4 L9,4 C11,4 11,7 9,7" fill="none" stroke={color} strokeWidth="1.2" />
+                </svg>
+                <span className="text-[7px] font-medium" style={{ color }}>LINKED TO AUTO-TUNE</span>
+              </div>
+            </div>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Sens" color={color} value={0.65} />
+              <MockKnob label="Range" color="#00bcff" value={0.5} />
+              <LushKnob color={color} />
+            </div>
+          </div>
+        );
       case "loudness":
         return (
           <div className="flex flex-col items-center gap-3 w-full">
