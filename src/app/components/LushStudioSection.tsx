@@ -7,6 +7,7 @@ import { useRef, useCallback, useState, useEffect } from "react";
 
 function MiniKnob({ color, value = 0.5, size = 18, delay = 0 }: { color: string; value?: number; size?: number; delay?: number }) {
   const angle = -135 + value * 270;
+  const idleStart = 0.5 + delay;
   return (
     <div
       className="rounded-full border relative"
@@ -15,7 +16,7 @@ function MiniKnob({ color, value = 0.5, size = 18, delay = 0 }: { color: string;
         height: size,
         borderColor: `${color}50`,
         background: "radial-gradient(circle at 40% 35%, #2a2a2a, #151515)",
-        animation: `rackKnobIn 0.6s ${delay}s both cubic-bezier(0.22, 1, 0.36, 1)`,
+        animation: `rackKnobIn 0.6s ${delay}s both cubic-bezier(0.22, 1, 0.36, 1), rackKnobBreath ${1.8 + delay * 0.5}s ${idleStart}s ease-in-out infinite`,
       }}
     >
       <div
@@ -27,7 +28,7 @@ function MiniKnob({ color, value = 0.5, size = 18, delay = 0 }: { color: string;
           left: "50%",
           transformOrigin: "bottom center",
           "--knob-angle": `${angle}deg`,
-          animation: `rackKnobIdle ${3 + delay}s ${0.6 + delay}s ease-in-out infinite`,
+          animation: `rackKnobIdle ${1.5 + delay * 0.4}s ${idleStart}s ease-in-out infinite`,
         } as React.CSSProperties}
       />
     </div>
@@ -142,7 +143,7 @@ function AnimPath({ d, color, width = 1, delay = 0.1, len = 120, fill }: { d: st
       strokeDasharray={len}
       style={cs({
         "--path-len": len,
-        animation: `rackPathDraw 0.8s ${delay}s both ease-out, rackPathShimmer ${3 + delay}s ${1 + delay}s ease-in-out infinite`,
+        animation: `rackPathDraw 0.8s ${delay}s both ease-out, rackPathShimmer ${1.8 + delay * 0.5}s ${0.6 + delay}s ease-in-out infinite`,
       })}
     />
   );
@@ -156,10 +157,10 @@ function AnimBar({ h, color, i, pulse = true }: { h: number; color: string; i: n
       style={cs({
         height: `${h * 100}%`,
         backgroundColor: color,
-        "--pulse-scale": `${0.75 + Math.random() * 0.2}`,
+        "--pulse-scale": `${0.7 + Math.random() * 0.25}`,
         "--bar-opacity": h > 0.5 ? "1" : "0.6",
         transformOrigin: "bottom",
-        animation: `rackBarGrow 0.5s ${d + 0.15}s both cubic-bezier(0.22,1,0.36,1)${pulse ? `, rackBarPulse ${2.5 + i * 0.3}s ${0.8 + d}s ease-in-out infinite` : ""}`,
+        animation: `rackBarGrow 0.5s ${d + 0.15}s both cubic-bezier(0.22,1,0.36,1)${pulse ? `, rackBarPulse ${1.2 + i * 0.15}s ${0.5 + d}s ease-in-out infinite` : ""}`,
       })}
     />
   );
@@ -174,10 +175,10 @@ function AnimWideBar({ h, color, i }: { h: number; color: string; i: number }) {
         height: `${h * 100}%`,
         backgroundColor: color,
         opacity: 0.7,
-        "--pulse-scale": `${0.8 + Math.random() * 0.15}`,
+        "--pulse-scale": `${0.72 + Math.random() * 0.2}`,
         "--bar-opacity": "0.7",
         transformOrigin: "bottom",
-        animation: `rackBarGrow 0.5s ${d + 0.1}s both cubic-bezier(0.22,1,0.36,1), rackBarPulse ${2 + i * 0.4}s ${0.7 + d}s ease-in-out infinite`,
+        animation: `rackBarGrow 0.5s ${d + 0.1}s both cubic-bezier(0.22,1,0.36,1), rackBarPulse ${1.0 + i * 0.2}s ${0.4 + d}s ease-in-out infinite`,
       })}
     />
   );
@@ -185,7 +186,7 @@ function AnimWideBar({ h, color, i }: { h: number; color: string; i: number }) {
 
 function DriftIn({ children, dx = 0, dy = 15, delay = 0 }: { children: React.ReactNode; dx?: number; dy?: number; delay?: number }) {
   return (
-    <div style={cs({ "--dx": `${dx}px`, "--dy": `${dy}px`, animation: `rackDriftIn 0.7s ${delay}s both cubic-bezier(0.22,1,0.36,1)` })}>
+    <div style={cs({ "--dx": `${dx}px`, "--dy": `${dy}px`, animation: `rackDriftIn 0.7s ${delay}s both cubic-bezier(0.22,1,0.36,1), rackSway ${3 + delay}s ${0.7 + delay}s ease-in-out infinite` })}>
       {children}
     </div>
   );
