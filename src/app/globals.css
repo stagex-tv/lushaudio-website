@@ -65,6 +65,62 @@ body::after {
   animation: grain 0.4s steps(1) infinite;
 }
 
+/* ─── Lush Studio rack micro-animations ─── */
+
+/* Knob idle: gentle back-and-forth oscillation */
+@keyframes rackKnobIdle {
+  0%, 100% { transform: translateX(-50%) rotate(var(--knob-angle)); }
+  50% { transform: translateX(-50%) rotate(calc(var(--knob-angle) + 6deg)); }
+}
+
+/* Knob entry: spin in from small + rotated */
+@keyframes rackKnobIn {
+  0% { transform: scale(0.3) rotate(-120deg); opacity: 0; }
+  60% { transform: scale(1.08) rotate(8deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Bar grow-in from bottom */
+@keyframes rackBarGrow {
+  0% { transform: scaleY(0); opacity: 0; }
+  60% { transform: scaleY(1.12); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+/* Bar idle pulse */
+@keyframes rackBarPulse {
+  0%, 100% { transform: scaleY(1); opacity: var(--bar-opacity, 1); }
+  50% { transform: scaleY(var(--pulse-scale, 0.88)); opacity: calc(var(--bar-opacity, 1) * 0.8); }
+}
+
+/* SVG path draw-in */
+@keyframes rackPathDraw {
+  0% { stroke-dashoffset: var(--path-len, 200); opacity: 0.2; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+/* SVG path idle shimmer */
+@keyframes rackPathShimmer {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Element scatter-in: drift from offset to final position */
+@keyframes rackDriftIn {
+  0% { transform: translate(var(--dx, 0px), var(--dy, 15px)) scale(0.7); opacity: 0; filter: blur(2px); }
+  70% { transform: translate(0, 0) scale(1.04); opacity: 1; filter: blur(0); }
+  100% { transform: translate(0, 0) scale(1); opacity: 1; filter: blur(0); }
+}
+
+/* LUFS meter bar idle fluctuation */
+@keyframes rackMeterFlicker {
+  0% { height: var(--meter-h, 65%); }
+  25% { height: calc(var(--meter-h, 65%) + 3%); }
+  50% { height: calc(var(--meter-h, 65%) - 2%); }
+  75% { height: calc(var(--meter-h, 65%) + 1%); }
+  100% { height: var(--meter-h, 65%); }
+}
+
 @keyframes grain {
   0%   { background-position:   0px   0px; }
   20%  { background-position: -60px  40px; }

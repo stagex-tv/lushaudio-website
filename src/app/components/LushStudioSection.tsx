@@ -5,7 +5,7 @@ import { useRef, useCallback, useState, useEffect } from "react";
 
 /* ─── Tiny helpers for the rack mock ─── */
 
-function MiniKnob({ color, value = 0.5, size = 18 }: { color: string; value?: number; size?: number }) {
+function MiniKnob({ color, value = 0.5, size = 18, delay = 0 }: { color: string; value?: number; size?: number; delay?: number }) {
   const angle = -135 + value * 270;
   return (
     <div
@@ -15,6 +15,7 @@ function MiniKnob({ color, value = 0.5, size = 18 }: { color: string; value?: nu
         height: size,
         borderColor: `${color}50`,
         background: "radial-gradient(circle at 40% 35%, #2a2a2a, #151515)",
+        animation: `rackKnobIn 0.6s ${delay}s both cubic-bezier(0.22, 1, 0.36, 1)`,
       }}
     >
       <div
@@ -25,8 +26,9 @@ function MiniKnob({ color, value = 0.5, size = 18 }: { color: string; value?: nu
           top: "15%",
           left: "50%",
           transformOrigin: "bottom center",
-          transform: `translateX(-50%) rotate(${angle}deg)`,
-        }}
+          "--knob-angle": `${angle}deg`,
+          animation: `rackKnobIdle ${3 + delay}s ${0.6 + delay}s ease-in-out infinite`,
+        } as React.CSSProperties}
       />
     </div>
   );
@@ -127,150 +129,242 @@ const presets: Preset[] = [
 
 /* ─── Module content renderer (desktop) ─── */
 
+/* Helpers for animated SVG paths and bars */
+const cs = (props: Record<string, string | number>) => props as React.CSSProperties;
+
+function AnimPath({ d, color, width = 1, delay = 0.1, len = 120, fill }: { d: string; color: string; width?: number; delay?: number; len?: number; fill?: string }) {
+  return (
+    <path
+      d={d}
+      fill={fill || "none"}
+      stroke={color}
+      strokeWidth={width}
+      strokeDasharray={len}
+      style={cs({
+        "--path-len": len,
+        animation: `rackPathDraw 0.8s ${delay}s both ease-out, rackPathShimmer ${3 + delay}s ${1 + delay}s ease-in-out infinite`,
+      })}
+    />
+  );
+}
+
+function AnimBar({ h, color, i, pulse = true }: { h: number; color: string; i: number; pulse?: boolean }) {
+  const d = 0.08 * i;
+  return (
+    <div
+      className="w-0.5 rounded-t origin-bottom"
+      style={cs({
+        height: `${h * 100}%`,
+        backgroundColor: color,
+        "--pulse-scale": `${0.75 + Math.random() * 0.2}`,
+        "--bar-opacity": h > 0.5 ? "1" : "0.6",
+        transformOrigin: "bottom",
+        animation: `rackBarGrow 0.5s ${d + 0.15}s both cubic-bezier(0.22,1,0.36,1)${pulse ? `, rackBarPulse ${2.5 + i * 0.3}s ${0.8 + d}s ease-in-out infinite` : ""}`,
+      })}
+    />
+  );
+}
+
+function AnimWideBar({ h, color, i }: { h: number; color: string; i: number }) {
+  const d = 0.06 * i;
+  return (
+    <div
+      className="w-1 rounded-t origin-bottom"
+      style={cs({
+        height: `${h * 100}%`,
+        backgroundColor: color,
+        opacity: 0.7,
+        "--pulse-scale": `${0.8 + Math.random() * 0.15}`,
+        "--bar-opacity": "0.7",
+        transformOrigin: "bottom",
+        animation: `rackBarGrow 0.5s ${d + 0.1}s both cubic-bezier(0.22,1,0.36,1), rackBarPulse ${2 + i * 0.4}s ${0.7 + d}s ease-in-out infinite`,
+      })}
+    />
+  );
+}
+
+function DriftIn({ children, dx = 0, dy = 15, delay = 0 }: { children: React.ReactNode; dx?: number; dy?: number; delay?: number }) {
+  return (
+    <div style={cs({ "--dx": `${dx}px`, "--dy": `${dy}px`, animation: `rackDriftIn 0.7s ${delay}s both cubic-bezier(0.22,1,0.36,1)` })}>
+      {children}
+    </div>
+  );
+}
+
 function DesktopModuleContent({ type, color }: { type: string; color: string }) {
   switch (type) {
     case "deess":
       return (
         <div className="flex flex-col items-center gap-1">
-          <svg viewBox="0 0 60 16" className="w-12 h-3">
-            <path d="M0,8 L20,8 C30,8 35,12 42,14 C48,12 52,8 60,8" fill="none" stroke={color} strokeWidth="1" />
-          </svg>
+          <DriftIn dy={-10} delay={0.05}>
+            <svg viewBox="0 0 60 16" className="w-12 h-3">
+              <AnimPath d="M0,8 L20,8 C30,8 35,12 42,14 C48,12 52,8 60,8" color={color} len={80} />
+            </svg>
+          </DriftIn>
           <div className="flex gap-1">
-            <MiniKnob color={color} value={0.7} size={14} />
-            <MiniKnob color={color} value={0.4} size={14} />
+            <MiniKnob color={color} value={0.7} size={14} delay={0.15} />
+            <MiniKnob color={color} value={0.4} size={14} delay={0.25} />
           </div>
         </div>
       );
     case "autotune":
       return (
         <div className="flex flex-col items-center gap-1">
-          <svg viewBox="0 0 60 20" className="w-12 h-3.5">
-            <line x1="0" y1="10" x2="60" y2="10" stroke="#222" strokeWidth="0.5" />
-            <path d="M0,10 C5,8 10,6 15,6 L25,6 L25,14 L35,14 L35,6 L50,6 L50,14 L60,14" fill="none" stroke={color} strokeWidth="1" />
-            <path d="M0,10 C5,9 10,7 15,5 C20,8 25,15 30,13 C35,11 40,5 45,7 C50,9 55,13 60,14" fill="none" stroke="#555" strokeWidth="0.6" strokeDasharray="2,2" />
-          </svg>
+          <DriftIn dx={8} dy={-8} delay={0.05}>
+            <svg viewBox="0 0 60 20" className="w-12 h-3.5">
+              <line x1="0" y1="10" x2="60" y2="10" stroke="#222" strokeWidth="0.5" />
+              <AnimPath d="M0,10 C5,8 10,6 15,6 L25,6 L25,14 L35,14 L35,6 L50,6 L50,14 L60,14" color={color} len={120} delay={0.15} />
+              <AnimPath d="M0,10 C5,9 10,7 15,5 C20,8 25,15 30,13 C35,11 40,5 45,7 C50,9 55,13 60,14" color="#555" width={0.6} len={100} delay={0.3} />
+            </svg>
+          </DriftIn>
           <div className="flex gap-1">
-            <MiniKnob color={color} value={0.3} size={14} />
-            <MiniKnob color={color} value={0.5} size={14} />
+            <MiniKnob color={color} value={0.3} size={14} delay={0.2} />
+            <MiniKnob color={color} value={0.5} size={14} delay={0.3} />
           </div>
         </div>
       );
     case "comp":
       return (
         <div className="flex flex-col items-center gap-1">
-          <div className="flex gap-px items-end h-4">
-            {[0.3, 0.5, 0.8, 1, 0.9, 0.6, 0.7, 0.85, 0.7, 0.4].map((v, i) => (
-              <div key={i} className="w-0.5 rounded-t" style={{ height: `${v * 100}%`, backgroundColor: v > 0.8 ? color : `${color}60` }} />
-            ))}
-          </div>
+          <DriftIn dy={-12} delay={0.05}>
+            <div className="flex gap-px items-end h-4">
+              {[0.3, 0.5, 0.8, 1, 0.9, 0.6, 0.7, 0.85, 0.7, 0.4].map((v, i) => (
+                <AnimBar key={i} h={v} color={v > 0.8 ? color : `${color}60`} i={i} />
+              ))}
+            </div>
+          </DriftIn>
           <div className="flex gap-1">
-            <MiniKnob color={color} value={0.4} size={14} />
-            <MiniKnob color={color} value={0.6} size={14} />
-            <MiniKnob color={color} value={0.5} size={14} />
+            <MiniKnob color={color} value={0.4} size={14} delay={0.15} />
+            <MiniKnob color={color} value={0.6} size={14} delay={0.25} />
+            <MiniKnob color={color} value={0.5} size={14} delay={0.35} />
           </div>
         </div>
       );
     case "proq":
       return (
         <div className="flex flex-col items-center gap-1">
-          <svg viewBox="0 0 80 24" className="w-16 h-5">
-            <line x1="0" y1="12" x2="80" y2="12" stroke="#222" strokeWidth="0.5" />
-            <path d="M0,12 C10,12 15,10 25,6 C35,2 40,14 55,13 C65,12 70,8 80,12" fill="none" stroke={color} strokeWidth="1" />
-          </svg>
+          <DriftIn dx={-6} dy={-10} delay={0.05}>
+            <svg viewBox="0 0 80 24" className="w-16 h-5">
+              <line x1="0" y1="12" x2="80" y2="12" stroke="#222" strokeWidth="0.5" />
+              <AnimPath d="M0,12 C10,12 15,10 25,6 C35,2 40,14 55,13 C65,12 70,8 80,12" color={color} len={120} delay={0.12} />
+            </svg>
+          </DriftIn>
           <div className="flex gap-1">
-            <MiniKnob color={color} value={0.5} size={14} />
-            <MiniKnob color={color} value={0.65} size={14} />
-            <MiniKnob color={color} value={0.4} size={14} />
+            <MiniKnob color={color} value={0.5} size={14} delay={0.18} />
+            <MiniKnob color={color} value={0.65} size={14} delay={0.28} />
+            <MiniKnob color={color} value={0.4} size={14} delay={0.38} />
           </div>
         </div>
       );
     case "saturate":
       return (
         <div className="flex flex-col items-center gap-1">
-          <svg viewBox="0 0 40 40" className="w-6 h-5">
-            <line x1="0" y1="40" x2="40" y2="0" stroke="#222" strokeWidth="0.4" strokeDasharray="2,2" />
-            <path d="M0,40 C4,36 8,28 12,22 C16,16 20,10 24,7 C28,5 32,3.5 36,3 L40,2.5" fill="none" stroke={color} strokeWidth="1" />
-          </svg>
+          <DriftIn dx={5} dy={-8} delay={0.05}>
+            <svg viewBox="0 0 40 40" className="w-6 h-5">
+              <line x1="0" y1="40" x2="40" y2="0" stroke="#222" strokeWidth="0.4" strokeDasharray="2,2" />
+              <AnimPath d="M0,40 C4,36 8,28 12,22 C16,16 20,10 24,7 C28,5 32,3.5 36,3 L40,2.5" color={color} len={60} delay={0.1} />
+            </svg>
+          </DriftIn>
           <div className="flex gap-1">
-            <MiniKnob color={color} value={0.6} size={14} />
-            <MiniKnob color={color} value={0.5} size={14} />
+            <MiniKnob color={color} value={0.6} size={14} delay={0.2} />
+            <MiniKnob color={color} value={0.5} size={14} delay={0.3} />
           </div>
         </div>
       );
     case "gate":
       return (
         <div className="flex gap-1.5 items-center">
-          <MiniKnob color={color} value={0.35} />
-          <MiniKnob color={color} value={0.5} />
-          <div className="flex gap-px items-end h-5">
-            {[0.1, 0.9, 0.9, 0.1, 0.1, 0.9, 0.9, 0.1].map((v, i) => (
-              <div key={i} className="w-0.5 rounded-t" style={{ height: `${v * 100}%`, backgroundColor: v > 0.5 ? color : `${color}30` }} />
-            ))}
-          </div>
+          <MiniKnob color={color} value={0.35} delay={0.1} />
+          <MiniKnob color={color} value={0.5} delay={0.2} />
+          <DriftIn dx={10} delay={0.08}>
+            <div className="flex gap-px items-end h-5">
+              {[0.1, 0.9, 0.9, 0.1, 0.1, 0.9, 0.9, 0.1].map((v, i) => (
+                <AnimBar key={i} h={v} color={v > 0.5 ? color : `${color}30`} i={i} />
+              ))}
+            </div>
+          </DriftIn>
         </div>
       );
     case "verb":
       return (
         <div className="flex flex-col items-center gap-1">
-          <svg viewBox="0 0 60 16" className="w-12 h-3">
-            <path d="M0,14 L5,2 C15,4 30,8 50,12 L60,14" fill={`${color}10`} stroke={color} strokeWidth="0.8" />
-          </svg>
+          <DriftIn dy={-10} dx={-5} delay={0.05}>
+            <svg viewBox="0 0 60 16" className="w-12 h-3">
+              <AnimPath d="M0,14 L5,2 C15,4 30,8 50,12 L60,14" color={color} width={0.8} len={80} fill={`${color}10`} />
+            </svg>
+          </DriftIn>
           <div className="flex gap-1">
-            <MiniKnob color={color} value={0.7} size={14} />
-            <MiniKnob color={color} value={0.55} size={14} />
-            <MiniKnob color={color} value={0.4} size={14} />
+            <MiniKnob color={color} value={0.7} size={14} delay={0.15} />
+            <MiniKnob color={color} value={0.55} size={14} delay={0.25} />
+            <MiniKnob color={color} value={0.4} size={14} delay={0.35} />
           </div>
         </div>
       );
     case "clipper":
       return (
         <div className="flex flex-col items-center gap-1">
-          <svg viewBox="0 0 60 20" className="w-12 h-4">
-            <line x1="0" y1="5" x2="60" y2="5" stroke={`${color}30`} strokeWidth="0.4" strokeDasharray="2,2" />
-            <line x1="0" y1="15" x2="60" y2="15" stroke={`${color}30`} strokeWidth="0.4" strokeDasharray="2,2" />
-            <path d="M0,10 C4,10 6,2 10,5 L18,5 C20,5 22,18 28,15 L36,15 C38,15 40,4 44,5 L52,5 C54,5 56,14 60,15" fill="none" stroke={color} strokeWidth="1" />
-          </svg>
+          <DriftIn dy={-12} dx={6} delay={0.05}>
+            <svg viewBox="0 0 60 20" className="w-12 h-4">
+              <line x1="0" y1="5" x2="60" y2="5" stroke={`${color}30`} strokeWidth="0.4" strokeDasharray="2,2" />
+              <line x1="0" y1="15" x2="60" y2="15" stroke={`${color}30`} strokeWidth="0.4" strokeDasharray="2,2" />
+              <AnimPath d="M0,10 C4,10 6,2 10,5 L18,5 C20,5 22,18 28,15 L36,15 C38,15 40,4 44,5 L52,5 C54,5 56,14 60,15" color={color} len={130} delay={0.12} />
+            </svg>
+          </DriftIn>
           <div className="flex gap-1">
-            <MiniKnob color={color} value={0.65} size={14} />
-            <MiniKnob color={color} value={0.5} size={14} />
+            <MiniKnob color={color} value={0.65} size={14} delay={0.2} />
+            <MiniKnob color={color} value={0.5} size={14} delay={0.3} />
           </div>
         </div>
       );
     case "multiband":
       return (
         <div className="flex flex-col items-center gap-1">
-          <div className="flex gap-px items-end h-5">
-            {[
-              { h: 0.7, c: "#7900ff" },
-              { h: 0.5, c: "#7900ff" },
-              { h: 0.8, c: "#0531fa" },
-              { h: 0.6, c: "#0531fa" },
-              { h: 0.9, c: "#00bcff" },
-              { h: 0.4, c: "#00bcff" },
-              { h: 0.6, c: "#f2a80d" },
-              { h: 0.3, c: "#f2a80d" },
-            ].map((b, i) => (
-              <div key={i} className="w-1 rounded-t" style={{ height: `${b.h * 100}%`, backgroundColor: b.c, opacity: 0.7 }} />
-            ))}
-          </div>
+          <DriftIn dy={-10} delay={0.05}>
+            <div className="flex gap-px items-end h-5">
+              {[
+                { h: 0.7, c: "#7900ff" },
+                { h: 0.5, c: "#7900ff" },
+                { h: 0.8, c: "#0531fa" },
+                { h: 0.6, c: "#0531fa" },
+                { h: 0.9, c: "#00bcff" },
+                { h: 0.4, c: "#00bcff" },
+                { h: 0.6, c: "#f2a80d" },
+                { h: 0.3, c: "#f2a80d" },
+              ].map((b, i) => (
+                <AnimWideBar key={i} h={b.h} color={b.c} i={i} />
+              ))}
+            </div>
+          </DriftIn>
           <div className="flex gap-1">
-            <MiniKnob color={color} value={0.55} size={14} />
-            <MiniKnob color="#00bcff" value={0.4} size={14} />
+            <MiniKnob color={color} value={0.55} size={14} delay={0.2} />
+            <MiniKnob color="#00bcff" value={0.4} size={14} delay={0.3} />
           </div>
         </div>
       );
     case "limiter":
       return (
         <div className="flex flex-col items-center gap-1">
-          <div className="w-full flex items-center gap-1.5">
-            <div className="flex-1 h-2 rounded-full bg-zinc-800 overflow-hidden">
-              <div className="h-full rounded-full" style={{ width: "75%", background: `linear-gradient(90deg, ${color}40, ${color})` }} />
+          <DriftIn dx={-8} dy={-6} delay={0.08}>
+            <div className="w-full flex items-center gap-1.5">
+              <div className="flex-1 h-2 rounded-full bg-zinc-800 overflow-hidden">
+                <div
+                  className="h-full rounded-full origin-left"
+                  style={cs({
+                    width: "75%",
+                    background: `linear-gradient(90deg, ${color}40, ${color})`,
+                    animation: `rackBarGrow 0.6s 0.15s both cubic-bezier(0.22,1,0.36,1), rackBarPulse 3s 1s ease-in-out infinite`,
+                    "--pulse-scale": "0.92",
+                    "--bar-opacity": "1",
+                    transformOrigin: "left",
+                  })}
+                />
+              </div>
+              <span className="text-[6px] text-zinc-600 font-mono" style={{ animation: "rackDriftIn 0.5s 0.3s both" }}>-2.1</span>
             </div>
-            <span className="text-[6px] text-zinc-600 font-mono">-2.1</span>
-          </div>
+          </DriftIn>
           <div className="flex gap-1">
-            <MiniKnob color={color} value={0.7} size={14} />
-            <MiniKnob color={color} value={0.85} size={14} />
+            <MiniKnob color={color} value={0.7} size={14} delay={0.2} />
+            <MiniKnob color={color} value={0.85} size={14} delay={0.3} />
           </div>
         </div>
       );
@@ -278,43 +372,67 @@ function DesktopModuleContent({ type, color }: { type: string; color: string }) 
       return (
         <div className="flex items-center gap-2">
           <div className="flex gap-0.5">
-            <div className="w-2 h-8 bg-zinc-800 rounded-sm overflow-hidden relative">
-              <div className="absolute bottom-0 w-full rounded-sm" style={{ height: "72%", background: `linear-gradient(to top, ${color}40, ${color})` }} />
-              <div className="absolute w-full h-px" style={{ bottom: "60%", backgroundColor: "#fff", opacity: 0.3 }} />
-            </div>
-            <div className="w-2 h-8 bg-zinc-800 rounded-sm overflow-hidden relative">
-              <div className="absolute bottom-0 w-full rounded-sm" style={{ height: "65%", background: `linear-gradient(to top, ${color}40, ${color})` }} />
-              <div className="absolute w-full h-px" style={{ bottom: "60%", backgroundColor: "#fff", opacity: 0.3 }} />
-            </div>
+            <DriftIn dy={12} delay={0.05}>
+              <div className="w-2 h-8 bg-zinc-800 rounded-sm overflow-hidden relative">
+                <div
+                  className="absolute bottom-0 w-full rounded-sm origin-bottom"
+                  style={cs({
+                    "--meter-h": "72%",
+                    background: `linear-gradient(to top, ${color}40, ${color})`,
+                    animation: `rackBarGrow 0.5s 0.15s both, rackMeterFlicker 4s 1s ease-in-out infinite`,
+                  })}
+                />
+                <div className="absolute w-full h-px" style={{ bottom: "60%", backgroundColor: "#fff", opacity: 0.3 }} />
+              </div>
+            </DriftIn>
+            <DriftIn dy={12} delay={0.12}>
+              <div className="w-2 h-8 bg-zinc-800 rounded-sm overflow-hidden relative">
+                <div
+                  className="absolute bottom-0 w-full rounded-sm origin-bottom"
+                  style={cs({
+                    "--meter-h": "65%",
+                    background: `linear-gradient(to top, ${color}40, ${color})`,
+                    animation: `rackBarGrow 0.5s 0.22s both, rackMeterFlicker 4.5s 1.2s ease-in-out infinite`,
+                  })}
+                />
+                <div className="absolute w-full h-px" style={{ bottom: "60%", backgroundColor: "#fff", opacity: 0.3 }} />
+              </div>
+            </DriftIn>
           </div>
-          <div className="flex flex-col items-start">
-            <span className="text-[6px] text-zinc-600">LUFS</span>
-            <span className="text-[8px] font-mono" style={{ color }}>-14.2</span>
-          </div>
+          <DriftIn dx={8} delay={0.2}>
+            <div className="flex flex-col items-start">
+              <span className="text-[6px] text-zinc-600">LUFS</span>
+              <span className="text-[8px] font-mono" style={{ color }}>-14.2</span>
+            </div>
+          </DriftIn>
         </div>
       );
     case "imager":
       return (
         <div className="flex flex-col items-center gap-1">
-          <svg viewBox="0 0 40 28" className="w-10 h-6">
-            {/* Mini 3D sphere with dots */}
-            <ellipse cx="20" cy="14" rx="18" ry="12" fill="none" stroke={color} strokeWidth="0.5" opacity="0.3" />
-            <ellipse cx="20" cy="14" rx="12" ry="8" fill="none" stroke={color} strokeWidth="0.3" opacity="0.2" />
-            <ellipse cx="20" cy="14" rx="6" ry="4" fill="none" stroke="#00bcff" strokeWidth="0.3" opacity="0.15" />
-            <line x1="2" y1="14" x2="38" y2="14" stroke={color} strokeWidth="0.2" opacity="0.15" />
-            <line x1="20" y1="2" x2="20" y2="26" stroke={color} strokeWidth="0.2" opacity="0.15" />
-            {/* Gold dots */}
-            <circle cx="20" cy="13" r="1.5" fill="#f2a80d" opacity="0.9" />
-            <circle cx="24" cy="11" r="1" fill="#f2a80d" opacity="0.7" />
-            <circle cx="16" cy="12" r="1.2" fill="#f2a80d" opacity="0.8" />
-            <circle cx="28" cy="14" r="0.8" fill="#f2a80d" opacity="0.5" />
-            <circle cx="12" cy="16" r="0.7" fill="#f2a80d" opacity="0.4" />
-            <circle cx="22" cy="18" r="0.8" fill="#f2a80d" opacity="0.5" />
-            <circle cx="32" cy="12" r="0.5" fill="#f2a80d" opacity="0.3" />
-          </svg>
+          <DriftIn dy={-8} dx={-5} delay={0.05}>
+            <svg viewBox="0 0 40 28" className="w-10 h-6">
+              <ellipse cx="20" cy="14" rx="18" ry="12" fill="none" stroke={color} strokeWidth="0.5" opacity="0.3" style={cs({ animation: "rackPathShimmer 3s 0.5s ease-in-out infinite" })} />
+              <ellipse cx="20" cy="14" rx="12" ry="8" fill="none" stroke={color} strokeWidth="0.3" opacity="0.2" style={cs({ animation: "rackPathShimmer 3.5s 0.8s ease-in-out infinite" })} />
+              <ellipse cx="20" cy="14" rx="6" ry="4" fill="none" stroke="#00bcff" strokeWidth="0.3" opacity="0.15" style={cs({ animation: "rackPathShimmer 4s 1s ease-in-out infinite" })} />
+              <line x1="2" y1="14" x2="38" y2="14" stroke={color} strokeWidth="0.2" opacity="0.15" />
+              <line x1="20" y1="2" x2="20" y2="26" stroke={color} strokeWidth="0.2" opacity="0.15" />
+              {[
+                { cx: 20, cy: 13, r: 1.5, o: 0.9, d: 0.1 },
+                { cx: 24, cy: 11, r: 1, o: 0.7, d: 0.2 },
+                { cx: 16, cy: 12, r: 1.2, o: 0.8, d: 0.15 },
+                { cx: 28, cy: 14, r: 0.8, o: 0.5, d: 0.25 },
+                { cx: 12, cy: 16, r: 0.7, o: 0.4, d: 0.3 },
+                { cx: 22, cy: 18, r: 0.8, o: 0.5, d: 0.35 },
+                { cx: 32, cy: 12, r: 0.5, o: 0.3, d: 0.4 },
+              ].map((dot, i) => (
+                <circle key={i} cx={dot.cx} cy={dot.cy} r={dot.r} fill="#f2a80d" opacity={dot.o} style={cs({ animation: `rackPathShimmer ${2.5 + i * 0.3}s ${dot.d + 0.5}s ease-in-out infinite` })} />
+              ))}
+            </svg>
+          </DriftIn>
           <div className="flex gap-1">
-            <MiniKnob color={color} value={0.7} size={14} />
-            <MiniKnob color="#00bcff" value={0.55} size={14} />
+            <MiniKnob color={color} value={0.7} size={14} delay={0.2} />
+            <MiniKnob color="#00bcff" value={0.55} size={14} delay={0.3} />
           </div>
         </div>
       );
