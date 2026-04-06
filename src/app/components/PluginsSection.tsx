@@ -16,6 +16,17 @@ const plugins = [
     originalPrice: 129,
   },
   {
+    name: "Lush Imager",
+    tagline: "Stereo Imager",
+    description:
+      "Place your sound in 3D space with surgical precision. Stereo widening, mid/side processing, spatial depth control, and a Lush knob for adding immersive reverb to your stereo field.",
+    accentColor: "#7900ff",
+    mockType: "imager",
+    comingSoon: true,
+    price: 99,
+    originalPrice: 129,
+  },
+  {
     name: "Lush Verb",
     tagline: "Reverb",
     description:

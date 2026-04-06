@@ -423,6 +423,89 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             </div>
           </div>
         );
+      case "imager":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* 3D Spatial Audio Sphere */}
+            <div className="w-full flex justify-center">
+              <svg viewBox="0 0 200 120" className="w-full h-28">
+                <defs>
+                  <radialGradient id="sphereGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#7900ff" stopOpacity="0.1" />
+                    <stop offset="50%" stopColor="#00bcff" stopOpacity="0.04" />
+                    <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+                  </radialGradient>
+                </defs>
+
+                {/* Background glow */}
+                <ellipse cx="100" cy="60" rx="95" ry="55" fill="url(#sphereGlow)" />
+
+                {/* Outer sphere boundary */}
+                <ellipse cx="100" cy="60" rx="90" ry="50" fill="none" stroke="#7900ff" strokeWidth="0.8" opacity="0.3" />
+
+                {/* 3D perspective grid - concentric ellipses */}
+                <ellipse cx="100" cy="60" rx="70" ry="38" fill="none" stroke="#7900ff" strokeWidth="0.4" opacity="0.2" />
+                <ellipse cx="100" cy="60" rx="50" ry="27" fill="none" stroke="#7900ff" strokeWidth="0.4" opacity="0.15" />
+                <ellipse cx="100" cy="60" rx="30" ry="16" fill="none" stroke="#00bcff" strokeWidth="0.4" opacity="0.15" />
+                <ellipse cx="100" cy="60" rx="12" ry="6" fill="none" stroke="#00bcff" strokeWidth="0.4" opacity="0.12" />
+
+                {/* Longitude lines for 3D sphere effect */}
+                <ellipse cx="100" cy="60" rx="20" ry="50" fill="none" stroke="#7900ff" strokeWidth="0.3" opacity="0.1" />
+                <ellipse cx="100" cy="60" rx="50" ry="50" fill="none" stroke="#7900ff" strokeWidth="0.3" opacity="0.08" />
+                <ellipse cx="100" cy="60" rx="75" ry="50" fill="none" stroke="#7900ff" strokeWidth="0.3" opacity="0.06" />
+
+                {/* Cross-hair grid lines */}
+                <line x1="10" y1="60" x2="190" y2="60" stroke="#7900ff" strokeWidth="0.3" opacity="0.15" />
+                <line x1="100" y1="8" x2="100" y2="112" stroke="#7900ff" strokeWidth="0.3" opacity="0.15" />
+
+                {/* Gold audio dots - center cluster (main focus) */}
+                <circle cx="100" cy="58" r="3.5" fill="#f2a80d" opacity="0.95" />
+                <circle cx="108" cy="54" r="2.5" fill="#f2a80d" opacity="0.85" />
+                <circle cx="92" cy="56" r="2.8" fill="#f2a80d" opacity="0.9" />
+                <circle cx="104" cy="65" r="2" fill="#f2a80d" opacity="0.8" />
+                <circle cx="96" cy="63" r="2.2" fill="#f2a80d" opacity="0.82" />
+
+                {/* Mid-field dots */}
+                <circle cx="130" cy="52" r="2" fill="#f2a80d" opacity="0.7" />
+                <circle cx="70" cy="55" r="1.8" fill="#f2a80d" opacity="0.65" />
+                <circle cx="125" cy="68" r="1.8" fill="#f2a80d" opacity="0.6" />
+                <circle cx="75" cy="70" r="1.5" fill="#f2a80d" opacity="0.55" />
+                <circle cx="115" cy="42" r="1.5" fill="#f2a80d" opacity="0.5" />
+                <circle cx="85" cy="45" r="1.6" fill="#f2a80d" opacity="0.55" />
+                <circle cx="120" cy="75" r="1.3" fill="#f2a80d" opacity="0.45" />
+                <circle cx="80" cy="78" r="1.4" fill="#f2a80d" opacity="0.48" />
+
+                {/* Far-field dots - smaller and more transparent */}
+                <circle cx="155" cy="55" r="1.2" fill="#f2a80d" opacity="0.35" />
+                <circle cx="45" cy="62" r="1" fill="#f2a80d" opacity="0.3" />
+                <circle cx="150" cy="70" r="1" fill="#f2a80d" opacity="0.28" />
+                <circle cx="50" cy="50" r="1.1" fill="#f2a80d" opacity="0.32" />
+                <circle cx="160" cy="45" r="0.8" fill="#f2a80d" opacity="0.25" />
+                <circle cx="40" cy="72" r="0.9" fill="#f2a80d" opacity="0.22" />
+                <circle cx="140" cy="38" r="0.9" fill="#f2a80d" opacity="0.2" />
+                <circle cx="60" cy="82" r="0.8" fill="#f2a80d" opacity="0.18" />
+                <circle cx="170" cy="60" r="0.7" fill="#f2a80d" opacity="0.15" />
+                <circle cx="30" cy="58" r="0.7" fill="#f2a80d" opacity="0.12" />
+
+                {/* Glow halos on center dots */}
+                <circle cx="100" cy="58" r="8" fill="#f2a80d" opacity="0.06" />
+                <circle cx="108" cy="54" r="6" fill="#f2a80d" opacity="0.04" />
+                <circle cx="92" cy="56" r="6" fill="#f2a80d" opacity="0.04" />
+
+                {/* L/R labels */}
+                <text x="14" y="63" fill="#7900ff" fontSize="6" opacity="0.4" fontFamily="monospace">L</text>
+                <text x="183" y="63" fill="#7900ff" fontSize="6" opacity="0.4" fontFamily="monospace">R</text>
+              </svg>
+            </div>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Width" color={color} value={0.7} />
+              <MockKnob label="Depth" color="#00bcff" value={0.55} />
+              <MockKnob label="Center" color={color} value={0.5} />
+              <MockKnob label="Spread" color="#00bcff" value={0.6} />
+              <LushKnob color={color} />
+            </div>
+          </div>
+        );
       default:
         return null;
     }
