@@ -151,13 +151,14 @@ function AnimPath({ d, color, width = 1, delay = 0.1, len = 120, fill }: { d: st
 
 function AnimBar({ h, color, i, pulse = true }: { h: number; color: string; i: number; pulse?: boolean }) {
   const d = 0.08 * i;
+  const pulseScale = 0.7 + ((i * 7 + 3) % 10) * 0.025;
   return (
     <div
       className="w-0.5 rounded-t origin-bottom"
       style={cs({
         height: `${h * 100}%`,
         backgroundColor: color,
-        "--pulse-scale": `${0.7 + Math.random() * 0.25}`,
+        "--pulse-scale": `${pulseScale}`,
         "--bar-opacity": h > 0.5 ? "1" : "0.6",
         transformOrigin: "bottom",
         animation: `rackBarGrow 0.5s ${d + 0.15}s both cubic-bezier(0.22,1,0.36,1)${pulse ? `, rackBarPulse ${1.2 + i * 0.15}s ${0.5 + d}s ease-in-out infinite` : ""}`,
@@ -168,6 +169,7 @@ function AnimBar({ h, color, i, pulse = true }: { h: number; color: string; i: n
 
 function AnimWideBar({ h, color, i }: { h: number; color: string; i: number }) {
   const d = 0.06 * i;
+  const pulseScale = 0.72 + ((i * 11 + 5) % 10) * 0.02;
   return (
     <div
       className="w-1 rounded-t origin-bottom"
@@ -175,7 +177,7 @@ function AnimWideBar({ h, color, i }: { h: number; color: string; i: number }) {
         height: `${h * 100}%`,
         backgroundColor: color,
         opacity: 0.7,
-        "--pulse-scale": `${0.72 + Math.random() * 0.2}`,
+        "--pulse-scale": `${pulseScale}`,
         "--bar-opacity": "0.7",
         transformOrigin: "bottom",
         animation: `rackBarGrow 0.5s ${d + 0.1}s both cubic-bezier(0.22,1,0.36,1), rackBarPulse ${1.0 + i * 0.2}s ${0.4 + d}s ease-in-out infinite`,
