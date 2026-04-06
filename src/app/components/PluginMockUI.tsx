@@ -506,6 +506,133 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             </div>
           </div>
         );
+      case "modulation":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* LFO waveform visualization */}
+            <div className="w-full h-10 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
+              <svg viewBox="0 0 200 40" className="w-full h-full">
+                {/* LFO sine wave */}
+                <path
+                  d="M0,20 C12,5 25,5 37,20 C50,35 62,35 75,20 C87,5 100,5 112,20 C125,35 137,35 150,20 C162,5 175,5 187,20 L200,20"
+                  fill="none"
+                  stroke={color}
+                  strokeWidth="1.5"
+                  opacity="0.7"
+                />
+                {/* Modulated signal overlay */}
+                <path
+                  d="M0,20 C8,12 16,8 25,14 C33,20 42,28 50,22 C58,16 67,10 75,18 C83,26 92,30 100,22 C108,14 117,10 125,18 C133,26 142,30 150,22 C158,14 167,8 175,16 C183,24 192,28 200,20"
+                  fill="none"
+                  stroke="#00bcff"
+                  strokeWidth="0.8"
+                  opacity="0.4"
+                />
+              </svg>
+            </div>
+            {/* Mode selector */}
+            <div className="flex gap-1">
+              {["CHR", "FLG", "PHS"].map((mode, i) => (
+                <span
+                  key={mode}
+                  className="text-[7px] px-1.5 py-0.5 rounded"
+                  style={{
+                    backgroundColor: i === 0 ? `${color}30` : "transparent",
+                    color: i === 0 ? color : "#555",
+                    border: `1px solid ${i === 0 ? `${color}50` : "#333"}`,
+                  }}
+                >
+                  {mode}
+                </span>
+              ))}
+            </div>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Rate" color={color} value={0.4} />
+              <MockKnob label="Depth" color={color} value={0.6} />
+              <MockKnob label="Fdbk" color={color} value={0.35} />
+              <LushKnob color={color} />
+              <MockKnob label="Mix" color={color} value={0.5} />
+            </div>
+          </div>
+        );
+      case "distortion":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* Distortion transfer curve */}
+            <svg viewBox="0 0 200 60" className="w-full h-12">
+              <line x1="0" y1="30" x2="200" y2="30" stroke="#333" strokeWidth="0.5" />
+              {/* Clean reference line */}
+              <line x1="0" y1="60" x2="200" y2="0" stroke="#333" strokeWidth="0.4" strokeDasharray="4,4" />
+              {/* Hard clipped / distorted curve */}
+              <path
+                d="M0,58 C10,52 20,40 35,28 C45,20 50,14 60,10 L80,8 L120,8 C130,8 140,8 150,10 C160,14 170,20 180,28 C190,36 195,42 200,48"
+                fill="none"
+                stroke={color}
+                strokeWidth="1.5"
+                opacity="0.8"
+              />
+              {/* Grit texture bars */}
+              {[30, 55, 80, 105, 130, 155, 175].map((x, i) => (
+                <rect key={i} x={x} y={8} width="2" height={4 + i * 1.5} rx="1" fill={color} opacity={0.15 + i * 0.05} />
+              ))}
+            </svg>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Drive" color={color} value={0.75} />
+              <MockKnob label="Tone" color={color} value={0.5} />
+              <MockKnob label="Output" color={color} value={0.4} />
+              <LushKnob color={color} />
+            </div>
+          </div>
+        );
+      case "exciter":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* Harmonic excitation spectrum */}
+            <div className="w-full flex justify-center gap-3 items-end">
+              {/* Low band */}
+              <div className="flex flex-col items-center gap-1">
+                <div className="flex gap-px items-end h-10">
+                  {[0.3, 0.5, 0.7, 0.4, 0.2].map((v, i) => (
+                    <div
+                      key={i}
+                      className="w-1 rounded-t"
+                      style={{ height: `${v * 100}%`, backgroundColor: `${color}${Math.round(v * 200).toString(16).padStart(2, "0")}` }}
+                    />
+                  ))}
+                </div>
+                <span className="text-[6px] text-zinc-600">LOW</span>
+              </div>
+              {/* Sparkle indicator */}
+              <svg viewBox="0 0 30 30" className="w-6 h-6">
+                <line x1="15" y1="2" x2="15" y2="28" stroke={color} strokeWidth="0.5" opacity="0.3" />
+                <line x1="2" y1="15" x2="28" y2="15" stroke={color} strokeWidth="0.5" opacity="0.3" />
+                <line x1="5" y1="5" x2="25" y2="25" stroke={color} strokeWidth="0.4" opacity="0.2" />
+                <line x1="25" y1="5" x2="5" y2="25" stroke={color} strokeWidth="0.4" opacity="0.2" />
+                <circle cx="15" cy="15" r="3" fill={color} opacity="0.3" />
+                <circle cx="15" cy="15" r="1.5" fill={color} opacity="0.8" />
+              </svg>
+              {/* High band */}
+              <div className="flex flex-col items-center gap-1">
+                <div className="flex gap-px items-end h-10">
+                  {[0.2, 0.4, 0.8, 0.9, 0.6, 0.3].map((v, i) => (
+                    <div
+                      key={i}
+                      className="w-1 rounded-t"
+                      style={{ height: `${v * 100}%`, backgroundColor: `#f2a80d${Math.round(v * 200).toString(16).padStart(2, "0")}` }}
+                    />
+                  ))}
+                </div>
+                <span className="text-[6px] text-zinc-600">HIGH</span>
+              </div>
+            </div>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Low" color={color} value={0.4} />
+              <MockKnob label="High" color="#f2a80d" value={0.65} />
+              <MockKnob label="Mix" color={color} value={0.55} />
+              <LushKnob color={color} />
+            </div>
+          </div>
+        );
       case "keybpm":
         return (
           <div className="flex flex-col items-center gap-3 w-full">

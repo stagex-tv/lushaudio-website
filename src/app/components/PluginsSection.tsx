@@ -137,6 +137,39 @@ const plugins = [
     originalPrice: 129,
   },
   {
+    name: "Lush Modulation",
+    tagline: "Chorus / Flanger / Phaser",
+    description:
+      "Three classic modulation effects in one plugin. Switch between chorus, flanger, and phaser modes with shared controls for rate, depth, and feedback — plus a Lush knob for modulated reverb.",
+    accentColor: "#0531fa",
+    mockType: "modulation",
+    comingSoon: true,
+    price: 99,
+    originalPrice: 129,
+  },
+  {
+    name: "Lush Distortion",
+    tagline: "Distortion",
+    description:
+      "From gritty overdrive to full-blown destruction. Multiple distortion algorithms, tone shaping, cabinet simulation, and a Lush knob for blending reverb into the chaos.",
+    accentColor: "#f2a80d",
+    mockType: "distortion",
+    comingSoon: true,
+    price: 99,
+    originalPrice: 129,
+  },
+  {
+    name: "Lush Exciter",
+    tagline: "Harmonic Exciter",
+    description:
+      "Add air, presence, and sparkle to any source. Multi-band harmonic generation with separate low and high excitation controls, and a Lush knob for excited reverb tails.",
+    accentColor: "#00bcff",
+    mockType: "exciter",
+    comingSoon: true,
+    price: 99,
+    originalPrice: 129,
+  },
+  {
     name: "Lush Imager",
     tagline: "Stereo Imager",
     description:
