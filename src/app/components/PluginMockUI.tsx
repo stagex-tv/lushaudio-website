@@ -506,6 +506,60 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             </div>
           </div>
         );
+      case "loudness":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* LUFS Meter Visualization */}
+            <div className="w-full flex justify-center gap-4 items-end">
+              {/* Stereo meters */}
+              <div className="flex gap-1.5">
+                <div className="flex flex-col items-center gap-1">
+                  <div className="w-4 h-24 bg-zinc-900 rounded border border-zinc-800 overflow-hidden relative">
+                    <div className="absolute bottom-0 w-full rounded-b" style={{ height: "72%", background: `linear-gradient(to top, ${color}30, ${color}80, ${color})` }} />
+                    <div className="absolute w-full h-px" style={{ bottom: "60%", backgroundColor: "#f2a80d", opacity: 0.6 }} />
+                  </div>
+                  <span className="text-[6px] text-zinc-600">L</span>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <div className="w-4 h-24 bg-zinc-900 rounded border border-zinc-800 overflow-hidden relative">
+                    <div className="absolute bottom-0 w-full rounded-b" style={{ height: "68%", background: `linear-gradient(to top, ${color}30, ${color}80, ${color})` }} />
+                    <div className="absolute w-full h-px" style={{ bottom: "60%", backgroundColor: "#f2a80d", opacity: 0.6 }} />
+                  </div>
+                  <span className="text-[6px] text-zinc-600">R</span>
+                </div>
+              </div>
+              {/* Readouts */}
+              <div className="flex flex-col gap-2 pb-4">
+                <div className="flex flex-col">
+                  <span className="text-[7px] text-zinc-600 tracking-wider">INTEGRATED</span>
+                  <span className="text-sm font-mono font-bold" style={{ color }}>-14.2</span>
+                  <span className="text-[7px] text-zinc-600">LUFS</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[7px] text-zinc-600 tracking-wider">TRUE PEAK</span>
+                  <span className="text-xs font-mono" style={{ color: "#f2a80d" }}>-1.0 dB</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[7px] text-zinc-600 tracking-wider">RANGE</span>
+                  <span className="text-xs font-mono text-zinc-400">7.2 LU</span>
+                </div>
+              </div>
+              {/* Target indicator */}
+              <div className="flex flex-col items-center gap-1 pb-4">
+                <span className="text-[7px] text-zinc-600 tracking-wider">TARGET</span>
+                <div className="px-2 py-1 rounded border" style={{ borderColor: `${color}40`, backgroundColor: `${color}10` }}>
+                  <span className="text-[9px] font-mono" style={{ color }}>-14 LUFS</span>
+                </div>
+                <span className="text-[7px] text-green-500">ON TARGET</span>
+              </div>
+            </div>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Target" color={color} value={0.5} />
+              <MockKnob label="Range" color={color} value={0.6} />
+              <LushKnob color={color} />
+            </div>
+          </div>
+        );
       default:
         return null;
     }

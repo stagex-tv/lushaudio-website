@@ -118,7 +118,7 @@ const presets: Preset[] = [
       { type: "comp", name: "Comp", color: "#00bcff" },
       { type: "multiband", name: "Multi-Band", color: "#7900ff" },
       { type: "proq", name: "Pro Q", color: "#f2a80d" },
-      { type: "saturate", name: "Saturate", color: "#f2a80d" },
+      { type: "imager", name: "Imager", color: "#7900ff" },
       { type: "limiter", name: "Limiter", color: "#7900ff" },
       { type: "loudness", name: "Loudness", color: "#00bcff" },
     ],
@@ -290,6 +290,31 @@ function DesktopModuleContent({ type, color }: { type: string; color: string }) 
           <div className="flex flex-col items-start">
             <span className="text-[6px] text-zinc-600">LUFS</span>
             <span className="text-[8px] font-mono" style={{ color }}>-14.2</span>
+          </div>
+        </div>
+      );
+    case "imager":
+      return (
+        <div className="flex flex-col items-center gap-1">
+          <svg viewBox="0 0 40 28" className="w-10 h-6">
+            {/* Mini 3D sphere with dots */}
+            <ellipse cx="20" cy="14" rx="18" ry="12" fill="none" stroke={color} strokeWidth="0.5" opacity="0.3" />
+            <ellipse cx="20" cy="14" rx="12" ry="8" fill="none" stroke={color} strokeWidth="0.3" opacity="0.2" />
+            <ellipse cx="20" cy="14" rx="6" ry="4" fill="none" stroke="#00bcff" strokeWidth="0.3" opacity="0.15" />
+            <line x1="2" y1="14" x2="38" y2="14" stroke={color} strokeWidth="0.2" opacity="0.15" />
+            <line x1="20" y1="2" x2="20" y2="26" stroke={color} strokeWidth="0.2" opacity="0.15" />
+            {/* Gold dots */}
+            <circle cx="20" cy="13" r="1.5" fill="#f2a80d" opacity="0.9" />
+            <circle cx="24" cy="11" r="1" fill="#f2a80d" opacity="0.7" />
+            <circle cx="16" cy="12" r="1.2" fill="#f2a80d" opacity="0.8" />
+            <circle cx="28" cy="14" r="0.8" fill="#f2a80d" opacity="0.5" />
+            <circle cx="12" cy="16" r="0.7" fill="#f2a80d" opacity="0.4" />
+            <circle cx="22" cy="18" r="0.8" fill="#f2a80d" opacity="0.5" />
+            <circle cx="32" cy="12" r="0.5" fill="#f2a80d" opacity="0.3" />
+          </svg>
+          <div className="flex gap-1">
+            <MiniKnob color={color} value={0.7} size={14} />
+            <MiniKnob color="#00bcff" value={0.55} size={14} />
           </div>
         </div>
       );
