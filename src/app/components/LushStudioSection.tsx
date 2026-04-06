@@ -187,7 +187,7 @@ function DesktopModuleContent({ type, color }: { type: string; color: string }) 
     case "saturate":
       return (
         <div className="flex flex-col items-center gap-1">
-          <svg viewBox="0 0 40 40" className="w-8 h-8">
+          <svg viewBox="0 0 40 40" className="w-6 h-5">
             <line x1="0" y1="40" x2="40" y2="0" stroke="#222" strokeWidth="0.4" strokeDasharray="2,2" />
             <path d="M0,40 C4,36 8,28 12,22 C16,16 20,10 24,7 C28,5 32,3.5 36,3 L40,2.5" fill="none" stroke={color} strokeWidth="1" />
           </svg>
