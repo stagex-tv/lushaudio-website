@@ -100,8 +100,8 @@ const plugins = [
     accentColor: "#00bcff",
     mockType: "deesser",
     comingSoon: true,
-    price: 99,
-    originalPrice: 129,
+    price: 49,
+    originalPrice: 79,
   },
   {
     name: "Lush Auto-Tune",
@@ -122,8 +122,8 @@ const plugins = [
     accentColor: "#f2a80d",
     mockType: "keybpm",
     comingSoon: true,
-    price: 99,
-    originalPrice: 129,
+    price: 49,
+    originalPrice: 79,
   },
   {
     name: "Lush Saturation",
@@ -155,8 +155,8 @@ const plugins = [
     accentColor: "#00bcff",
     mockType: "loudness",
     comingSoon: true,
-    price: 99,
-    originalPrice: 129,
+    price: 49,
+    originalPrice: 79,
   },
   {
     name: "Lush Multi-Band",
