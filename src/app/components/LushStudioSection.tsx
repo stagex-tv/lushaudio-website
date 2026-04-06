@@ -127,10 +127,10 @@ const presets: Preset[] = [
     ],
   },
   {
-    name: "BV Effects — Thick",
+    name: "Backup FX — Thick",
     modules: [
-      { type: "autotune", name: "Auto-Tune", color: "#00bcff" },
       { type: "deess", name: "De-Ess", color: "#00bcff" },
+      { type: "autotune", name: "Auto-Tune", color: "#00bcff" },
       { type: "comp", name: "Comp", color: "#00bcff" },
       { type: "proq_hpf", name: "Pro Q", color: "#f2a80d" },
       { type: "distortion", name: "Distort", color: "#f2a80d" },
