@@ -126,6 +126,18 @@ const presets: Preset[] = [
       { type: "loudness", name: "Loudness", color: "#00bcff" },
     ],
   },
+  {
+    name: "BV Effects — Thick",
+    modules: [
+      { type: "autotune", name: "Auto-Tune", color: "#00bcff" },
+      { type: "deess", name: "De-Ess", color: "#00bcff" },
+      { type: "comp", name: "Comp", color: "#00bcff" },
+      { type: "proq_hpf", name: "Pro Q", color: "#f2a80d" },
+      { type: "distortion", name: "Distort", color: "#f2a80d" },
+      { type: "modulation", name: "Chorus", color: "#0531fa" },
+      { type: "verb", name: "Verb", color: "#0531fa" },
+    ],
+  },
 ];
 
 /* ─── Module content renderer (desktop) ─── */
@@ -436,6 +448,56 @@ function DesktopModuleContent({ type, color }: { type: string; color: string }) 
           <div className="flex gap-1">
             <MiniKnob color={color} value={0.7} size={14} delay={0.2} />
             <MiniKnob color="#00bcff" value={0.55} size={14} delay={0.3} />
+          </div>
+        </div>
+      );
+    case "proq_hpf":
+      return (
+        <div className="flex flex-col items-center gap-1">
+          <DriftIn dx={-6} dy={-10} delay={0.05}>
+            <svg viewBox="0 0 80 24" className="w-16 h-5">
+              <line x1="0" y1="12" x2="80" y2="12" stroke="#222" strokeWidth="0.5" />
+              {/* HPF + LPF curve: low cut, flat mid, high cut */}
+              <AnimPath d="M0,22 C5,22 8,20 12,16 C16,12 18,12 25,12 L55,12 C58,12 62,12 66,14 C70,17 74,20 80,22" color={color} len={100} delay={0.12} />
+            </svg>
+          </DriftIn>
+          <div className="flex gap-1">
+            <MiniKnob color={color} value={0.3} size={14} delay={0.18} />
+            <MiniKnob color={color} value={0.5} size={14} delay={0.28} />
+            <MiniKnob color={color} value={0.7} size={14} delay={0.38} />
+          </div>
+        </div>
+      );
+    case "distortion":
+      return (
+        <div className="flex flex-col items-center gap-1">
+          <DriftIn dy={-10} dx={5} delay={0.05}>
+            <svg viewBox="0 0 50 24" className="w-10 h-5">
+              {/* Hard-clip transfer curve */}
+              <line x1="0" y1="24" x2="50" y2="0" stroke="#222" strokeWidth="0.3" strokeDasharray="2,2" />
+              <AnimPath d="M0,24 C5,20 10,14 15,10 C18,8 20,6 22,6 L28,6 C30,6 32,8 35,10 C40,14 45,20 50,24" color={color} len={70} delay={0.1} />
+            </svg>
+          </DriftIn>
+          <div className="flex gap-1">
+            <MiniKnob color={color} value={0.75} size={14} delay={0.15} />
+            <MiniKnob color={color} value={0.5} size={14} delay={0.25} />
+          </div>
+        </div>
+      );
+    case "modulation":
+      return (
+        <div className="flex flex-col items-center gap-1">
+          <DriftIn dy={-8} dx={-5} delay={0.05}>
+            <svg viewBox="0 0 60 20" className="w-12 h-4">
+              {/* LFO sine wave */}
+              <AnimPath d="M0,10 C5,2 10,2 15,10 C20,18 25,18 30,10 C35,2 40,2 45,10 C50,18 55,18 60,10" color={color} len={90} delay={0.1} />
+              {/* Modulated signal */}
+              <AnimPath d="M0,10 C4,6 8,4 12,7 C16,10 20,14 24,12 C28,8 32,5 36,8 C40,12 44,15 48,12 C52,8 56,5 60,8" color="#00bcff" width={0.6} len={80} delay={0.25} />
+            </svg>
+          </DriftIn>
+          <div className="flex gap-1">
+            <MiniKnob color={color} value={0.45} size={14} delay={0.15} />
+            <MiniKnob color={color} value={0.6} size={14} delay={0.25} />
           </div>
         </div>
       );
