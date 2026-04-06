@@ -155,9 +155,19 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
       case "verb":
         return (
           <div className="flex flex-col items-center gap-3 w-full">
-            <div className="w-full h-10 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
-              <svg viewBox="0 0 200 40" className="w-full h-full">
-                <path d="M0,38 L10,5 C30,8 60,15 100,25 C140,32 180,37 200,38" fill={`${color}15`} stroke={color} strokeWidth="1" opacity="0.6" />
+            <div className="w-full h-16 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
+              <svg viewBox="0 0 200 64" className="w-full h-full">
+                {/* Early reflections */}
+                {[15, 22, 28, 35, 42].map((x, i) => (
+                  <line key={i} x1={x} y1={60} x2={x} y2={60 - (30 - i * 5)} stroke={color} strokeWidth="1" opacity={0.3 - i * 0.04} />
+                ))}
+                {/* Reverb tail */}
+                <path d="M0,60 L12,8 C30,12 55,22 90,35 C130,46 170,56 200,60" fill={`${color}12`} stroke={color} strokeWidth="1.2" opacity="0.7" />
+                {/* Decay envelope line */}
+                <path d="M12,8 C40,10 80,20 130,38 C160,48 185,56 200,60" fill="none" stroke={`${color}`} strokeWidth="0.5" strokeDasharray="3,3" opacity="0.3" />
+                {/* Pre-delay marker */}
+                <line x1="12" y1="4" x2="12" y2="62" stroke={color} strokeWidth="0.5" opacity="0.25" strokeDasharray="2,2" />
+                <text x="14" y="8" fill={color} fontSize="5" opacity="0.4" fontFamily="monospace">PRE</text>
               </svg>
             </div>
             <div className="flex gap-3 items-center">
@@ -214,10 +224,20 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
       case "gate":
         return (
           <div className="flex flex-col items-center gap-3 w-full">
-            <div className="flex gap-0.5 items-end h-8">
-              {[0.1, 0.1, 0.9, 0.9, 0.9, 0.1, 0.1, 0.1, 0.9, 0.9, 0.1, 0.1, 0.9, 0.9, 0.9, 0.9, 0.1].map((v, i) => (
-                <div key={i} className="w-1.5 rounded-t" style={{ height: `${v * 100}%`, backgroundColor: v > 0.5 ? color : `${color}30` }} />
-              ))}
+            {/* Gate waveform with threshold line */}
+            <div className="w-full h-14 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
+              <svg viewBox="0 0 200 56" className="w-full h-full">
+                {/* Threshold line */}
+                <line x1="0" y1="18" x2="200" y2="18" stroke={color} strokeWidth="0.5" opacity="0.3" strokeDasharray="4,4" />
+                <text x="3" y="15" fill={color} fontSize="5" opacity="0.35" fontFamily="monospace">THR</text>
+                {/* Input signal (grey, crosses threshold) */}
+                <path d="M0,28 C5,28 8,25 12,15 C16,8 20,10 25,22 C28,30 32,35 38,35 C42,35 45,32 48,28 C52,22 55,12 60,8 C65,14 68,28 72,35 C76,38 80,38 85,35 C88,30 92,28 95,30 C98,32 102,18 108,10 C112,6 115,14 120,25 C125,35 130,38 135,35 C140,30 142,28 148,30 C152,35 158,12 162,8 C166,14 170,28 175,35 C180,38 185,30 190,22 C195,14 198,20 200,28" fill="none" stroke="#555" strokeWidth="0.8" />
+                {/* Gated output (colored, only where open) */}
+                <path d="M8,28 C10,22 12,15 16,8 C20,10 22,18 25,22" fill="none" stroke={color} strokeWidth="1.2" opacity="0.8" />
+                <path d="M50,28 C52,22 55,12 60,8 C65,14 68,28 70,32" fill="none" stroke={color} strokeWidth="1.2" opacity="0.8" />
+                <path d="M100,20 C104,12 108,10 112,6 C115,14 118,22 120,25" fill="none" stroke={color} strokeWidth="1.2" opacity="0.8" />
+                <path d="M155,16 C158,12 162,8 166,14 C168,20 170,28 172,32" fill="none" stroke={color} strokeWidth="1.2" opacity="0.8" />
+              </svg>
             </div>
             <div className="flex gap-3 items-center">
               <MockKnob label="Thresh" color={color} value={0.35} />
@@ -231,11 +251,28 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
       case "limiter":
         return (
           <div className="flex flex-col items-center gap-3 w-full">
+            {/* Gain reduction history + meter */}
+            <div className="w-full h-14 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
+              <svg viewBox="0 0 200 56" className="w-full h-full">
+                {/* Ceiling line */}
+                <line x1="0" y1="10" x2="200" y2="10" stroke={color} strokeWidth="0.5" opacity="0.35" strokeDasharray="4,4" />
+                <text x="3" y="8" fill={color} fontSize="5" opacity="0.35" fontFamily="monospace">CEIL</text>
+                {/* Input signal waveform */}
+                <path d="M0,30 C10,28 15,22 25,16 C35,10 40,8 50,12 C60,18 65,25 75,20 C85,14 90,8 100,10 C110,14 115,22 125,18 C135,12 140,6 150,10 C160,16 165,24 175,20 C185,14 190,10 200,14" fill="none" stroke="#555" strokeWidth="0.8" />
+                {/* Limited output (flat at ceiling) */}
+                <path d="M0,30 C10,28 15,22 25,16 C30,12 32,10 35,10 L45,10 C48,10 50,12 55,16 C60,18 65,25 75,20 C80,16 85,14 88,10 L112,10 C115,12 118,18 125,18 C130,14 135,12 138,10 L162,10 C165,14 170,20 175,20 C180,16 185,14 188,10 L200,10" fill="none" stroke={color} strokeWidth="1.2" opacity="0.7" />
+                {/* GR amount shading */}
+                <path d="M35,10 L35,8 C35,6 40,6 45,8 L45,10 Z" fill={color} opacity="0.15" />
+                <path d="M88,10 L88,5 C95,4 105,4 112,5 L112,10 Z" fill={color} opacity="0.15" />
+                <path d="M138,10 L138,6 C145,5 155,5 162,6 L162,10 Z" fill={color} opacity="0.15" />
+              </svg>
+            </div>
+            {/* Meter bar */}
             <div className="w-full flex items-center gap-2">
-              <div className="flex-1 h-3 rounded-full bg-zinc-800 overflow-hidden">
+              <div className="flex-1 h-2.5 rounded-full bg-zinc-800 overflow-hidden">
                 <div className="h-full rounded-full" style={{ width: "75%", background: `linear-gradient(90deg, ${color}40, ${color})` }} />
               </div>
-              <span className="text-[8px] text-zinc-500">-3.2 dB</span>
+              <span className="text-[8px] text-zinc-500 font-mono">-3.2 dB</span>
             </div>
             <div className="flex gap-3 items-center">
               <MockKnob label="Input" color={color} value={0.7} />
