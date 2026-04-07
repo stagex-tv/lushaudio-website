@@ -14,6 +14,7 @@ const words = [
   "LIMITER",
   "SOFTCLIP",
   "DE-ESSER",
+  "DE-POP",
   "HARMONIX",
   "AUTO-TUNE",
   "SATURATION",

@@ -104,6 +104,17 @@ const plugins = [
     originalPrice: 79,
   },
   {
+    name: "Lush De-Pop",
+    tagline: "Plosive Tamer",
+    description:
+      "A post-production pop filter. Transparently tames plosives (P, B, T) without affecting the rest of your vocal. Intelligent transient detection, adjustable threshold, and the Lush knob for adding space after cleanup.",
+    accentColor: "#7900ff",
+    mockType: "depop",
+    comingSoon: true,
+    price: 49,
+    originalPrice: 69,
+  },
+  {
     name: "Lush Auto-Tune",
     tagline: "Pitch Correction",
     description:
