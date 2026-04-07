@@ -840,6 +840,49 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             </div>
           </div>
         );
+      case "depop":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* Waveform with plosive detection */}
+            <div className="w-full h-14 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
+              <svg viewBox="0 0 200 56" className="w-full h-full">
+                {/* Zero line */}
+                <line x1="0" y1="28" x2="200" y2="28" stroke="#333" strokeWidth="0.5" />
+                {/* Normal waveform */}
+                <path d="M0,28 L5,24 L10,32 L15,22 L20,34 L25,26 L30,30 L35,25 L40,31 L45,27 L50,29 L55,26 L60,30"
+                  fill="none" stroke="#555" strokeWidth="1" />
+                {/* Plosive spike (detected) */}
+                <path d="M60,30 L63,8 L65,6 L67,4 L70,8 L73,12 L75,28 L77,44 L79,48 L81,50 L83,46 L85,38 L88,30"
+                  fill="none" stroke={`${color}90`} strokeWidth="1.5" />
+                {/* Detection bracket */}
+                <rect x="58" y="1" width="33" height="54" rx="2" fill={`${color}08`} stroke={`${color}50`} strokeWidth="0.5" strokeDasharray="2,2" />
+                <text x="74.5" y="8" fill={color} fontSize="5" textAnchor="middle" fontFamily="monospace" fontWeight="bold">P</text>
+                {/* Tamed waveform after plosive */}
+                <path d="M88,30 L93,26 L98,31 L103,24 L108,33 L113,27 L118,30 L123,25 L128,32 L133,26 L138,29"
+                  fill="none" stroke="#555" strokeWidth="1" />
+                {/* Second plosive (smaller) */}
+                <path d="M138,29 L141,14 L143,12 L145,14 L148,22 L150,28 L152,36 L154,40 L156,38 L158,30"
+                  fill="none" stroke={`${color}90`} strokeWidth="1.5" />
+                <rect x="136" y="5" width="25" height="46" rx="2" fill={`${color}08`} stroke={`${color}50`} strokeWidth="0.5" strokeDasharray="2,2" />
+                <text x="148.5" y="12" fill={color} fontSize="5" textAnchor="middle" fontFamily="monospace" fontWeight="bold">B</text>
+                {/* Remaining waveform */}
+                <path d="M158,30 L163,26 L168,31 L173,25 L178,32 L183,27 L188,30 L193,26 L198,29 L200,28"
+                  fill="none" stroke="#555" strokeWidth="1" />
+                {/* Reduction meter bar */}
+                <rect x="2" y="48" width="40" height="5" rx="2" fill="#222" />
+                <rect x="2" y="48" width="18" height="5" rx="2" fill={`${color}60`} />
+                <text x="44" y="52.5" fill="#666" fontSize="4" fontFamily="monospace">-6.2 dB</text>
+              </svg>
+            </div>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Thresh" color={color} value={0.35} />
+              <MockKnob label="Depth" color={color} value={0.6} />
+              <MockKnob label="Speed" color={color} value={0.5} />
+              <MockKnob label="Filter" color={color} value={0.3} />
+              <LushKnob color={color} />
+            </div>
+          </div>
+        );
       default:
         return null;
     }
