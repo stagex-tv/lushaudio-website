@@ -134,7 +134,7 @@ const presets: Preset[] = [
       { type: "comp", name: "Comp", color: "#00bcff" },
       { type: "proq_hpf", name: "Pro Q", color: "#f2a80d" },
       { type: "distortion", name: "Distort", color: "#f2a80d" },
-      { type: "modulation", name: "Chorus", color: "#0531fa" },
+      { type: "chorus", name: "Chorus", color: "#0531fa" },
       { type: "verb", name: "Verb", color: "#0531fa" },
     ],
   },
@@ -484,15 +484,15 @@ function DesktopModuleContent({ type, color }: { type: string; color: string }) 
           </div>
         </div>
       );
-    case "modulation":
+    case "chorus":
       return (
         <div className="flex flex-col items-center gap-1">
           <DriftIn dy={-8} dx={-5} delay={0.05}>
             <svg viewBox="0 0 60 20" className="w-12 h-4">
-              {/* LFO sine wave */}
-              <AnimPath d="M0,10 C5,2 10,2 15,10 C20,18 25,18 30,10 C35,2 40,2 45,10 C50,18 55,18 60,10" color={color} len={90} delay={0.1} />
-              {/* Modulated signal */}
-              <AnimPath d="M0,10 C4,6 8,4 12,7 C16,10 20,14 24,12 C28,8 32,5 36,8 C40,12 44,15 48,12 C52,8 56,5 60,8" color="#00bcff" width={0.6} len={80} delay={0.25} />
+              {/* Multi-voice chorus waves */}
+              <AnimPath d="M0,10 C5,4 10,4 15,10 C20,16 25,16 30,10 C35,4 40,4 45,10 C50,16 55,16 60,10" color={color} len={90} delay={0.1} />
+              <AnimPath d="M0,7 C5,2 10,12 15,7 C20,2 25,12 30,7 C35,2 40,12 45,7 C50,2 55,12 60,7" color={color} width={0.7} len={85} delay={0.2} />
+              <AnimPath d="M0,13 C5,18 10,8 15,13 C20,18 25,8 30,13 C35,18 40,8 45,13 C50,18 55,8 60,13" color="#00bcff" width={0.7} len={85} delay={0.3} />
             </svg>
           </DriftIn>
           <div className="flex gap-1">

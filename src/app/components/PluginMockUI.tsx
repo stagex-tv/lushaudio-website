@@ -543,52 +543,124 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             </div>
           </div>
         );
-      case "modulation":
+      case "chorus":
         return (
           <div className="flex flex-col items-center gap-3 w-full">
-            {/* LFO waveform visualization */}
-            <div className="w-full h-10 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
-              <svg viewBox="0 0 200 40" className="w-full h-full">
-                {/* LFO sine wave */}
-                <path
-                  d="M0,20 C12,5 25,5 37,20 C50,35 62,35 75,20 C87,5 100,5 112,20 C125,35 137,35 150,20 C162,5 175,5 187,20 L200,20"
-                  fill="none"
-                  stroke={color}
-                  strokeWidth="1.5"
-                  opacity="0.7"
-                />
-                {/* Modulated signal overlay */}
-                <path
-                  d="M0,20 C8,12 16,8 25,14 C33,20 42,28 50,22 C58,16 67,10 75,18 C83,26 92,30 100,22 C108,14 117,10 125,18 C133,26 142,30 150,22 C158,14 167,8 175,16 C183,24 192,28 200,20"
-                  fill="none"
-                  stroke="#00bcff"
-                  strokeWidth="0.8"
-                  opacity="0.4"
-                />
+            {/* Chorus voices visualization */}
+            <div className="w-full h-14 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
+              <svg viewBox="0 0 200 56" className="w-full h-full">
+                {/* Center reference */}
+                <line x1="0" y1="28" x2="200" y2="28" stroke="#333" strokeWidth="0.4" />
+                {/* Dry signal (center) */}
+                <path d="M0,28 C20,18 40,38 60,28 C80,18 100,38 120,28 C140,18 160,38 180,28 L200,28" fill="none" stroke="#666" strokeWidth="1" />
+                {/* Voice 1 — slightly delayed/detuned */}
+                <path d="M0,22 C22,12 42,32 62,22 C82,12 102,32 122,22 C142,12 162,32 182,22 L200,22" fill="none" stroke={color} strokeWidth="1" opacity="0.7" />
+                {/* Voice 2 — opposite detune */}
+                <path d="M0,34 C18,24 38,44 58,34 C78,24 98,44 118,34 C138,24 158,44 178,34 L200,34" fill="none" stroke="#00bcff" strokeWidth="1" opacity="0.7" />
+                {/* Voice 3 */}
+                <path d="M0,18 C24,8 44,28 64,18 C84,8 104,28 124,18 C144,8 164,28 184,18 L200,18" fill="none" stroke={color} strokeWidth="0.8" opacity="0.4" />
+                <path d="M0,38 C16,28 36,48 56,38 C76,28 96,48 116,38 C136,28 156,48 176,38 L200,38" fill="none" stroke="#00bcff" strokeWidth="0.8" opacity="0.4" />
               </svg>
             </div>
-            {/* Mode selector */}
-            <div className="flex gap-1">
-              {["CHR", "FLG", "PHS"].map((mode, i) => (
-                <span
-                  key={mode}
-                  className="text-[7px] px-1.5 py-0.5 rounded"
-                  style={{
-                    backgroundColor: i === 0 ? `${color}30` : "transparent",
-                    color: i === 0 ? color : "#555",
-                    border: `1px solid ${i === 0 ? `${color}50` : "#333"}`,
-                  }}
-                >
-                  {mode}
-                </span>
-              ))}
-            </div>
             <div className="flex gap-3 items-center">
-              <MockKnob label="Rate" color={color} value={0.4} />
+              <MockKnob label="Rate" color={color} value={0.35} />
               <MockKnob label="Depth" color={color} value={0.6} />
-              <MockKnob label="Fdbk" color={color} value={0.35} />
+              <MockKnob label="Voices" color={color} value={0.7} />
+              <MockKnob label="Width" color="#00bcff" value={0.75} />
               <LushKnob color={color} />
               <MockKnob label="Mix" color={color} value={0.5} />
+            </div>
+          </div>
+        );
+      case "flanger":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* Comb filter sweep visualization */}
+            <div className="w-full h-14 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
+              <svg viewBox="0 0 200 56" className="w-full h-full">
+                {/* Comb filter notches */}
+                {[10, 25, 40, 55, 70, 85, 100, 115, 130, 145, 160, 175, 190].map((x, i) => {
+                  const dip = Math.sin((i / 13) * Math.PI * 2) * 8;
+                  return (
+                    <path
+                      key={i}
+                      d={`M${x - 5},10 Q${x},${30 + dip} ${x + 5},10`}
+                      fill="none"
+                      stroke={color}
+                      strokeWidth="0.8"
+                      opacity={0.4 + Math.abs(dip) / 16}
+                    />
+                  );
+                })}
+                {/* Spectrum line */}
+                <path d="M0,12 L200,12" stroke={color} strokeWidth="0.5" opacity="0.3" />
+                <path d="M0,46 L200,46" stroke={color} strokeWidth="0.5" opacity="0.3" />
+                {/* LFO sweep indicator */}
+                <path d="M0,28 C20,16 40,40 60,28 C80,16 100,40 120,28 C140,16 160,40 180,28 L200,28" fill="none" stroke="#00bcff" strokeWidth="0.6" strokeDasharray="2,2" opacity="0.4" />
+              </svg>
+            </div>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Rate" color={color} value={0.25} />
+              <MockKnob label="Depth" color={color} value={0.7} />
+              <MockKnob label="Fdbk" color={color} value={0.55} />
+              <MockKnob label="Manual" color={color} value={0.4} />
+              <LushKnob color={color} />
+              <MockKnob label="Mix" color={color} value={0.5} />
+            </div>
+          </div>
+        );
+      case "phaser":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* Phaser stages visualization */}
+            <div className="w-full h-14 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
+              <svg viewBox="0 0 200 56" className="w-full h-full">
+                <line x1="0" y1="28" x2="200" y2="28" stroke="#333" strokeWidth="0.4" />
+                {/* Multi-stage phase shift curves */}
+                <path d="M0,28 C25,8 35,48 55,28 C75,8 85,48 105,28 C125,8 135,48 155,28 C175,8 185,48 200,28" fill="none" stroke={color} strokeWidth="1.4" opacity="0.85" />
+                {/* Secondary phase curve */}
+                <path d="M0,28 C20,18 30,38 50,28 C70,18 80,38 100,28 C120,18 130,38 150,28 C170,18 180,38 200,28" fill="none" stroke={color} strokeWidth="0.8" opacity="0.5" />
+                {/* Stage notch markers */}
+                {[35, 65, 95, 125, 155, 185].map((x, i) => (
+                  <circle key={i} cx={x} cy="28" r="1.5" fill={color} opacity="0.7" />
+                ))}
+                {/* Stages label */}
+                <text x="3" y="10" fill={color} fontSize="6" opacity="0.5" fontFamily="monospace">12 STAGES</text>
+              </svg>
+            </div>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Rate" color={color} value={0.3} />
+              <MockKnob label="Depth" color={color} value={0.65} />
+              <MockKnob label="Reson" color={color} value={0.55} />
+              <MockKnob label="Stages" color={color} value={0.8} />
+              <LushKnob color={color} />
+              <MockKnob label="Mix" color={color} value={0.5} />
+            </div>
+          </div>
+        );
+      case "doubler":
+        return (
+          <div className="flex flex-col items-center gap-3 w-full">
+            {/* Doubler waveform visualization — 3 stacked takes */}
+            <div className="w-full h-14 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
+              <svg viewBox="0 0 200 56" className="w-full h-full">
+                {/* L/R labels */}
+                <text x="3" y="10" fill={color} fontSize="6" opacity="0.4" fontFamily="monospace">L</text>
+                <text x="3" y="52" fill={color} fontSize="6" opacity="0.4" fontFamily="monospace">R</text>
+                {/* Original take (center) */}
+                <path d="M10,28 L20,20 L25,32 L35,18 L42,30 L52,22 L60,30 L72,16 L80,32 L92,18 L100,28 L112,22 L120,30 L130,16 L142,30 L150,22 L160,28 L172,18 L180,30 L190,22" fill="none" stroke="#888" strokeWidth="1" />
+                {/* Double 1 — top (slight offset) */}
+                <path d="M12,12 L22,6 L27,16 L37,4 L44,14 L54,8 L62,14 L74,2 L82,16 L94,4 L102,12 L114,8 L122,14 L132,2 L144,14 L152,8 L162,12 L174,4 L182,14 L192,8" fill="none" stroke={color} strokeWidth="0.8" opacity="0.7" />
+                {/* Double 2 — bottom (opposite offset) */}
+                <path d="M8,46 L18,40 L23,50 L33,38 L40,48 L50,42 L58,48 L70,36 L78,50 L90,38 L98,46 L110,42 L118,48 L128,36 L140,48 L148,42 L158,46 L170,38 L178,48 L188,42" fill="none" stroke="#7900ff" strokeWidth="0.8" opacity="0.7" />
+              </svg>
+            </div>
+            <div className="flex gap-3 items-center">
+              <MockKnob label="Detune" color={color} value={0.4} />
+              <MockKnob label="Time" color={color} value={0.5} />
+              <MockKnob label="Width" color={color} value={0.75} />
+              <MockKnob label="Mix" color={color} value={0.6} />
+              <LushKnob color={color} />
             </div>
           </div>
         );
