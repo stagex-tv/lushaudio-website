@@ -52,17 +52,54 @@ body {
   text-shadow: 0 0 20px rgba(121, 0, 255, 0.6), 0 0 40px rgba(121, 0, 255, 0.25);
 }
 
-/* Cinematic film grain — covers entire page */
+/* Cinematic analog film grain — dense, warm, coarse */
+body::before,
 body::after {
   content: "";
   position: fixed;
-  inset: 0;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.045;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-  background-size: 300px 300px;
-  animation: grain 0.4s steps(1) infinite;
+}
+
+/* Layer 1: coarse grain */
+body::before {
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 250px 250px;
+  animation: grain1 0.3s steps(1) infinite;
+}
+
+/* Layer 2: fine grain with warm tint */
+body::after {
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1.2 0 0 0 0.04 0 1.05 0 0 0.02 0 0 0.9 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g2)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  animation: grain2 0.5s steps(1) infinite;
+}
+
+@keyframes grain1 {
+  0%   { transform: translate(0, 0); }
+  10%  { transform: translate(-5%, -10%); }
+  20%  { transform: translate(8%, 5%); }
+  30%  { transform: translate(-3%, 12%); }
+  40%  { transform: translate(10%, -8%); }
+  50%  { transform: translate(-8%, 2%); }
+  60%  { transform: translate(4%, -12%); }
+  70%  { transform: translate(-10%, 8%); }
+  80%  { transform: translate(6%, -4%); }
+  90%  { transform: translate(-2%, 10%); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes grain2 {
+  0%   { transform: translate(3%, 7%); }
+  25%  { transform: translate(-7%, -3%); }
+  50%  { transform: translate(5%, -9%); }
+  75%  { transform: translate(-4%, 6%); }
+  100% { transform: translate(3%, 7%); }
 }
 
 /* ─── Lush Studio rack micro-animations ─── */
@@ -134,13 +171,4 @@ body::after {
   50% { height: calc(var(--meter-h, 65%) - 2%); }
   75% { height: calc(var(--meter-h, 65%) + 1%); }
   100% { height: var(--meter-h, 65%); }
-}
-
-@keyframes grain {
-  0%   { background-position:   0px   0px; }
-  20%  { background-position: -60px  40px; }
-  40%  { background-position:  30px -70px; }
-  60%  { background-position: -80px  20px; }
-  80%  { background-position:  50px -50px; }
-  100% { background-position:  10px  60px; }
 }
