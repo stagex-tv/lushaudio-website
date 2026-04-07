@@ -62,11 +62,12 @@ body::after {
   height: 200%;
   z-index: 9999;
   pointer-events: none;
+  mix-blend-mode: overlay;
 }
 
 /* Layer 1: coarse grain */
 body::before {
-  opacity: 0.12;
+  opacity: 0.18;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   background-size: 250px 250px;
   animation: grain1 0.3s steps(1) infinite;
@@ -74,7 +75,7 @@ body::before {
 
 /* Layer 2: fine grain with warm tint */
 body::after {
-  opacity: 0.06;
+  opacity: 0.09;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1.2 0 0 0 0.04 0 1.05 0 0 0.02 0 0 0.9 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g2)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
   animation: grain2 0.5s steps(1) infinite;
