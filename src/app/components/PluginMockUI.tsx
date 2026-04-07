@@ -846,7 +846,7 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
   };
 
   return (
-    <div className="relative w-full h-48 mb-6 rounded-lg bg-[#0a0a0a] border border-white/5 flex items-center justify-center overflow-hidden p-4">
+    <div className="relative w-full h-48 mb-6 rounded-lg bg-black border border-white/10 flex items-center justify-center overflow-hidden p-4">
       <div
         className="absolute inset-0 opacity-10"
         style={{

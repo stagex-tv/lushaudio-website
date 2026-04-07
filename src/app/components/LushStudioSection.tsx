@@ -689,11 +689,12 @@ export default function LushStudioSection() {
             ref={rackRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative rounded-2xl border border-white/10 bg-[#0a0a0a] overflow-hidden"
+            className="relative rounded-2xl border border-white/15 bg-[#050505] overflow-hidden"
             style={{
               transition: "transform 0.4s ease-out",
               transformStyle: "preserve-3d",
               willChange: "transform",
+              boxShadow: "0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.6)",
             }}
           >
             {/* Mouse-follow glow */}
@@ -877,7 +878,10 @@ export default function LushStudioSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="rounded-xl border border-white/5 bg-[#111] p-6"
+            className="rounded-xl border border-white/15 bg-[#050505] p-6"
+            style={{
+              boxShadow: "0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.6)",
+            }}
           >
             <h3 className="text-base font-semibold mb-2 text-white">Preset Chains</h3>
             <p className="text-sm text-zinc-400 leading-relaxed">
@@ -889,7 +893,10 @@ export default function LushStudioSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="rounded-xl border border-white/5 bg-[#111] p-6"
+            className="rounded-xl border border-white/15 bg-[#050505] p-6"
+            style={{
+              boxShadow: "0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.6)",
+            }}
           >
             <h3 className="text-base font-semibold mb-2 text-white">Marketplace</h3>
             <p className="text-sm text-zinc-400 leading-relaxed">
@@ -901,7 +908,10 @@ export default function LushStudioSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="rounded-xl border border-white/5 bg-[#111] p-6"
+            className="rounded-xl border border-white/15 bg-[#050505] p-6"
+            style={{
+              boxShadow: "0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.6)",
+            }}
           >
             <h3 className="text-base font-semibold mb-2 text-white">Basic &amp; Advanced</h3>
             <p className="text-sm text-zinc-400 leading-relaxed">
