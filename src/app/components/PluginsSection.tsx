@@ -184,7 +184,7 @@ const plugins = [
     name: "Lush Distortion",
     tagline: "Distortion",
     description:
-      "From gritty overdrive to full-blown destruction. Multiple distortion algorithms, tone shaping, cabinet simulation, oversampling, and a Lush knob for blending reverb into the chaos — perfect for guitars, vocals, and synths.",
+      "From gritty overdrive to full-blown destruction. Multiple distortion algorithms, tone shaping, cabinet simulation, and a Lush knob for blending reverb into the chaos.",
     accentColor: "#f2a80d",
     mockType: "distortion",
     comingSoon: true,
@@ -195,7 +195,7 @@ const plugins = [
     name: "Lush Exciter",
     tagline: "Harmonic Exciter",
     description:
-      "Add air, presence, and sparkle to any source. Multi-band harmonic generation with separate low and high excitation controls, intelligent saturation curves, and a Lush knob for excited reverb tails — instantly bring any mix to life.",
+      "Add air, presence, and sparkle to any source. Multi-band harmonic generation with separate low and high excitation controls, and a Lush knob for excited reverb tails.",
     accentColor: "#00bcff",
     mockType: "exciter",
     comingSoon: true,
