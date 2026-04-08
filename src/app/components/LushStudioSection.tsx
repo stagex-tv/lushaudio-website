@@ -629,7 +629,7 @@ export default function LushStudioSection() {
             The Flagship
           </p>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            LUSH
+            LUSH SUITE
           </h2>
           <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
             Your entire signal chain in one plugin.{" "}
