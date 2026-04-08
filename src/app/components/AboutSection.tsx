@@ -15,7 +15,8 @@ export default function AboutSection() {
             About
           </p>
           <h2 className="text-4xl md:text-5xl font-bold mb-8">
-            Built by engineers and producers,{" "}
+            Built by engineers and producers,
+            <br />
             made for engineers and producers.
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed">
