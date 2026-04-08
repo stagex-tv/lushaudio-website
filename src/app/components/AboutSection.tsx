@@ -15,8 +15,8 @@ export default function AboutSection() {
             About
           </p>
           <h2 className="text-4xl md:text-5xl font-bold mb-8">
-            Built by producers,{" "}
-            for producers.
+            Built by engineers and producers,{" "}
+            made for engineers and producers.
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed">
             Lush Plugins is a small team building the audio tools we always wanted.
