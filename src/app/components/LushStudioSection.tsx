@@ -15,7 +15,7 @@ function MiniKnob({ color, value = 0.5, size = 18, delay = 0 }: { color: string;
         width: size,
         height: size,
         borderColor: `${color}50`,
-        background: "radial-gradient(circle at 40% 35%, #2a2a2a, #151515)",
+        background: "radial-gradient(circle at 40% 35%, var(--surface-3), var(--surface-2))",
         animation: `rackKnobIn 0.6s ${delay}s both cubic-bezier(0.22, 1, 0.36, 1), rackKnobBreath ${1.8 + delay * 0.5}s ${idleStart}s ease-in-out infinite`,
       }}
     >
@@ -51,23 +51,23 @@ function RackModule({ name, color, active = true, children }: ModuleProps) {
         className="flex items-center justify-between px-2 py-1 rounded-t-md border-b"
         style={{
           borderColor: `${color}20`,
-          background: active ? `linear-gradient(180deg, ${color}12, transparent)` : "#0d0d0d",
+          background: active ? `linear-gradient(180deg, ${color}12, transparent)` : "var(--surface-1)",
         }}
       >
-        <span className="text-[8px] md:text-[9px] font-bold tracking-wider uppercase" style={{ color: active ? color : "#444" }}>
+        <span className="text-[8px] md:text-[9px] font-bold tracking-wider uppercase" style={{ color: active ? color : "var(--muted)" }}>
           {name}
         </span>
         <div
           className="w-1.5 h-1.5 rounded-full"
-          style={{ backgroundColor: active ? color : "#333" }}
+          style={{ backgroundColor: active ? color : "var(--surface-3)" }}
         />
       </div>
       {/* Module body */}
       <div
         className="flex-1 flex items-center justify-center p-2 md:p-3 rounded-b-md border-x border-b"
         style={{
-          borderColor: active ? `${color}15` : "#1a1a1a",
-          background: active ? "#0c0c0c" : "#090909",
+          borderColor: active ? `${color}15` : "var(--surface-3)",
+          background: active ? "var(--surface-1)" : "var(--background)",
           opacity: active ? 1 : 0.4,
         }}
       >
@@ -227,9 +227,9 @@ function DesktopModuleContent({ type, color }: { type: string; color: string }) 
         <div className="flex flex-col items-center gap-1">
           <DriftIn dx={8} dy={-8} delay={0.05}>
             <svg viewBox="0 0 60 20" className="w-12 h-3.5">
-              <line x1="0" y1="10" x2="60" y2="10" stroke="#222" strokeWidth="0.5" />
+              <line x1="0" y1="10" x2="60" y2="10" stroke="var(--surface-3)" strokeWidth="0.5" />
               <AnimPath d="M0,10 C5,8 10,6 15,6 L25,6 L25,14 L35,14 L35,6 L50,6 L50,14 L60,14" color={color} len={120} delay={0.15} />
-              <AnimPath d="M0,10 C5,9 10,7 15,5 C20,8 25,15 30,13 C35,11 40,5 45,7 C50,9 55,13 60,14" color="#555" width={0.6} len={100} delay={0.3} />
+              <AnimPath d="M0,10 C5,9 10,7 15,5 C20,8 25,15 30,13 C35,11 40,5 45,7 C50,9 55,13 60,14" color="var(--muted)" width={0.6} len={100} delay={0.3} />
             </svg>
           </DriftIn>
           <div className="flex gap-1">
@@ -260,7 +260,7 @@ function DesktopModuleContent({ type, color }: { type: string; color: string }) 
         <div className="flex flex-col items-center gap-1">
           <DriftIn dx={-6} dy={-10} delay={0.05}>
             <svg viewBox="0 0 80 24" className="w-16 h-5">
-              <line x1="0" y1="12" x2="80" y2="12" stroke="#222" strokeWidth="0.5" />
+              <line x1="0" y1="12" x2="80" y2="12" stroke="var(--surface-3)" strokeWidth="0.5" />
               <AnimPath d="M0,12 C10,12 15,10 25,6 C35,2 40,14 55,13 C65,12 70,8 80,12" color={color} len={120} delay={0.12} />
             </svg>
           </DriftIn>
@@ -276,7 +276,7 @@ function DesktopModuleContent({ type, color }: { type: string; color: string }) 
         <div className="flex flex-col items-center gap-1">
           <DriftIn dx={5} dy={-8} delay={0.05}>
             <svg viewBox="0 0 40 40" className="w-6 h-5">
-              <line x1="0" y1="40" x2="40" y2="0" stroke="#222" strokeWidth="0.4" strokeDasharray="2,2" />
+              <line x1="0" y1="40" x2="40" y2="0" stroke="var(--surface-3)" strokeWidth="0.4" strokeDasharray="2,2" />
               <AnimPath d="M0,40 C4,36 8,28 12,22 C16,16 20,10 24,7 C28,5 32,3.5 36,3 L40,2.5" color={color} len={60} delay={0.1} />
             </svg>
           </DriftIn>
@@ -456,7 +456,7 @@ function DesktopModuleContent({ type, color }: { type: string; color: string }) 
         <div className="flex flex-col items-center gap-1">
           <DriftIn dx={-6} dy={-10} delay={0.05}>
             <svg viewBox="0 0 80 24" className="w-16 h-5">
-              <line x1="0" y1="12" x2="80" y2="12" stroke="#222" strokeWidth="0.5" />
+              <line x1="0" y1="12" x2="80" y2="12" stroke="var(--surface-3)" strokeWidth="0.5" />
               {/* HPF + LPF curve: low cut, flat mid, high cut */}
               <AnimPath d="M0,22 C5,22 8,20 12,16 C16,12 18,12 25,12 L55,12 C58,12 62,12 66,14 C70,17 74,20 80,22" color={color} len={100} delay={0.12} />
             </svg>
@@ -474,7 +474,7 @@ function DesktopModuleContent({ type, color }: { type: string; color: string }) 
           <DriftIn dy={-10} dx={5} delay={0.05}>
             <svg viewBox="0 0 50 24" className="w-10 h-5">
               {/* Hard-clip transfer curve */}
-              <line x1="0" y1="24" x2="50" y2="0" stroke="#222" strokeWidth="0.3" strokeDasharray="2,2" />
+              <line x1="0" y1="24" x2="50" y2="0" stroke="var(--surface-3)" strokeWidth="0.3" strokeDasharray="2,2" />
               <AnimPath d="M0,24 C5,20 10,14 15,10 C18,8 20,6 22,6 L28,6 C30,6 32,8 35,10 C40,14 45,20 50,24" color={color} len={70} delay={0.1} />
             </svg>
           </DriftIn>
@@ -689,12 +689,11 @@ export default function LushStudioSection() {
             ref={rackRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative rounded-2xl border border-white/15 bg-[#050505] overflow-hidden"
+            className="relative rounded-2xl card-surface overflow-hidden"
             style={{
               transition: "transform 0.4s ease-out",
               transformStyle: "preserve-3d",
               willChange: "transform",
-              boxShadow: "0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.6)",
             }}
           >
             {/* Mouse-follow glow */}
@@ -705,7 +704,7 @@ export default function LushStudioSection() {
             />
 
             {/* ── Top bar ── */}
-            <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-white/5 bg-[#0d0d0d]">
+            <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-white/5 bg-surface-1">
               <div className="flex items-center gap-3">
                 <span className="text-sm md:text-base font-bold tracking-wider text-white">LUSH</span>
                 <span className="text-[10px] px-2 py-0.5 rounded bg-primary/20 text-primary font-medium tracking-wider">STUDIO</span>
@@ -726,7 +725,7 @@ export default function LushStudioSection() {
                       {preset.name}
                     </motion.span>
                   </AnimatePresence>
-                  <svg viewBox="0 0 10 6" className="w-2 h-1.5 ml-1"><path d="M1,1 L5,5 L9,1" fill="none" stroke="#555" strokeWidth="1.5" /></svg>
+                  <svg viewBox="0 0 10 6" className="w-2 h-1.5 ml-1"><path d="M1,1 L5,5 L9,1" fill="none" stroke="var(--muted)" strokeWidth="1.5" /></svg>
                 </div>
               </div>
               {/* Account */}
@@ -826,7 +825,7 @@ export default function LushStudioSection() {
             </div>
 
             {/* ── Bottom bar ── */}
-            <div className="flex items-center justify-between px-4 md:px-6 py-2.5 border-t border-white/5 bg-[#080808]">
+            <div className="flex items-center justify-between px-4 md:px-6 py-2.5 border-t border-white/5 bg-background">
               {/* Chain info */}
               <div className="flex items-center gap-3">
                 <AnimatePresence mode="wait">
@@ -847,7 +846,7 @@ export default function LushStudioSection() {
               {/* Marketplace & sharing */}
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-zinc-900/80 border border-zinc-800">
-                  <svg viewBox="0 0 12 12" className="w-2.5 h-2.5"><path d="M6,1 L6,8 M3,5 L6,8 L9,5 M2,10 L10,10" fill="none" stroke="#555" strokeWidth="1.2" /></svg>
+                  <svg viewBox="0 0 12 12" className="w-2.5 h-2.5"><path d="M6,1 L6,8 M3,5 L6,8 L9,5 M2,10 L10,10" fill="none" stroke="var(--muted)" strokeWidth="1.2" /></svg>
                   <span className="text-[8px] text-zinc-500">Share</span>
                 </div>
                 <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-primary/10 border border-primary/20">
@@ -878,10 +877,7 @@ export default function LushStudioSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="rounded-xl border border-white/15 bg-[#050505] p-6"
-            style={{
-              boxShadow: "0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.6)",
-            }}
+            className="rounded-xl card-surface p-6"
           >
             <h3 className="text-base font-semibold mb-2 text-white">Preset Chains</h3>
             <p className="text-sm text-zinc-400 leading-relaxed">
@@ -893,10 +889,7 @@ export default function LushStudioSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="rounded-xl border border-white/15 bg-[#050505] p-6"
-            style={{
-              boxShadow: "0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.6)",
-            }}
+            className="rounded-xl card-surface p-6"
           >
             <h3 className="text-base font-semibold mb-2 text-white">Marketplace</h3>
             <p className="text-sm text-zinc-400 leading-relaxed">
@@ -908,10 +901,7 @@ export default function LushStudioSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="rounded-xl border border-white/15 bg-[#050505] p-6"
-            style={{
-              boxShadow: "0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.6)",
-            }}
+            className="rounded-xl card-surface p-6"
           >
             <h3 className="text-base font-semibold mb-2 text-white">Basic &amp; Advanced</h3>
             <p className="text-sm text-zinc-400 leading-relaxed">

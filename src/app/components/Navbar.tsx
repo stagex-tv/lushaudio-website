@@ -9,7 +9,7 @@ export default function Navbar() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 backdrop-blur-md bg-[#0a0a0a]/80 border-b border-white/5"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 backdrop-blur-md bg-background/80 border-b border-white/5"
     >
       <Link href="/" className="text-xl font-bold tracking-widest">
         <span className="text-wave">LUSH PLUGINS</span>

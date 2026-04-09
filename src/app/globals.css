@@ -7,6 +7,10 @@
   --secondary: #0531fa;
   --tertiary: #00bcff;
   --accent: #f2a80d;
+  --surface-1: #0d0d0d;
+  --surface-2: #141414;
+  --surface-3: #1a1a1a;
+  --muted: #555;
 }
 
 @theme inline {
@@ -16,6 +20,10 @@
   --color-secondary: var(--secondary);
   --color-tertiary: var(--tertiary);
   --color-accent: var(--accent);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-muted: var(--muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -31,10 +39,10 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #111;
+  background: var(--surface-1);
 }
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: var(--surface-3);
   border-radius: 3px;
 }
 
@@ -50,6 +58,16 @@ body {
 }
 .text-glow-primary {
   text-shadow: 0 0 20px rgba(121, 0, 255, 0.6), 0 0 40px rgba(121, 0, 255, 0.25);
+}
+
+/* Card surface with layered depth */
+.card-surface {
+  background: var(--surface-1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* Cinematic film grain — covers entire page */

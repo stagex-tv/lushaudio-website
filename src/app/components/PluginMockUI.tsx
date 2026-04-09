@@ -17,7 +17,7 @@ function MockKnob({ label, color, size = 32, value = 0.5 }: MockKnobProps) {
           width: size,
           height: size,
           borderColor: `${color}60`,
-          background: `radial-gradient(circle at 40% 35%, #333, #1a1a1a)`,
+          background: `radial-gradient(circle at 40% 35%, var(--surface-3), var(--surface-2))`,
         }}
       >
         <div
@@ -94,7 +94,7 @@ function LushKnob({ color }: { color: string }) {
 function MockEQCurve({ color }: { color: string }) {
   return (
     <svg viewBox="0 0 200 60" className="w-full h-12">
-      <line x1="0" y1="30" x2="200" y2="30" stroke="#333" strokeWidth="0.5" />
+      <line x1="0" y1="30" x2="200" y2="30" stroke="var(--surface-3)" strokeWidth="0.5" />
       <path
         d="M0,30 C20,30 30,28 50,20 C70,12 80,35 110,32 C130,30 150,18 170,22 C185,25 195,30 200,30"
         fill="none"
@@ -231,7 +231,7 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
                 <line x1="0" y1="18" x2="200" y2="18" stroke={color} strokeWidth="0.5" opacity="0.3" strokeDasharray="4,4" />
                 <text x="3" y="15" fill={color} fontSize="5" opacity="0.35" fontFamily="monospace">THR</text>
                 {/* Input signal (grey, crosses threshold) */}
-                <path d="M0,28 C5,28 8,25 12,15 C16,8 20,10 25,22 C28,30 32,35 38,35 C42,35 45,32 48,28 C52,22 55,12 60,8 C65,14 68,28 72,35 C76,38 80,38 85,35 C88,30 92,28 95,30 C98,32 102,18 108,10 C112,6 115,14 120,25 C125,35 130,38 135,35 C140,30 142,28 148,30 C152,35 158,12 162,8 C166,14 170,28 175,35 C180,38 185,30 190,22 C195,14 198,20 200,28" fill="none" stroke="#555" strokeWidth="0.8" />
+                <path d="M0,28 C5,28 8,25 12,15 C16,8 20,10 25,22 C28,30 32,35 38,35 C42,35 45,32 48,28 C52,22 55,12 60,8 C65,14 68,28 72,35 C76,38 80,38 85,35 C88,30 92,28 95,30 C98,32 102,18 108,10 C112,6 115,14 120,25 C125,35 130,38 135,35 C140,30 142,28 148,30 C152,35 158,12 162,8 C166,14 170,28 175,35 C180,38 185,30 190,22 C195,14 198,20 200,28" fill="none" stroke="var(--muted)" strokeWidth="0.8" />
                 {/* Gated output (colored, only where open) */}
                 <path d="M8,28 C10,22 12,15 16,8 C20,10 22,18 25,22" fill="none" stroke={color} strokeWidth="1.2" opacity="0.8" />
                 <path d="M50,28 C52,22 55,12 60,8 C65,14 68,28 70,32" fill="none" stroke={color} strokeWidth="1.2" opacity="0.8" />
@@ -258,7 +258,7 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
                 <line x1="0" y1="10" x2="200" y2="10" stroke={color} strokeWidth="0.5" opacity="0.35" strokeDasharray="4,4" />
                 <text x="3" y="8" fill={color} fontSize="5" opacity="0.35" fontFamily="monospace">CEIL</text>
                 {/* Input signal waveform */}
-                <path d="M0,30 C10,28 15,22 25,16 C35,10 40,8 50,12 C60,18 65,25 75,20 C85,14 90,8 100,10 C110,14 115,22 125,18 C135,12 140,6 150,10 C160,16 165,24 175,20 C185,14 190,10 200,14" fill="none" stroke="#555" strokeWidth="0.8" />
+                <path d="M0,30 C10,28 15,22 25,16 C35,10 40,8 50,12 C60,18 65,25 75,20 C85,14 90,8 100,10 C110,14 115,22 125,18 C135,12 140,6 150,10 C160,16 165,24 175,20 C185,14 190,10 200,14" fill="none" stroke="var(--muted)" strokeWidth="0.8" />
                 {/* Limited output (flat at ceiling) */}
                 <path d="M0,30 C10,28 15,22 25,16 C30,12 32,10 35,10 L45,10 C48,10 50,12 55,16 C60,18 65,25 75,20 C80,16 85,14 88,10 L112,10 C115,12 118,18 125,18 C130,14 135,12 138,10 L162,10 C165,14 170,20 175,20 C180,16 185,14 188,10 L200,10" fill="none" stroke={color} strokeWidth="1.2" opacity="0.7" />
                 {/* GR amount shading */}
@@ -286,7 +286,7 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
         return (
           <div className="flex flex-col items-center gap-3 w-full">
             <svg viewBox="0 0 200 50" className="w-full h-10">
-              <line x1="0" y1="25" x2="200" y2="25" stroke="#333" strokeWidth="0.5" />
+              <line x1="0" y1="25" x2="200" y2="25" stroke="var(--surface-3)" strokeWidth="0.5" />
               <line x1="0" y1="10" x2="200" y2="10" stroke={`${color}40`} strokeWidth="0.5" strokeDasharray="4,4" />
               <line x1="0" y1="40" x2="200" y2="40" stroke={`${color}40`} strokeWidth="0.5" strokeDasharray="4,4" />
               <path d="M0,25 C10,25 15,5 25,10 L35,10 C40,10 45,45 55,40 L65,40 C70,40 75,8 85,10 L95,10 C100,10 110,42 120,40 L130,40 C135,40 140,10 150,10 L160,10 C165,10 175,38 185,40 L200,40" fill="none" stroke={color} strokeWidth="1.5" />
@@ -307,13 +307,13 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
               <svg viewBox="0 0 200 48" className="w-full h-full">
                 {/* Grid lines for notes */}
                 {[8, 16, 24, 32, 40].map((y) => (
-                  <line key={y} x1="0" y1={y} x2="200" y2={y} stroke="#222" strokeWidth="0.5" />
+                  <line key={y} x1="0" y1={y} x2="200" y2={y} stroke="var(--surface-3)" strokeWidth="0.5" />
                 ))}
                 {/* Input pitch (wobbly) */}
                 <path
                   d="M0,24 C10,22 15,20 25,18 C35,16 40,19 50,22 C60,25 65,28 75,26 C85,23 90,18 100,16 C110,14 120,17 130,20 C140,23 150,27 160,24 C170,21 180,17 190,19 L200,20"
                   fill="none"
-                  stroke="#555"
+                  stroke="var(--muted)"
                   strokeWidth="1"
                   strokeDasharray="3,3"
                 />
@@ -326,9 +326,9 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
                 />
                 {/* Note labels */}
                 <text x="3" y="7" fill={`${color}80`} fontSize="5" fontFamily="monospace">C4</text>
-                <text x="3" y="19" fill="#444" fontSize="5" fontFamily="monospace">B3</text>
-                <text x="3" y="27" fill="#444" fontSize="5" fontFamily="monospace">A3</text>
-                <text x="3" y="43" fill="#444" fontSize="5" fontFamily="monospace">G3</text>
+                <text x="3" y="19" fill="var(--muted)" fontSize="5" fontFamily="monospace">B3</text>
+                <text x="3" y="27" fill="var(--muted)" fontSize="5" fontFamily="monospace">A3</text>
+                <text x="3" y="43" fill="var(--muted)" fontSize="5" fontFamily="monospace">G3</text>
               </svg>
             </div>
             <div className="flex gap-3 items-center">
@@ -346,8 +346,8 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
                   className="text-[7px] px-1.5 py-0.5 rounded"
                   style={{
                     backgroundColor: i === 0 ? `${color}30` : "transparent",
-                    color: i === 0 ? color : "#555",
-                    border: `1px solid ${i === 0 ? `${color}50` : "#333"}`,
+                    color: i === 0 ? color : "var(--muted)",
+                    border: `1px solid ${i === 0 ? `${color}50` : "var(--surface-3)"}`,
                   }}
                 >
                   {note}
@@ -363,14 +363,14 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             <div className="w-full flex gap-3 items-end justify-center">
               {/* Saturation transfer curve */}
               <svg viewBox="0 0 60 60" className="w-14 h-14">
-                <line x1="0" y1="60" x2="60" y2="0" stroke="#222" strokeWidth="0.5" strokeDasharray="2,2" />
+                <line x1="0" y1="60" x2="60" y2="0" stroke="var(--surface-3)" strokeWidth="0.5" strokeDasharray="2,2" />
                 <path
                   d="M0,60 C5,55 10,45 15,35 C20,25 25,16 30,12 C35,8 40,5 45,4 C50,3 55,2.5 60,2"
                   fill="none"
                   stroke={color}
                   strokeWidth="1.5"
                 />
-                <rect x="0" y="0" width="60" height="60" fill="none" stroke="#333" strokeWidth="0.5" />
+                <rect x="0" y="0" width="60" height="60" fill="none" stroke="var(--surface-3)" strokeWidth="0.5" />
               </svg>
               {/* Harmonic bars */}
               <div className="flex gap-0.5 items-end h-12">
@@ -398,8 +398,8 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
         return (
           <div className="flex flex-col items-center gap-3 w-full">
             <svg viewBox="0 0 200 50" className="w-full h-10">
-              <line x1="0" y1="25" x2="200" y2="25" stroke="#333" strokeWidth="0.5" />
-              <path d="M0,25 L80,25 C100,25 110,15 130,15 C150,15 160,25 200,25" fill="none" stroke="#555" strokeWidth="1" />
+              <line x1="0" y1="25" x2="200" y2="25" stroke="var(--surface-3)" strokeWidth="0.5" />
+              <path d="M0,25 L80,25 C100,25 110,15 130,15 C150,15 160,25 200,25" fill="none" stroke="var(--muted)" strokeWidth="1" />
               <path d="M0,25 L80,25 C100,25 110,35 130,40 C150,35 160,25 200,25" fill="none" stroke={color} strokeWidth="1.5" />
               <rect x="105" y="8" width="50" height="6" rx="3" fill={`${color}30`} />
               <rect x="105" y="8" width="30" height="6" rx="3" fill={`${color}80`} />
@@ -419,14 +419,14 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             <div className="w-full h-14 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
               <svg viewBox="0 0 200 56" className="w-full h-full">
                 {/* Crossover lines */}
-                <line x1="50" y1="0" x2="50" y2="56" stroke="#333" strokeWidth="0.5" strokeDasharray="3,3" />
-                <line x1="100" y1="0" x2="100" y2="56" stroke="#333" strokeWidth="0.5" strokeDasharray="3,3" />
-                <line x1="150" y1="0" x2="150" y2="56" stroke="#333" strokeWidth="0.5" strokeDasharray="3,3" />
+                <line x1="50" y1="0" x2="50" y2="56" stroke="var(--surface-3)" strokeWidth="0.5" strokeDasharray="3,3" />
+                <line x1="100" y1="0" x2="100" y2="56" stroke="var(--surface-3)" strokeWidth="0.5" strokeDasharray="3,3" />
+                <line x1="150" y1="0" x2="150" y2="56" stroke="var(--surface-3)" strokeWidth="0.5" strokeDasharray="3,3" />
                 {/* Band labels */}
-                <text x="22" y="8" fill="#555" fontSize="6" textAnchor="middle" fontFamily="monospace">LOW</text>
-                <text x="75" y="8" fill="#555" fontSize="6" textAnchor="middle" fontFamily="monospace">MID</text>
-                <text x="125" y="8" fill="#555" fontSize="6" textAnchor="middle" fontFamily="monospace">HI-M</text>
-                <text x="175" y="8" fill="#555" fontSize="6" textAnchor="middle" fontFamily="monospace">HIGH</text>
+                <text x="22" y="8" fill="var(--muted)" fontSize="6" textAnchor="middle" fontFamily="monospace">LOW</text>
+                <text x="75" y="8" fill="var(--muted)" fontSize="6" textAnchor="middle" fontFamily="monospace">MID</text>
+                <text x="125" y="8" fill="var(--muted)" fontSize="6" textAnchor="middle" fontFamily="monospace">HI-M</text>
+                <text x="175" y="8" fill="var(--muted)" fontSize="6" textAnchor="middle" fontFamily="monospace">HIGH</text>
                 {/* Band fill regions */}
                 <rect x="0" y="18" width="50" height="38" fill={`${color}08`} />
                 <rect x="50" y="22" width="50" height="34" fill="#0531fa08" />
@@ -550,7 +550,7 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             <div className="w-full h-14 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
               <svg viewBox="0 0 200 56" className="w-full h-full">
                 {/* Center reference */}
-                <line x1="0" y1="28" x2="200" y2="28" stroke="#333" strokeWidth="0.4" />
+                <line x1="0" y1="28" x2="200" y2="28" stroke="var(--surface-3)" strokeWidth="0.4" />
                 {/* Dry signal (center) */}
                 <path d="M0,28 C20,18 40,38 60,28 C80,18 100,38 120,28 C140,18 160,38 180,28 L200,28" fill="none" stroke="#666" strokeWidth="1" />
                 {/* Voice 1 — slightly delayed/detuned */}
@@ -615,7 +615,7 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             {/* Phaser stages visualization */}
             <div className="w-full h-14 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
               <svg viewBox="0 0 200 56" className="w-full h-full">
-                <line x1="0" y1="28" x2="200" y2="28" stroke="#333" strokeWidth="0.4" />
+                <line x1="0" y1="28" x2="200" y2="28" stroke="var(--surface-3)" strokeWidth="0.4" />
                 {/* Multi-stage phase shift curves */}
                 <path d="M0,28 C25,8 35,48 55,28 C75,8 85,48 105,28 C125,8 135,48 155,28 C175,8 185,48 200,28" fill="none" stroke={color} strokeWidth="1.4" opacity="0.85" />
                 {/* Secondary phase curve */}
@@ -669,9 +669,9 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
           <div className="flex flex-col items-center gap-3 w-full">
             {/* Distortion transfer curve */}
             <svg viewBox="0 0 200 60" className="w-full h-12">
-              <line x1="0" y1="30" x2="200" y2="30" stroke="#333" strokeWidth="0.5" />
+              <line x1="0" y1="30" x2="200" y2="30" stroke="var(--surface-3)" strokeWidth="0.5" />
               {/* Clean reference line */}
-              <line x1="0" y1="60" x2="200" y2="0" stroke="#333" strokeWidth="0.4" strokeDasharray="4,4" />
+              <line x1="0" y1="60" x2="200" y2="0" stroke="var(--surface-3)" strokeWidth="0.4" strokeDasharray="4,4" />
               {/* Hard clipped / distorted curve */}
               <path
                 d="M0,58 C10,52 20,40 35,28 C45,20 50,14 60,10 L80,8 L120,8 C130,8 140,8 150,10 C160,14 170,20 180,28 C190,36 195,42 200,48"
@@ -847,10 +847,10 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
             <div className="w-full h-14 rounded bg-zinc-900/50 border border-zinc-800 overflow-hidden relative">
               <svg viewBox="0 0 200 56" className="w-full h-full">
                 {/* Zero line */}
-                <line x1="0" y1="28" x2="200" y2="28" stroke="#333" strokeWidth="0.5" />
+                <line x1="0" y1="28" x2="200" y2="28" stroke="var(--surface-3)" strokeWidth="0.5" />
                 {/* Normal waveform */}
                 <path d="M0,28 L5,24 L10,32 L15,22 L20,34 L25,26 L30,30 L35,25 L40,31 L45,27 L50,29 L55,26 L60,30"
-                  fill="none" stroke="#555" strokeWidth="1" />
+                  fill="none" stroke="var(--muted)" strokeWidth="1" />
                 {/* Plosive spike (detected) */}
                 <path d="M60,30 L63,8 L65,6 L67,4 L70,8 L73,12 L75,28 L77,44 L79,48 L81,50 L83,46 L85,38 L88,30"
                   fill="none" stroke={`${color}90`} strokeWidth="1.5" />
@@ -859,7 +859,7 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
                 <text x="74.5" y="8" fill={color} fontSize="5" textAnchor="middle" fontFamily="monospace" fontWeight="bold">P</text>
                 {/* Tamed waveform after plosive */}
                 <path d="M88,30 L93,26 L98,31 L103,24 L108,33 L113,27 L118,30 L123,25 L128,32 L133,26 L138,29"
-                  fill="none" stroke="#555" strokeWidth="1" />
+                  fill="none" stroke="var(--muted)" strokeWidth="1" />
                 {/* Second plosive (smaller) */}
                 <path d="M138,29 L141,14 L143,12 L145,14 L148,22 L150,28 L152,36 L154,40 L156,38 L158,30"
                   fill="none" stroke={`${color}90`} strokeWidth="1.5" />
@@ -867,9 +867,9 @@ export default function PluginMockUI({ type, color }: PluginMockUIProps) {
                 <text x="148.5" y="12" fill={color} fontSize="5" textAnchor="middle" fontFamily="monospace" fontWeight="bold">B</text>
                 {/* Remaining waveform */}
                 <path d="M158,30 L163,26 L168,31 L173,25 L178,32 L183,27 L188,30 L193,26 L198,29 L200,28"
-                  fill="none" stroke="#555" strokeWidth="1" />
+                  fill="none" stroke="var(--muted)" strokeWidth="1" />
                 {/* Reduction meter bar */}
-                <rect x="2" y="48" width="40" height="5" rx="2" fill="#222" />
+                <rect x="2" y="48" width="40" height="5" rx="2" fill="var(--surface-3)" />
                 <rect x="2" y="48" width="18" height="5" rx="2" fill={`${color}60`} />
                 <text x="44" y="52.5" fill="#666" fontSize="4" fontFamily="monospace">-6.2 dB</text>
               </svg>

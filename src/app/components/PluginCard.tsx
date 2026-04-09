@@ -67,12 +67,11 @@ export default function PluginCard({
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="relative group rounded-2xl border border-white/15 bg-[#050505] p-8 overflow-hidden"
+        className="relative group rounded-2xl card-surface p-8 overflow-hidden"
         style={{
           transition: "transform 0.3s ease-out",
           transformStyle: "preserve-3d",
           willChange: "transform",
-          boxShadow: "0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 30px rgba(0,0,0,0.6)",
         }}
       >
         {/* Mouse-follow glow */}
