@@ -187,7 +187,7 @@ export default function Hero() {
             href="#plugins"
             className="px-8 py-3 rounded-full bg-primary text-white font-semibold hover:brightness-110 transition-all glow-primary"
           >
-            Explore Our Plugins
+            Explore Plugins
           </a>
           <a
             href="#about"
